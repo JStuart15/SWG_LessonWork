@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Vending Machine</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1 align="center">Vending Machine</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-8" id="itemDiv">
+                    <div id="errorMessages"></div>
+                    <div class="row" id="contentRows">
+                    </div>
+                </div>
+                <div class="col-md-4" id="adminDiv">
+                    <div id='moneyDiv'>
+                        <input type="number" 
+                               align="center" 
+                               hidden 
+                               id="totalDeposit">
+                        <h4 align='center'>Total $ In</h4>
+                        <div class="form-group">
+                            <input id="total-money-in" 
+                                   class="form-control form-control-lg col-md-auto text-center" 
+                                   type="text" 
+                                   disabled 
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <div class="btn-group d-flex justify-content-center">
+                                <button id="add-dollar-button" 
+                                        type="button" 
+                                        class="btn btn-outline-primary"
+                                        onclick="addDollar()">
+                                    Add Dollar</button>
+                                <button id="add-quarter-button" 
+                                        type="button" 
+                                        class="btn btn-outline-primary"
+                                        onclick="addQuarter()">
+                                    Add Quarter</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="btn-group d-flex justify-content-center">
+                                <button id="add-dime-button" 
+                                        type="button" 
+                                        class="btn btn-outline-primary"
+                                        onclick="addDime()">
+                                    Add Dime</button>
+                                <button id="add-nickel-button" 
+                                        type="button" 
+                                        class="btn btn-outline-primary" 
+                                        onclick="addNickel()">
+                                    Add Nickel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="messageDiv">
+                        <hr>
+                        <h4 align="center">Messages</h4>
+                        <div class="form-group">
+                            <input id="messages" 
+                                   class="form-control form-control-lg col-md-auto text-center" 
+                                   type="text" 
+                                   disabled>
+                        </div>
+                        <div class="form-group" id="makePurchaseForm">
+                            <div class="form-inline">
+                                <label for="item-selected" 
+                                       class="form-control-label col-md-3">
+                                    Item:</label>
+                                <input type="text" 
+                                       class="form-control col-md-9" 
+                                       id="item-selected"
+                                       required
+                                       />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-outline-primary btn-block"
+                                    id="make-purchase-button"
+                                    onclick="makePurchase()">Make Purchase</button>
+                        </div>
+                    </div>
+                    <div id="changeDiv">
+                        <hr>
+                        <h4 align="center">Change</h4>
+                        <div class="form-group">
+                            <input id="change-output" 
+                                   class="form-control form-control-lg col-md-auto text-center" 
+                                   type="text" 
+                                   disabled>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-outline-primary btn-block"
+                                    id="return-change-button"
+                                    onclick="changeBack()">Change Return</button> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="js/jquery-3.2.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" crossorigin="anonymous"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/home.js"></script>
+    </body>
+</html>

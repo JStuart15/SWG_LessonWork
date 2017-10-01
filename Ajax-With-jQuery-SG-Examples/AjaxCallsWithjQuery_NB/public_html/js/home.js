@@ -15,6 +15,7 @@ $(document).ready(function () {
                 contactInfo += 'Company: ' + contact.company + '<br>';
                 contactInfo += 'Email: ' + contact.email + '<br>';
                 contactInfo += 'Phone: ' + contact.phone + '<br>';
+                contactInfo += '</p>';
                 contactInfo += '<hr>';
 
                 contactsDiv.append(contactInfo);

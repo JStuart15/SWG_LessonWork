@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>My Weather</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/bootstrap.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Weather Page</h1>
+            <hr>  
+            
+        </div>
+
+        <!--OLD--><div class="container-fluid">
+            <div class="row">
+                <form class="form-inline" role="form" id="zipcodeForm">
+                    <div class="form-group">
+                        <label for="add-zipcode" class="control-label">Zip Code:</label>
+                        <input type="text" 
+                               class="form-control" 
+                               pattern="[0-9]{5}" 
+                               id="add-zipcode" 
+                               placeholder="Enter Zipcode" required
+                               maxLength="5"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-units" class="control-label">Units:</label>
+                        <select name="units" class="form-control" id='units'>
+                            <option value="imperial">Imperial</option>
+                            <option value="metric">Metric</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type ='button' id='get-weather' class='btn btn-default'>Get Weather</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class='container-fluid'>
+            <div class='row'>
+                <h2 id='currentCondHeading'>Current Conditions in </h2>
+            </div>
+            <div class='row'>
+                <hr>
+            </div>
+            <div class='row'>
+                <div class='col-md-6' id="weather-icon">Weather Icon
+
+                </div>
+                <div class='col-md-6'>
+                    <p id='current-temp'>Temperature: </p>
+                    <p id='current-humidity'>Humidity: </p>
+                    <p id='current-wind'>Wind: </p>
+                </div>
+            </div>
+        </div>
+
+        <div class='container'>
+            <div class='row'>
+
+            </div>
+        </div>
+
+        <script src="js/jquery-2.2.4.min.js"></script>
+        <script src="js/home.js"></script>
+    </body>
+</html>
