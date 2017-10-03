@@ -4,8 +4,6 @@ $(document).ready(function () {
     $('#contentRows').delegate('.card', "click", function (e) {
         var id = $(this).find('#productId');
         $('#item-selected').val(id[0]['innerText']);
-        //var price = $(this).find('#price');
-        //$('#item-selected-price').val(price[0]['innerText']);
         clearMessages();
         clearChange();
         e.preventDefault();
@@ -95,9 +93,6 @@ function makePurchase() {
     price = $('#item-selected-price').val();
     const maybePluralize = (count, noun, suffix = 's') =>
             `${count} ${noun}${count !== 1 ? suffix : ''}`;
-//    if(!item.validity.valid){
-//        $('#messages').val('Please select an item');
-//    }
 
     $.ajax({
         type: 'GET',
@@ -182,7 +177,6 @@ function changeBack() {
         change -= num * 0.01;
         changeMessage += ' ' + maybePluralize(pennies, "Penny");
     }
-    console.log(changeMessage);
     $('#total-money-in').val('');
     $('#totalDeposit').val(0);
     clearMessages();
