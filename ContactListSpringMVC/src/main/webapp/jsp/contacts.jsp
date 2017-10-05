@@ -61,7 +61,9 @@
                                     <c:out value="${currentContact.company}"/>
                                 </td>
                                 <td>
-                                    Edit
+                                    <a href="displayEditContactForm?contactId=${currentContact.contactId}">
+                                        Edit
+                                    </a>
                                 </td>
                                 <td>
                                     <a href="deleteContact?contactId=${currentContact.contactId}">
