@@ -32,10 +32,19 @@ public class ContactController {
     @RequestMapping(value = "/displayContactsPage", method = RequestMethod.GET)
     public String displayContactsPage(Model model) {
         List<Contact> contactList = dao.getAllContacts();
-        
+
         model.addAttribute("contactList", contactList);
-        
+
         return "contacts";
+    }
+
+    @RequestMapping(value = "/displayContactDetails", method = RequestMethod.GET)
+    public String displayContactDetails(HttpServletRequest request, Model model) {
+        String contactIdParameter = request.getParameter("contactId");
+        int contactId = Integer.parseInt(contactIdParameter);
+        Contact contact = dao.getContactById(contactId);
+        model.addAttribute("contact", contact);
+        return "contactDetails";
     }
 
     @RequestMapping(value = "/createContact", method = RequestMethod.POST)

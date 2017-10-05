@@ -52,8 +52,10 @@
                         <c:forEach var="currentContact" items="${contactList}">
                             <tr>
                                 <td>
+                                    <a href="displayContactDetails?contactId=${currentContact.contactId}">
                                     <c:out value="${currentContact.firstName} "/>
                                     <c:out value="${currentContact.lastName}"/>
+                                    </a>
                                 </td>
                                 <td>
                                     <c:out value="${currentContact.company}"/>
