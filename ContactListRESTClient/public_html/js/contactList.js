@@ -12,7 +12,7 @@ $(document).ready(function () {
         
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8080/contact',
+            url: 'http://localhost:8080/ContactListSpringMVC/contact',
             data: JSON.stringify({
                 firstName: $('#add-first-name').val(),
                 lastName: $('#add-last-name').val(),
@@ -53,7 +53,7 @@ $(document).ready(function () {
         
         $.ajax({
             type: 'PUT',
-            url: 'http://localhost:8080/contact/' + $('#edit-contact-id').val(),
+            url: 'http://localhost:8080/ContactListSpringMVC/contact/' + $('#edit-contact-id').val(),
             data: JSON.stringify({
                 contactId: $('edit-contact-id').val(),
                 firstName: $('#edit-first-name').val(),
@@ -89,7 +89,7 @@ function loadContacts() {
 
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/contacts',
+        url: 'http://localhost:8080/ContactListSpringMVC/contacts',
         success: function (contactArray) {
             $.each(contactArray, function (index, contact) {
                 var name = contact.firstName + ' ' + contact.lastName;
@@ -124,7 +124,7 @@ function showEditForm(contactId) {
 
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/contact/' + contactId,
+        url: 'http://localhost:8080/ContactListSpringMVC/contact/' + contactId,
         success: function (data, status) {
             $('#edit-first-name').val(data.firstName);
             $('#edit-last-name').val(data.lastName);
@@ -162,7 +162,7 @@ function hideEditForm() {
 function deleteContact(contactId) {
     $.ajax({
         type: 'DELETE',
-        url: 'http://localhost:8080/contact/' + contactId,
+        url: 'http://localhost:8080/ContactListSpringMVC/contact/' + contactId,
         success: function () {
             loadContacts();
         }
