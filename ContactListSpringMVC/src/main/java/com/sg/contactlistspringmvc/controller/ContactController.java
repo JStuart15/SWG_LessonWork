@@ -29,12 +29,18 @@ public class ContactController {
         this.dao = dao;
     }
 
+    @RequestMapping(value = "/deleteContact", method = RequestMethod.GET)
+    public String deleteContact(HttpServletRequest request){
+        String contactIdParameter = request.getParameter("contactId");
+        long contactId = Long.parseLong(contactIdParameter);
+        dao.removeContact(contactId);
+        return "redirect:displayContactsPage";
+    }
+    
     @RequestMapping(value = "/displayContactsPage", method = RequestMethod.GET)
     public String displayContactsPage(Model model) {
         List<Contact> contactList = dao.getAllContacts();
-
         model.addAttribute("contactList", contactList);
-
         return "contacts";
     }
 

@@ -53,8 +53,8 @@
                             <tr>
                                 <td>
                                     <a href="displayContactDetails?contactId=${currentContact.contactId}">
-                                    <c:out value="${currentContact.firstName} "/>
-                                    <c:out value="${currentContact.lastName}"/>
+                                        <c:out value="${currentContact.firstName} "/>
+                                        <c:out value="${currentContact.lastName}"/>
                                     </a>
                                 </td>
                                 <td>
@@ -64,7 +64,9 @@
                                     Edit
                                 </td>
                                 <td>
-                                    Delete
+                                    <a href="deleteContact?contactId=${currentContact.contactId}">
+                                        Delete
+                                    </a>
                                 </td>
                             </tr>
                         </c:forEach>
