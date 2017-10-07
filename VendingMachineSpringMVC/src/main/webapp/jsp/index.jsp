@@ -23,6 +23,7 @@
                     <div class="row" id="contentRows">
                         <c:forEach var="currentItem" items="${itemList}">
                             <div class="card col-md-4">
+                                <img class="card-img-top" alt="Image" src="images/${currentItem.itemName}.jpg">
                                 <div class="card-body">
                                     <p class="card-text" 
                                        id="productId" 
