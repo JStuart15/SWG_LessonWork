@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class VendingMachineController {
 
-    Change change;
+    Change change = new Change();
     //VendingMachineDao dao;
     VendingMachine service;
     String itemSelected;
@@ -38,7 +39,7 @@ public class VendingMachineController {
 
     @Inject
     public VendingMachineController(VendingMachine service) {
-        this.service = service; 
+        this.service = service;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -80,24 +81,16 @@ public class VendingMachineController {
 
     @RequestMapping(value = "/makePurchase", method = RequestMethod.GET)
     public String makePurchase() {
-        try {
-            int itemIdSelected = Integer.parseInt(itemSelected);
-            Item itemPurchased = service.getItem(itemIdSelected);
-            if (itemPurchased.getQuantityAvailable() > 0) {
-                if (totalIn.compareTo(itemPurchased.getItemCost()) >= 0) {
-                    itemPurchased.setQuantityAvailable(itemPurchased.getQuantityAvailable() - 1);
-                    message = "Thank You!!!";
-                    changeMessage = change.makeChange(totalIn, itemPurchased.getItemCost());
-                    itemSelected = "";
-                    totalIn = new BigDecimal(0);
-                } else {
-                    message = "Please deposit: " + itemPurchased.getItemCost().subtract(totalIn);
-                }
-            } else {
-                message = "SOLD OUT!!!";
-            }
-        } catch (Exception e) {
-            message = "Please select a product";
+        Map<String, String> purchaseResults = service.completePurchase(itemSelected, totalIn);
+        if (purchaseResults.get("success").equals("true")) {
+            changeMessage = purchaseResults.get("changeMessage");
+            totalIn = new BigDecimal(0);
+            message = purchaseResults.get("message");
+            itemSelected = "";
+
+            System.out.println(purchaseResults.get("message"));
+        } else {
+            message = purchaseResults.get("message");
         }
         return "redirect:/";
     }

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  */
 public class Change {
 
-    public static String makeChange(BigDecimal totalIn, BigDecimal cost) {
+    public String makeChange(BigDecimal totalIn, BigDecimal cost) {
         String changeString = "";
 
         BigDecimal differenceInCents = totalIn
