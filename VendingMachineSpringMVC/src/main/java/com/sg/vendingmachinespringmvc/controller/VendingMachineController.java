@@ -87,8 +87,6 @@ public class VendingMachineController {
             totalIn = new BigDecimal(0);
             message = purchaseResults.get("message");
             itemSelected = "";
-
-            System.out.println(purchaseResults.get("message"));
         } else {
             message = purchaseResults.get("message");
         }

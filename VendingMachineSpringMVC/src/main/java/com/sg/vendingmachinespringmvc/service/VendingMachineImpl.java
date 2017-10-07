@@ -52,14 +52,17 @@ public class VendingMachineImpl implements VendingMachine {
                     purchaseResults.put("changeMessage", change.makeChange(totalDeposit, itemPurchased.getItemCost()));
 
                 } else {
+                    purchaseResults.put("success", "false");
                     purchaseResults.put("message",
                             "Please deposit: "
                             + itemPurchased.getItemCost().subtract(totalDeposit));
                 }
             } else {
+                purchaseResults.put("success", "false");
                 purchaseResults.put("message", "SOLD OUT!!!");
             }
         } catch (Exception e) {
+            purchaseResults.put("success", "false");
             purchaseResults.put("message", "Please select a product");
         }
         return purchaseResults;
