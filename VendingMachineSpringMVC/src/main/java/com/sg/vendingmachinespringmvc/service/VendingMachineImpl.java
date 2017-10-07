@@ -63,7 +63,7 @@ public class VendingMachineImpl implements VendingMachine {
             }
         } catch (Exception e) {
             purchaseResults.put("success", "false");
-            purchaseResults.put("message", "Please select a product");
+            purchaseResults.put("message", "Please select an item");
         }
         return purchaseResults;
     }

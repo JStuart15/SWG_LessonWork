@@ -15,5 +15,11 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd"> 
 
     <!-- Bean definitions go here -->
+    <bean id="vendingMachineDao" 
+          class="com.sg.vendingmachinespringmvc.dao.VendingMachineDaoStubImpl"/>
     
+    <bean id="vendingMachineService"
+          class="com.sg.vendingmachinespringmvc.service.VendingMachineImpl">
+          <constructor-arg ref="vendingMachineDao"/>
+    </bean>
 </beans>
