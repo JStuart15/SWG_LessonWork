@@ -17,8 +17,6 @@ public class Item {
     private BigDecimal itemCost;
     private int quantityAvailable;
     
-    
-
     public int getItemId() {
         return itemId;
     }
