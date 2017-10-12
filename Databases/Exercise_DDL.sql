@@ -1,4 +1,5 @@
-create database if not exists MovieCatalogue;
+drop database if exists MovieCatalogue;
+create database MovieCatalogue;
 
 use MovieCatalogue;
 
@@ -28,14 +29,14 @@ create table if not exists Actor(
 
 create table if not exists Movie(
 	MovieId int not null primary key auto_increment,
-    DirectorId int not null,
     GenreId int not null,
-    RatingId int not null,
+    DirectorId int null,
+    RatingId int null,
+	Title varchar(128) not null,
+    ReleaseDate date null,
     foreign key (DirectorId) references Director(DirectorId),
 	foreign key (GenreId) references Genre(GenreId),
-    foreign key (RatingId) references Rating(RatingId),
-    Title varchar(128) not null,
-    ReleaseDate date null
+    foreign key (RatingId) references Rating(RatingId)
     );
 
 create table if not exists CastMember(
