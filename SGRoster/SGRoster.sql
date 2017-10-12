@@ -14,8 +14,7 @@ create table Apprentice(
 	ApprenticeId int not null auto_increment,
     FirstName varchar(30) not null,
     LastName varchar(30) not null,
-    CohortId int not null,
-    primary key (ApprenticeId),
+    primary key (ApprenticeId)
 );
 
 /*
@@ -58,3 +57,28 @@ alter table Apprentice
 modify column DateOfBirth datetime null;
 
 #drop database SGRoster;
+
+insert into Apprentice(FirstName, LastName)
+values ('Bob', 'Jones'), ('Bob', 'Smith'), ('Brenda', 'Walters'), ('Shauna', 'Mullins');
+
+insert into Cohort (StartDate, Subject, Location)
+values('2017/1/9', 'C#', 'Akron'), ('2017/1/9', 'Java', 'Akron');
+
+insert into ApprenticeCohort(ApprenticeId, CohortId)
+values (1,1), (2,1), (3,2), (4,2);
+
+update ApprenticeCohort
+set CohortId =2
+where ApprenticeId=2;
+
+update ApprenticeCohort
+set CohortId = 1
+where ApprenticeId in (3,4);
+
+update ApprenticeCohort
+set CohortId = 1
+where CohortId = 2;
+
+delete from Cohort
+where CohortId=2;
+
