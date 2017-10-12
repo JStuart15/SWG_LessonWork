@@ -2,7 +2,7 @@ drop database if exists SGRoster;
 create database SGRoster;
 use SGRoster;
 
-create table Cohort (
+create table Cohort if not exists(
 	CohortId int not null auto_increment,
     StartDate date not null,
     Subject varchar(30) not null,

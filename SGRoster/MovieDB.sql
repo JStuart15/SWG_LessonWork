@@ -63,3 +63,18 @@ delete from MoviePersonRole
 	where MovieId = 1
     and PersonId = 2
     and RoleId in (3,4,5);
+    
+    use OMDB;
+#joining tables allows us to get at the things we need
+
+select
+	Movie.Title, Person.FirstName, Person.LastName
+from Movie
+inner join MoviePersonRole 
+	on Movie.MovieId = MoviePersonRole.MovieId
+inner join Person
+	on MoviePersonRole.PersonId = Person.PersonId;
+    
+update Movie set
+	ReleaseDate = '1983-05-25'
+where MovieId = 2;

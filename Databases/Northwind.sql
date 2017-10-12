@@ -73,7 +73,40 @@ INNER JOIN Customers c ON o.CustomerID = c.CustomerID
 GROUP BY Country
 ORDER BY TotalSales DESC;
 */
-
+/*
 select distinct Country 
 from Customers
 order by Country;
+*/
+
+SELECT DISTINCT(o.OrderID), OrderDate, CompanyName
+FROM Orders o 
+INNER JOIN Customers c ON o.CustomerID = c.CustomerID
+INNER JOIN Order_Details od ON o.OrderID = od.OrderID
+WHERE od.ProductID IN     
+-- subquery      
+   (SELECT ProductID        
+   FROM Products
+   WHERE  UnitPrice > 90.00       
+   ORDER BY UnitPrice DESC)
+ORDER BY CompanyName, OrderID;
+
+SELECT DISTINCT(o.OrderID), OrderDate, CompanyName
+FROM Orders o 
+INNER JOIN Customers c ON o.CustomerID = c.CustomerID
+INNER JOIN Order_Details od ON o.OrderID = od.OrderID
+INNER JOIN
+   (SELECT ProductID  
+   FROM Products
+   WHERE UnitPrice > 90.00                    
+   ORDER BY UnitPrice DESC) 
+AS TopProducts                
+ON od.ProductID = TopProducts.ProductID
+ORDER BY CompanyName, OrderID;
+
+SELECT o.OrderID, o.OrderDate,    
+   (SELECT MAX(od.UnitPrice)     
+   FROM Order_Details od
+   WHERE o.OrderID = od.OrderID) 
+AS MaxUnitPrice
+FROM Orders o;
