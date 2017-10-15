@@ -19,18 +19,10 @@ create table if not exists Locations(
 create table if not exists RoomRates(
 	RateId int not null primary key auto_increment,
     LocationId int not null,
-    RoomTypeId int not null,
     StartDate date not null,
     EndDate date not null,
     Rate decimal not null,
-    foreign key (LocationId) references Locations(LocationId),
-    foreign key (RoomTypeId) references RoomTypes(RoomTypeId)
-);
-
--- Amenities Table
-create table if not exists Amenities(
-	AmenityId int not null primary key auto_increment,
-    Name varchar(45) not null
+    foreign key (LocationId) references Locations(LocationId)
 );
 
 -- RoomTypes Table
@@ -40,6 +32,12 @@ create table if not exists RoomTypes(
     BaseRate decimal not null,
     RateId int null,
     foreign key (RateId) references RoomRates(RateId)
+);
+
+-- Amenities Table
+create table if not exists Amenities(
+	AmenityId int not null primary key auto_increment,
+    Name varchar(45) not null
 );
 
 -- Rooms Table
@@ -55,7 +53,7 @@ create table if not exists Rooms(
 );
 
 -- RoomAmenity Table
-create table if not exists RoomAmenities(
+create table if not exists RoomsAmenities(
 	RoomId int not null auto_increment,
     AmenityId int not null,
     Quantity int not null,

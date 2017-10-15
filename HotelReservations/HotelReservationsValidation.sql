@@ -67,12 +67,12 @@ where rr.EndDate = '2017-10-16' -- and res.InvoiceId is null
 	+ Write a query that returns a list of promotion codes, and the #times used.
 	+ bonus: allow me to specify a date range
 */
-select p.Code as Promotion, count(r.ReservationId) as `Times Used`
+select p.PromoCode as Promotion, count(r.ReservationId) as `Times Used`
 from Promotions p 
 left outer join ReservationsPromotions rp on rp.PromotionId = p.PromotionId
 left outer join Reservations r on r.ReservationId = rp.ReservationId
 where p.StartDate between '2017/01/01' and '2017/12/31' 
-group by p.Code;
+group by p.PromoCode;
 
 /* 6
 	- Write a query that returns the 10 most expensive bills ever charged
