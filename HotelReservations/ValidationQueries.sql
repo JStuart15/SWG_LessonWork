@@ -1,15 +1,11 @@
 use HotelReservations;
 
-/* 
-    Write a query that returns all the rooms NOT reserved on a particular date
-    
-    Room 7 & 6 reserved for 10/31 to 11/1
-    Room 5 reserved for 11/15 to 11/16
-    We have 8 rooms; check on 10/31; expect 6 rooms available;
-    
-    BONUS: allow me to also specify room type
+/* 1
+    + Write a query that returns all the rooms NOT reserved on a particular date
+    + RoomIds 6 & 7 are reserved on 10/31 by Kyle
+    - BONUS: allow me to also specify room type
  */
-select l.Name, r.Floor, r.RoomNumber, rt.Description as RoomType, res.ReservationId, rr.StartDate, rr.EndDate 
+select l.Name, r.Floor, r.RoomId, r.RoomNumber, rt.Description as RoomType, res.ReservationId, rr.StartDate, rr.EndDate 
 from Rooms r
 left outer join ReservationsRooms rr on rr.RoomId = r.RoomId
 left outer join Reservations res on res.ReservationId = rr.ReservationId
@@ -23,13 +19,15 @@ where
 	rr.EndDate 	!= '2017-10-31')
 order by r.RoomId;
 
-/*
+/* 2
 	+ Write a query that returns all the rooms reserved for a particular customer
-    - Can I identify all info needed to tell a customer their room ...?
-    - Even if the hotel had multiple floors? If it was a chain and had multiple hotels?
+    + Can I identify all info needed to tell a customer their room ...?
+		+ Even if the hotel had multiple floors? If it was a chain and had multiple hotels?
+    + Can a wedding party have many rooms on the same reservations? Yes
+		+ Do they all have to arrive and leave on the same day? No
 	- BONUS: instead query based on promotional code
 */
-select c.FirstName, c.LastName, l.Name as HotelName, r.Floor, r.RoomId, r.RoomNumber, res.ReservationId, rr.StartDate, rr.EndDate
+select c.FirstName, c.LastName, l.Name as Hotel, r.RoomId, r.Floor, r.RoomNumber, r.RoomId, res.ReservationId, rr.StartDate, rr.EndDate
 from Customers c
 inner join Reservations res on res.CustomerId = c.CustomerId
 inner join ReservationsRooms rr on rr.ReservationId = res.ReservationId
@@ -37,56 +35,87 @@ inner join Rooms r on rr.RoomId = r.RoomId
 inner join Locations l on l.LocationId = r.LocationId
 where c.CustomerId in (1,2,3,4);
 
-/*
-	Write a query that returns rooms that contain a set of amenities
-	(i.e. list of rooms that have mini-bar, hot-tub and fridge -> (101,207,310,323))
-
-	BONUS: also order by cheapest & not reserved
+/* 3
+	+ Write a query that returns rooms that contain a set of amenities
+	+ (i.e. list of rooms that have mini-bar, hot-tub and fridge -> (101,207,310,323))
+	+ Can I track 2 HD tvs in a room, or other multiple amenities? Can the room TYPE change?
+	- BONUS: also order by cheapest & not reserved
 */
-select rt.Description as RoomType, Room.RoomNumber, Room.Floor, a.Name
-from Room
-inner join RoomAmenity ra on ra.RoomId = Room.RoomId
-inner join Amenity a on ra.AmenityId = a.AmenityId
-inner join RoomType rt on rt.RoomTypeId = Room.RoomTypeId
-where a.Name in ('Casino');
+select l.Name as Hotel, r.Floor, r.RoomNumber, rt.Description as RoomType,  a.Name as AmenityRoomAmenity, ra.Quantity
+from Rooms r
+inner join RoomsAmenities ra on ra.RoomId = r.RoomId
+inner join Amenities a on ra.AmenityId = a.AmenityId
+inner join RoomTypes rt on rt.RoomTypeId = r.RoomTypeId
+inner join Locations l on l.LocationId = r.LocationId
+where a.Name in ('HD TV', 'Jacuzzi')
+order by r.RoomId;
 
-/*
-	+ Write a query that returns a list of reservations that end today
+/* 4
+	+ Write a query that returns a list of reservations that end on a specified date
 	- BONUS: that also don't have a bill issued
 */
--- insert a reservation that ends today
-insert into Reservations (ReservationId, StartDate,EndDate,Bill_BillId,CustomerId) 
-values (100, curdate()-1, curdate(), null, 2),
-		(101, curdate()-1, curdate(), null, 3);
-
--- insert a matching ReservationRoom entry
-insert into ReservationsRooms (ReservationId, RoomId)
-values (100, 4), (100,3), (101,8);
-
-select c.FirstName, c.LastName, res.ReservationId, res.EndDate, l.Name, r.Floor, r.RoomNumber
+select c.FirstName, c.LastName, res.ReservationId, rr.EndDate, l.Name, r.Floor, r.RoomNumber
 from Reservations res
 inner join Customers c on c.CustomerId = res.CustomerId
 inner join ReservationsRooms rr on rr.ReservationId = res.ReservationId
 inner join Rooms r on rr.RoomId = r.RoomId
 inner join Locations l on l.LocationId = r.LocationId
-where res.EndDate = curdate();
+where rr.EndDate = '2017-10-16' -- and res.InvoiceId is null
+;
 
--- delete entries
-delete from ReservationRoom where ReservationId in (100,101);
-delete from Reservation where ReservationId in (100,101);
+/* 5
+	+ Write a query that returns a list of promotion codes, and the #times used.
+	+ bonus: allow me to specify a date range
+*/
+select p.Code as Promotion, count(r.ReservationId) as `Times Used`
+from Promotions p 
+left outer join ReservationsPromotions rp on rp.PromotionId = p.PromotionId
+left outer join Reservations r on r.ReservationId = rp.ReservationId
+where p.StartDate between '2017/01/01' and '2017/12/31' 
+group by p.Code;
 
-/*
+/* 6
+	- Write a query that returns the 10 most expensive bills ever charged
+	- bonus: allow me to specify a customer
+    - make up some past stays
+*/
+
+/* 7
   Reservations should list the names and ages of all guests.
 */
-select res.ReservationId, l.Name, r.Floor, r.RoomNumber, g.FirstName, g.LastName, g.Age
+select res.ReservationId, rr.RoomId, rr.StartDate, rr.EndDate, g.FirstName, g.LastName, g.Age
 from Reservations res
 inner join ReservationsRooms rr on rr.ReservationId = res.ReservationId
-inner join Rooms r on r.RoomId = rr.RoomId
-inner join Locations l on l.LocationId = r.LocationId
-inner join RoomsGuests rg on rg.RoomId = r.RoomId
-inner join Guests g on rg.GuestId = g.GuestId
+inner join ReservationsRoomsGuests rrg on rr.ReservationId = rrg.ReservationId and rr.RoomId = rrg.RoomId
+inner join Guests g on rrg.GuestId = g.GuestId
+order by res.ReservationId, rr.RoomId;
 
 /*
-  - Generate a bill that uses a seasonal rate
-  
+	- Generate invoice(s) by reservation
 */
+-- 8a Generate Invoice Header
+select i.InvoiceId, c.FirstName, c.LastName, (i.Total + i.TotalTax) as Total
+from Reservations res
+inner join Customers c on c.CustomerId = res.CustomerId
+inner join Invoices i on i.CustomerId = c.CustomerId
+inner join ReservationsPromotions rp on res.ReservationId = rp.ReservationId
+where res.ReservationId = 4;
+
+-- 8b Generate Invoice Lines
+select id.InvoiceId, id.Description, id.ChargeDate, id.UnitPrice, 
+	id.Quantity, id.Discount, (id.UnitPrice*id.Quantity*(1 + Discount/100)) as Total
+from Reservations res
+inner join Customers c on c.CustomerId = res.CustomerId
+inner join Invoices i on i.CustomerId = c.CustomerId
+inner join InvoiceDetails id on id.InvoiceId = i.InvoiceId
+where res.ReservationId = 4
+order by id.InvoiceId, id.ChargeDate;
+
+/*
+	Get an invoice by reservation
+*/
+
+/* 
+	- What queries are required to enter a reservation into the system
+*/
+
