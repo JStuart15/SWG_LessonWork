@@ -91,31 +91,58 @@ inner join Guests g on rrg.GuestId = g.GuestId
 order by res.ReservationId, rr.RoomId;
 
 /*
-	- Generate invoice(s) by reservation
+	- Generate invoice(s) by reservation number
 */
 -- 8a Generate Invoice Header
-select i.InvoiceId, c.FirstName, c.LastName, (i.Total + i.TotalTax) as Total
+-- add in promotions
+select i.InvoiceId, c.FirstName, c.LastName, 
+	round((i.Total + i.TotalTax) * (1 - IFNULL(p.DiscountPercent, p.DiscountFlat)/100),2) as Total 
 from Reservations res
 inner join Customers c on c.CustomerId = res.CustomerId
 inner join Invoices i on i.CustomerId = c.CustomerId
 inner join ReservationsPromotions rp on res.ReservationId = rp.ReservationId
+inner join Promotions p on p.PromotionId = rp.PromotionId
 where res.ReservationId = 4;
 
 -- 8b Generate Invoice Lines
-select id.InvoiceId, id.Description, id.ChargeDate, id.UnitPrice, 
-	id.Quantity, id.Discount, (id.UnitPrice*id.Quantity*(1 + Discount/100)) as Total
+select rr.RoomId, id.InvoiceId, id.Description, id.ChargeDate, id.UnitPrice, 
+	id.Quantity, id.Discount, round((id.UnitPrice*id.Quantity*(1 + Discount/100)),2) as Total
 from Reservations res
 inner join Customers c on c.CustomerId = res.CustomerId
 inner join Invoices i on i.CustomerId = c.CustomerId
 inner join InvoiceDetails id on id.InvoiceId = i.InvoiceId
+inner join ReservationsRooms rr on rr.InvoiceId = i.InvoiceId
 where res.ReservationId = 4
-order by id.InvoiceId, id.ChargeDate;
+order by rr.RoomId, id.ChargeDate;
 
 /*
-	Get an invoice by reservation
+	- Generate invoice(s) by room number
 */
+-- 9a Generate Header information
+select 	i.InvoiceId, 
+		concat(c.FirstName, " ", c.LastName) as Customer, 
+		round((i.Total + i.TotalTax) * (1 - IFNULL(p.DiscountPercent, p.DiscountFlat)/100),2) as Total 
+from Reservations res
+inner join Customers c on c.CustomerId = res.CustomerId
+inner join Invoices i on i.CustomerId = c.CustomerId
+inner join ReservationsPromotions rp on res.ReservationId = rp.ReservationId
+inner join Promotions p on p.PromotionId = rp.PromotionId
+inner join ReservationsRooms rr on rr.ReservationId = res.ReservationId
+where rr.RoomId in (5, 6);
 
-/* 
-	- What queries are required to enter a reservation into the system
+-- if I can get header, I can get lines, no need to repeat
+
+/*
+	- Generate invoice(s) by customer
 */
-
+-- 10a Generate Header information
+select 	i.InvoiceId, 
+		concat(c.FirstName, " ", c.LastName) as Customer, 
+		round((i.Total + i.TotalTax) * (1 - IFNULL(p.DiscountPercent, p.DiscountFlat)/100),2) as Total 
+from Reservations res
+inner join Customers c on c.CustomerId = res.CustomerId
+inner join Invoices i on i.CustomerId = c.CustomerId
+inner join ReservationsPromotions rp on res.ReservationId = rp.ReservationId
+inner join Promotions p on p.PromotionId = rp.PromotionId
+where c.FirstName in ('Jeff');
+-- if I can get header, I can get lines, no need to repeat
