@@ -15,6 +15,18 @@ create table if not exists Locations(
     Zip char(10) not null
 );
 
+-- RoomRates table 
+create table if not exists RoomRates(
+	RateId int not null primary key auto_increment,
+    LocationId int not null,
+    RoomTypeId int not null,
+    StartDate date not null,
+    EndDate date not null,
+    Rate decimal not null,
+    foreign key (LocationId) references Locations(LocationId),
+    foreign key (RoomTypeId) references RoomTypes(RoomTypeId)
+);
+
 -- Amenities Table
 create table if not exists Amenities(
 	AmenityId int not null primary key auto_increment,
@@ -25,7 +37,9 @@ create table if not exists Amenities(
 create table if not exists RoomTypes(
 	RoomTypeId int not null primary key auto_increment,
     Description varchar(45) not null,
-    BaseRate decimal not null
+    BaseRate decimal not null,
+    RateId int null,
+    foreign key (RateId) references RoomRates(RateId)
 );
 
 -- Rooms Table
@@ -112,23 +126,68 @@ create table if not exists ReservationsRooms(
     foreign key (InvoiceId) references Invoices(InvoiceId)
 );
 
--- RoomRates table 
-create table if not exists RoomRates(
-	RateId int not null primary key auto_increment,
-    LocationId int not null,
-    RoomTypeId int not null,
-    StartDate date not null,
-    EndDate date not null,
-    Rate decimal not null,
-    foreign key (LocationId) references Locations(LocationId),
-    foreign key (RoomTypeId) references RoomTypes(RoomTypeId)
-);
-
 -- AddOns table
 create table if not exists AddOns(
 	AddOnId int not null primary key auto_increment,
     StartDate date not null,
     EndDate date not null,
     UnitPrice decimal not null,
+    Description varchar(45) not null
+);
+
+-- InvoiceDetails table
+create table if not exists InvoiceDetails(
+	InvoiceDetailId int not null primary key auto_increment,
+    InvoiceId int not null,
     Description varchar(45) not null,
+    ChargeDate date not null,
+    UnitPrice decimal not null,
+    Quantity int not null,
+    Discount decimal null,
+    foreign key (InvoiceId) references Invoices(InvoiceId)
+);
+
+-- Promotions table
+create table if not exists Promotions(
+	PromotionId int not null primary key auto_increment,
+    PromoCode varchar(45) not null,
+    StartDate date not null,
+    EndDate date not null,
+    DiscountPercent decimal null,
+    DiscountFlat decimal null
+);
+
+-- ReservationsPromotions table
+create table if not exists ReservationsPromotions(
+	ReservationId int not null,
+    PromotionId int not null,
+    primary key (ReservationId, PromotionId),
+    foreign key (ReservationId) references Reservations(ReservationId),
+    foreign key (PromotionId) references Promotions(PromotionId)
+);
+
+-- ReservationsRoomsAddOns table
+create table if not exists ReservationsRoomsAddOns(
+	ReservationId int not null,
+    RoomId int not null,
+    AddOnId int not null,
+    ChargeDate date not null,
+    Quantity int not null,
+    Description varchar(45) not null,
+    Discount int null default 0,
+    primary key (ReservationId, RoomId, AddOnId, ChargeDate),
+    foreign key (ReservationId) references ReservationsRooms(ReservationId),
+    foreign key (RoomId) references ReservationsRooms(RoomId),
+    foreign key (AddOnId) references AddOns(AddOnId)
+);
+
+-- ReservationsRoomsGuests table
+create table if not exists ReservationsRoomsGuests(
+	ReservationId int not null,
+    RoomId int not null,
+    GuestId int not null,
+    primary key (ReservationId, RoomId, GuestId),
+    foreign key (ReservationId) references ReservationsRooms(ReservationId),
+    foreign key (RoomId) references ReservationsRooms(RoomId),
+    foreign key (GuestId) references Guests(GuestId)
 );
