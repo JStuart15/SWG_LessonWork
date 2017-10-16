@@ -39,8 +39,16 @@ public class ContactListDaoTest {
     
     @Before
     public void setUp() {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("test-applicationContext.xml");
+        ApplicationContext ctx 
+                = new ClassPathXmlApplicationContext(
+                        "test-applicationContext.xml");
         dao = ctx.getBean("contactListDao", ContactListDao.class);
+        
+        //remove all Contacts from the database
+        List<Contact> contacts = dao.getAllContacts();
+        for (Contact contact : contacts) {
+            dao.removeContact(contact.getContactId());
+        }
     }
     
     @After
