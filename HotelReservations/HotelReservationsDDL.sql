@@ -153,6 +153,7 @@ create table if not exists Promotions(
     EndDate date not null,
     DiscountPercent decimal null,
     DiscountFlat decimal null
+    -- decimal and defaults (6,2)
 );
 
 -- ReservationsPromotions table

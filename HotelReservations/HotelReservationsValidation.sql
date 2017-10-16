@@ -47,8 +47,15 @@ inner join RoomsAmenities ra on ra.RoomId = r.RoomId
 inner join Amenities a on ra.AmenityId = a.AmenityId
 inner join RoomTypes rt on rt.RoomTypeId = r.RoomTypeId
 inner join Locations l on l.LocationId = r.LocationId
+-- where a.Name = 'HD TV' and a.Name = 'Jacuzzi'
 where a.Name in ('HD TV', 'Jacuzzi')
 order by r.RoomId;
+
+select ra.RoomId, count(*) 
+from RoomsAmenities ra
+where ra.AmenityId in (5,7)
+group by ra.RoomId
+having count(*) = 2;
 
 /* 4
 	+ Write a query that returns a list of reservations that end on a specified date
