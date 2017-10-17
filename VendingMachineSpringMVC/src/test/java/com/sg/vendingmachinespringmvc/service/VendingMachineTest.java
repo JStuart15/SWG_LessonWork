@@ -33,6 +33,7 @@ public class VendingMachineTest {
 
     @BeforeClass
     public static void setUpClass() {
+        
     }
 
     @AfterClass
