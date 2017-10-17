@@ -43,7 +43,7 @@
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     
-    <bean id="vendingMachineService"
+    <bean id="vendingMachine"
           class="com.sg.vendingmachinespringmvc.service.VendingMachineImpl">
         
     </bean>

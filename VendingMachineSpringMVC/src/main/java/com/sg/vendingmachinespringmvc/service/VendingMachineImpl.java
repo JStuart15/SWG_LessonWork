@@ -47,6 +47,7 @@ public class VendingMachineImpl implements VendingMachine {
             if (itemPurchased.getQuantityAvailable() > 0) {
                 if (totalDeposit.compareTo(itemPurchased.getItemCost()) >= 0) {
                     itemPurchased.setQuantityAvailable(itemPurchased.getQuantityAvailable() - 1);
+                    dao.updateItem(itemPurchased);
                     purchaseResults.put("success", "true");
                     purchaseResults.put("message", "Thank You!!!");
                     purchaseResults.put("changeMessage", change.makeChange(totalDeposit, itemPurchased.getItemCost()));

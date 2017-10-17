@@ -21,20 +21,20 @@ public class VendingMachineDaoDbImpl implements VendingMachineDao {
 
     private static final String SQL_SELECT_ALL_ITEMS
             = "select * from Items";
-    
+
     private static final String SQL_SELECT_ITEM
             = "select * from Items where itemId = ?";
-    
+
     private static final String SQL_UPDATE_ITEM
             = "update Items set Quantity = ? "
-            + "where itemId = ?"; 
-    
+            + "where itemId = ?";
+
     private JdbcTemplate jdbcTemplate;
-    
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    
+
     @Override
     public List<Item> getAllItems() {
         return jdbcTemplate.query(SQL_SELECT_ALL_ITEMS, new ItemMapper());
@@ -43,7 +43,7 @@ public class VendingMachineDaoDbImpl implements VendingMachineDao {
     @Override
     public Item getItem(int itemId) {
         try {
-            return jdbcTemplate.queryForObject(SQL_SELECT_ITEM, 
+            return jdbcTemplate.queryForObject(SQL_SELECT_ITEM,
                     new ItemMapper(), itemId);
         } catch (EmptyResultDataAccessException e) {
             return null;
@@ -52,10 +52,12 @@ public class VendingMachineDaoDbImpl implements VendingMachineDao {
 
     @Override
     public void updateItem(Item item) {
-        jdbcTemplate.update(SQL_UPDATE_ITEM, item.getQuantityAvailable());
+        jdbcTemplate.update(SQL_UPDATE_ITEM,
+                item.getQuantityAvailable(),
+                item.getItemId());
     }
-    
-    private static final class ItemMapper implements RowMapper<Item>{
+
+    private static final class ItemMapper implements RowMapper<Item> {
 
         @Override
         public Item mapRow(ResultSet rs, int i) throws SQLException {
@@ -66,6 +68,6 @@ public class VendingMachineDaoDbImpl implements VendingMachineDao {
             item.setQuantityAvailable(rs.getInt("Quantity"));
             return item;
         }
-        
+
     }
 }
