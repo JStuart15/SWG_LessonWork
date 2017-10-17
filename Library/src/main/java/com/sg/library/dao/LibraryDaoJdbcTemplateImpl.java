@@ -68,4 +68,31 @@ public class LibraryDaoJdbcTemplateImpl {
             + "from books b"
             + "join books_authors ba on author_id"
             + "where b.book_id = ba.book_id and ba.author_id = ?;";
+    
+    //Prepared statements for PUBLISHER
+    private static final String SQL_SELECT_BOOKS_BY_PUBLISHER_ID
+            = "select * from books where publisher_id = ?";
+    
+    private static final String SQL_INSERT_PUBLISHER
+            = "insert into publishers (name, street, city, state, zip, phone) "
+            + "values (?,?,?,?,?,?)";
+    
+    private static final String SQL_DELETE_PUBLISHER
+            = "delete from publishers where publisher_id = ?";
+    
+    private static final String SQL_UPDATE_PUBLISHER
+            = "update publishers set name = ?, street = ?, city = ?, "
+            + "state = ?, zip = ?, phone = ? where publisher_id  = ?";
+    
+    private static final String SQL_SELECT_PUBLISHER
+            = "select * from publishers where publisher_id = ?";
+    
+    private static final String SQL_SELECT_PUBLISHER_BY_BOOK_ID
+            = "select pub.* "
+            + "from publishers pub "
+            + "inner join books on pub.publisher_id = books.publisher_id "
+            + "where books.book_id = ?";
+    
+    private static final String SQL_SELECT_ALL_PUBLISHERS
+            = "select * from publishers";
 }
