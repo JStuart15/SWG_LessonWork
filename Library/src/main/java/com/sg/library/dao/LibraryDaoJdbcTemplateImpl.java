@@ -67,6 +67,11 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
     private static final String SQL_DELETE_BOOKS_AUTHORS
             = "delete from books_authors where book_id = ?";
 
+    private static final String SQL_UPDATE_BOOK
+            = "update books set isbn = ?, title = ?, publisher_id = ?, "
+            + "price = ?, publish_date = ? "
+            + "where book_id = ?";
+
     private static final String SQL_SELECT_BOOK
             = "select * from books where book_id = ?";
 
@@ -164,18 +169,41 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addBook(Book book) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //first insert into books table and get newly generated book_id
+        jdbcTemplate.update(SQL_INSERT_BOOK,
+                book.getIsbn(),
+                book.getTitle(),
+                book.getPublisher().getPublisherId(),
+                book.getPrice(),
+                book.getPublishDate().toString());
+        book.setBookId(jdbcTemplate.queryForObject("select LAST_INSERT_ID()",
+                Integer.class));
+        //now update the books_authors table
+        insertBooksAuthors(book);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteBook(int bookId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //delete books_authors relationship for this book
+        jdbcTemplate.update(SQL_DELETE_BOOKS_AUTHORS, bookId);
+        //delete book
+        jdbcTemplate.update(SQL_DELETE_BOOK, bookId);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void updateBook(Book book) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //update books table
+        jdbcTemplate.update(SQL_UPDATE_BOOK,
+                book.getIsbn(),
+                book.getTitle(),
+                book.getPublisher().getPublisherId(),
+                book.getPrice(),
+                book.getPublishDate().toString(),
+                book.getBookId());
     }
 
     @Override
@@ -208,10 +236,10 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
                 publisher.getState(),
                 publisher.getZip(),
                 publisher.getPhone());
-        
+
         int publisherId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()",
                 Integer.class);
-        
+
         publisher.setPublisherId(publisherId);
     }
 
@@ -245,9 +273,44 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
 
     @Override
     public List<Publisher> getAllPublishers() {
-        return jdbcTemplate.query(SQL_SELECT_ALL_PUBLISHERS, 
-                                  new PublisherMapper());
-        
+        return jdbcTemplate.query(SQL_SELECT_ALL_PUBLISHERS,
+                new PublisherMapper());
+
+    }
+
+    private void insertBooksAuthors(Book book) {
+        final int bookId = book.getBookId();
+        final List<Author> authors = book.getAuthors();
+
+        //update the books_authors bridge table with an entry for each author of this book
+        for (Author currentAuthor : authors) {
+            jdbcTemplate.update(SQL_INSERT_BOOKS_AUTHORS,
+                    bookId,
+                    currentAuthor.getAuthorId());
+        }
+    }
+
+    private List<Author> findAuthorsForBook(Book book) {
+        return jdbcTemplate.query(SQL_SELECT_AUTHORS_BY_BOOK_ID,
+                new AuthorMapper(),
+                book.getBookId());
+    }
+
+    private Publisher findPublisherForBook(Book book) {
+        return jdbcTemplate.queryForObject(SQL_SELECT_PUBLISHER_BY_BOOK_ID,
+                new PublisherMapper(),
+                book.getBookId());
+    }
+
+    private List<Book> associatePublisherAndAuthorWithBooks(List<Book> bookList) {
+        //set the complete list of author ids for each book
+        for (Book currentBook : bookList) {
+            //add Authors to current book
+            currentBook.setAuthors(findAuthorsForBook(currentBook));
+            //add the Publisher to current book
+            currentBook.setPublisher(findPublisherForBook(currentBook));
+        }
+        return bookList;
     }
 
     //mappers
@@ -267,7 +330,7 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
             return au;
         }
     }
-    
+
     private static final class PublisherMapper implements RowMapper<Publisher> {
 
         @Override
@@ -282,9 +345,22 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
             pub.setPhone(rs.getString("phone"));
             return pub;
         }
-
-        
     }
-    
+
+    private static final class BookMapper implements RowMapper<Book> {
+
+        @Override
+        public Book mapRow(ResultSet rs, int i) throws SQLException {
+            Book b = new Book();
+            b.setBookId(rs.getInt("book_id"));
+            b.setIsbn(rs.getString("isbn"));
+            b.setTitle(rs.getString("title"));
+            b.setPrice(rs.getBigDecimal("price"));
+            b.setPublishDate(rs.getTimestamp("publish_date")
+                    .toLocalDateTime().toLocalDate());
+            return b;
+        }
+
+    }
 
 }
