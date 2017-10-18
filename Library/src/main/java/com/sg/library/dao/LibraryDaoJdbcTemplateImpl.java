@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Propagation;
@@ -75,8 +76,8 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
     private static final String SQL_SELECT_BOOK
             = "select * from books where book_id = ?";
 
-    private static final String SQL_SELECT_BOOKS_AUTHORS_AUTHOR_ID_BY_BOOK_ID
-            = "select author_id from books_authors where book_id = ?";
+//    private static final String SQL_SELECT_BOOKS_AUTHORS_AUTHOR_ID_BY_BOOK_ID
+//            = "select author_id from books_authors where book_id = ?";
 
     private static final String SQL_SELECT_ALL_BOOKS
             = "select * from books";
@@ -114,6 +115,8 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
     private static final String SQL_SELECT_ALL_PUBLISHERS
             = "select * from publishers";
 
+    // AUTHOR METHODS
+    // ==============
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addAuthor(Author author) {
@@ -168,6 +171,8 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
                 new AuthorMapper());
     }
 
+    // BOOK METHODS
+    // ============
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addBook(Book book) {
@@ -204,28 +209,61 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
                 book.getPrice(),
                 book.getPublishDate().toString(),
                 book.getBookId());
+        
+        //delete books_authors relationships and then reset them
+        jdbcTemplate.update(SQL_DELETE_BOOKS_AUTHORS, book.getBookId());
+        insertBooksAuthors(book);
     }
 
     @Override
     public Book getBookById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            //get the properties from the books table
+            Book book = jdbcTemplate.queryForObject(SQL_SELECT_BOOK,
+                    new BookMapper(),
+                    id);
+            //get the Authors for this book and set list on the book
+            book.setAuthors(findAuthorsForBook(book));
+            //get the Publisher for this book and set
+            book.setPublisher(findPublisherForBook(book));
+            return book;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
     public List<Book> getBooksByAuthorId(int authorId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //get the books written/cowritten by this author
+        List<Book> bookList =
+                jdbcTemplate.query(SQL_SELECT_BOOKS_BY_AUTHOR_ID,
+                        new BookMapper(),
+                        authorId);
+        //set the publisher and list of Authors for each book
+        return associatePublisherAndAuthorsWithBooks(bookList);
     }
 
     @Override
     public List<Book> getBooksByPublisherId(int publisherId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //get the books published by this publisher
+        List<Book> bookList =
+                jdbcTemplate.query(SQL_SELECT_BOOKS_BY_PUBLISHER_ID,
+                        new BookMapper(),
+                        publisherId);
+        //set the publisher and list of Authors for each book
+        return associatePublisherAndAuthorsWithBooks(bookList);
     }
 
     @Override
     public List<Book> getAllBooks() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Book> bookList = jdbcTemplate.query(SQL_SELECT_ALL_BOOKS,
+                    new BookMapper());
+        //set the publisher and list of Authors for each book
+        return associatePublisherAndAuthorsWithBooks(bookList);
     }
 
+    // PUBLISHER METHODS
+    // =================
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addPublisher(Publisher publisher) {
@@ -278,6 +316,8 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
 
     }
 
+    // HELPER METHODS
+    // ==============
     private void insertBooksAuthors(Book book) {
         final int bookId = book.getBookId();
         final List<Author> authors = book.getAuthors();
@@ -302,7 +342,7 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
                 book.getBookId());
     }
 
-    private List<Book> associatePublisherAndAuthorWithBooks(List<Book> bookList) {
+    private List<Book> associatePublisherAndAuthorsWithBooks(List<Book> bookList) {
         //set the complete list of author ids for each book
         for (Book currentBook : bookList) {
             //add Authors to current book
@@ -313,7 +353,8 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
         return bookList;
     }
 
-    //mappers
+    // MAPPERS
+    // =======
     private static final class AuthorMapper implements RowMapper<Author> {
 
         @Override
