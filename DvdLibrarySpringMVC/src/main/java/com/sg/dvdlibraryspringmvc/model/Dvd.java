@@ -5,14 +5,13 @@
  */
 package com.sg.dvdlibraryspringmvc.model;
 
-import java.util.Objects;
-
 /**
  *
  * @author jstuart15
  */
 public class Dvd {
 
+    private int dvdId;
     private String title;
     private int releaseYear;
     private String director;
@@ -59,54 +58,21 @@ public class Dvd {
         this.notes = notes;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 43 * hash + Objects.hashCode(this.title);
-        hash = 43 * hash + this.releaseYear;
-        hash = 43 * hash + Objects.hashCode(this.director);
-        hash = 43 * hash + Objects.hashCode(this.rating);
-        hash = 43 * hash + Objects.hashCode(this.notes);
-        return hash;
+    public int getDvdId() {
+        return dvdId;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Dvd other = (Dvd) obj;
-        if (this.releaseYear != other.releaseYear) {
-            return false;
-        }
-        if (!Objects.equals(this.title, other.title)) {
-            return false;
-        }
-        if (!Objects.equals(this.director, other.director)) {
-            return false;
-        }
-        if (!Objects.equals(this.rating, other.rating)) {
-            return false;
-        }
-        if (!Objects.equals(this.notes, other.notes)) {
-            return false;
-        }
-        return true;
+    public void setDvdId(int dvdId) {
+        this.dvdId = dvdId;
     }
 
     @Override
     public String toString() {
-        return "Item: " + title
+        return "Item: " + dvdId
+                + " |Title: " + title
                 + " |Release Date: " + releaseYear
                 + " |MPAA Rating: " + rating
                 + " |Director's Name: " + director
                 + " |Comments: " + notes;
     }
-
 }
