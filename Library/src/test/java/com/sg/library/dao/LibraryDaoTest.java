@@ -12,7 +12,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -39,9 +38,27 @@ public class LibraryDaoTest {
     
     @Before
     public void setUp() {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("test-applicationContest.xml");
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("test-applicationContext.xml");
         
         dao = ctx.getBean("libraryDao", LibraryDao.class);
+        
+        //delete all books
+        List<Book> books = dao.getAllBooks();
+        for(Book currentBook : books){
+            dao.deleteBook(currentBook.getBookId());
+        }
+        
+        //delete all authors
+        List<Author> authors = dao.getAllAuthors();
+        for (Author currentAuthor: authors){
+            dao.deleteAuthor(currentAuthor.getAuthorId());
+        }
+        
+        //delete all publishers
+        List<Publisher> publishers = dao.getAllPublishers();
+        for (Publisher currentPublisher : publishers) {
+            dao.deletePublisher(currentPublisher.getPublisherId());            
+        }
     }
     
     @After
@@ -49,248 +66,20 @@ public class LibraryDaoTest {
     }
 
     @Test
-    public void testAddAuthor() {
-        System.out.println("addAuthor");
-        Author author = null;
-        LibraryDao instance = new LibraryDaoImpl();
-        instance.addAuthor(author);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testDeleteAuthor() {
-        System.out.println("deleteAuthor");
-        int authorId = 0;
-        LibraryDao instance = new LibraryDaoImpl();
-        instance.deleteAuthor(authorId);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testUpdateAuthor() {
-        System.out.println("updateAuthor");
-        Author author = null;
-        LibraryDao instance = new LibraryDaoImpl();
-        instance.updateAuthor(author);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetAuthorById() {
-        System.out.println("getAuthorById");
-        int id = 0;
-        LibraryDao instance = new LibraryDaoImpl();
-        Author expResult = null;
-        Author result = instance.getAuthorById(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetAllAuthors() {
-        System.out.println("getAllAuthors");
-        LibraryDao instance = new LibraryDaoImpl();
-        List<Author> expResult = null;
-        List<Author> result = instance.getAllAuthors();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testAddBook() {
-        System.out.println("addBook");
-        Book book = null;
-        LibraryDao instance = new LibraryDaoImpl();
-        instance.addBook(book);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testDeleteBook() {
-        System.out.println("deleteBook");
-        int bookId = 0;
-        LibraryDao instance = new LibraryDaoImpl();
-        instance.deleteBook(bookId);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testUpdateBook() {
-        System.out.println("updateBook");
-        Book book = null;
-        LibraryDao instance = new LibraryDaoImpl();
-        instance.updateBook(book);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetBookById() {
-        System.out.println("getBookById");
-        int id = 0;
-        LibraryDao instance = new LibraryDaoImpl();
-        Book expResult = null;
-        Book result = instance.getBookById(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetBooksByAuthorId() {
-        System.out.println("getBooksByAuthorId");
-        int authorId = 0;
-        LibraryDao instance = new LibraryDaoImpl();
-        List<Book> expResult = null;
-        List<Book> result = instance.getBooksByAuthorId(authorId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetBooksByPublisherId() {
-        System.out.println("getBooksByPublisherId");
-        int publisherId = 0;
-        LibraryDao instance = new LibraryDaoImpl();
-        List<Book> expResult = null;
-        List<Book> result = instance.getBooksByPublisherId(publisherId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetAllBooks() {
-        System.out.println("getAllBooks");
-        LibraryDao instance = new LibraryDaoImpl();
-        List<Book> expResult = null;
-        List<Book> result = instance.getAllBooks();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testAddPublisher() {
-        System.out.println("addPublisher");
-        Publisher publisher = null;
-        LibraryDao instance = new LibraryDaoImpl();
-        instance.addPublisher(publisher);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testDeletePublisher() {
-        System.out.println("deletePublisher");
-        int publisherId = 0;
-        LibraryDao instance = new LibraryDaoImpl();
-        instance.deletePublisher(publisherId);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testUpdatePublisher() {
-        System.out.println("updatePublisher");
-        Publisher publisher = null;
-        LibraryDao instance = new LibraryDaoImpl();
-        instance.updatePublisher(publisher);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetPublisherById() {
-        System.out.println("getPublisherById");
-        int id = 0;
-        LibraryDao instance = new LibraryDaoImpl();
-        Publisher expResult = null;
-        Publisher result = instance.getPublisherById(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetAllPublishers() {
-        System.out.println("getAllPublishers");
-        LibraryDao instance = new LibraryDaoImpl();
-        List<Publisher> expResult = null;
-        List<Publisher> result = instance.getAllPublishers();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    public class LibraryDaoImpl implements LibraryDao {
-
-        public void addAuthor(Author author) {
-        }
-
-        public void deleteAuthor(int authorId) {
-        }
-
-        public void updateAuthor(Author author) {
-        }
-
-        public Author getAuthorById(int id) {
-            return null;
-        }
-
-        public List<Author> getAllAuthors() {
-            return null;
-        }
-
-        public void addBook(Book book) {
-        }
-
-        public void deleteBook(int bookId) {
-        }
-
-        public void updateBook(Book book) {
-        }
-
-        public Book getBookById(int id) {
-            return null;
-        }
-
-        public List<Book> getBooksByAuthorId(int authorId) {
-            return null;
-        }
-
-        public List<Book> getBooksByPublisherId(int publisherId) {
-            return null;
-        }
-
-        public List<Book> getAllBooks() {
-            return null;
-        }
-
-        public void addPublisher(Publisher publisher) {
-        }
-
-        public void deletePublisher(int publisherId) {
-        }
-
-        public void updatePublisher(Publisher publisher) {
-        }
-
-        public Publisher getPublisherById(int id) {
-            return null;
-        }
-
-        public List<Publisher> getAllPublishers() {
-            return null;
-        }
+    public void testAddGetPublisher() {
+        Publisher publisher = new Publisher();
+        publisher.setName("Pub One");
+        publisher.setStreet("123 Main Street");
+        publisher.setCity("Publisher City");
+        publisher.setState("OH");
+        publisher.setZip("44123");
+        publisher.setPhone("555-1212");
+        
+        dao.addPublisher(publisher);
+        
+        Publisher fromDao = dao.getPublisherById(publisher.getPublisherId());
+        assertEquals(fromDao, publisher);
+        
     }
     
 }
