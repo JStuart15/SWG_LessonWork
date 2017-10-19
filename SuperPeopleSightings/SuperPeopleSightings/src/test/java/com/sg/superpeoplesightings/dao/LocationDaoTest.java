@@ -9,103 +9,67 @@ import com.sg.superpeoplesightings.model.Location;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
  * @author jstuart15
  */
 public class LocationDaoTest {
-    
+
+    LocationDao dao;
+
     public LocationDaoTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
+        ApplicationContext ctx
+                = new ClassPathXmlApplicationContext("test-applicationContext.xml");
+
+        dao = ctx.getBean("locationDao", LocationDao.class);
+
+        //delete all locations
+        List<Location> locations = dao.getAllLocations();
+        for (Location l : locations) {
+            dao.deleteLocation(l.getLocationId());
+        }
     }
-    
+
     @After
     public void tearDown() {
     }
 
     @Test
-    public void testAddLocation() {
-        System.out.println("addLocation");
-        Location location = null;
-        LocationDao instance = new LocationDaoImpl();
-        instance.addLocation(location);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testAddGetLocation() {
+        Location l = new Location();
+        l.setName("Plymouth");
+        l.setDescription("City of Plymouth");
+        l.setStreet("3635 Wellington Ln N");
+        l.setCity("Plymouth");
+        l.setState("MN");
+        l.setZip("55441");
+        l.setPhone("7634126674");
+        l.setLatitude(45.023046);
+        l.setLongitude(-93.4202007);
+
+        dao.addLocation(l);
+        
+        Location fromDao = dao.getLocationById(l.getLocationId());
+        assertEquals(fromDao, l);
     }
 
-    @Test
-    public void testDeleteLocation() {
-        System.out.println("deleteLocation");
-        int locationId = 0;
-        LocationDao instance = new LocationDaoImpl();
-        instance.deleteLocation(locationId);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testUpdateLocation() {
-        System.out.println("updateLocation");
-        Location location = null;
-        LocationDao instance = new LocationDaoImpl();
-        instance.updateLocation(location);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetLocationById() {
-        System.out.println("getLocationById");
-        int id = 0;
-        LocationDao instance = new LocationDaoImpl();
-        instance.getLocationById(id);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetAllLocations() {
-        System.out.println("getAllLocations");
-        LocationDao instance = new LocationDaoImpl();
-        List<Location> expResult = null;
-        List<Location> result = instance.getAllLocations();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    public class LocationDaoImpl implements LocationDao {
-
-        public void addLocation(Location location) {
-        }
-
-        public void deleteLocation(int locationId) {
-        }
-
-        public void updateLocation(Location location) {
-        }
-
-        public void getLocationById(int id) {
-        }
-
-        public List<Location> getAllLocations() {
-            return null;
-        }
-    }
-    
 }
