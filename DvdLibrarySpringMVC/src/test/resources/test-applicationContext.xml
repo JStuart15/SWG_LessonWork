@@ -39,7 +39,7 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <bean id="contactListDao"
+    <bean id="dvdLibraryDao"
           class="com.sg.dvdlibraryspringmvc.dao.DvdLibraryDaoJdbcTemplateImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean> 

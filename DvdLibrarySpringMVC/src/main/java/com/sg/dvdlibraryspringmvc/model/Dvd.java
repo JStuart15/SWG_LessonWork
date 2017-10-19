@@ -5,6 +5,8 @@
  */
 package com.sg.dvdlibraryspringmvc.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author jstuart15
@@ -75,4 +77,50 @@ public class Dvd {
                 + " |Director's Name: " + director
                 + " |Comments: " + notes;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + this.dvdId;
+        hash = 41 * hash + Objects.hashCode(this.title);
+        hash = 41 * hash + this.releaseYear;
+        hash = 41 * hash + Objects.hashCode(this.director);
+        hash = 41 * hash + Objects.hashCode(this.rating);
+        hash = 41 * hash + Objects.hashCode(this.notes);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Dvd other = (Dvd) obj;
+        if (this.dvdId != other.dvdId) {
+            return false;
+        }
+        if (this.releaseYear != other.releaseYear) {
+            return false;
+        }
+        if (!Objects.equals(this.title, other.title)) {
+            return false;
+        }
+        if (!Objects.equals(this.director, other.director)) {
+            return false;
+        }
+        if (!Objects.equals(this.rating, other.rating)) {
+            return false;
+        }
+        if (!Objects.equals(this.notes, other.notes)) {
+            return false;
+        }
+        return true;
+    }
+    
 }
