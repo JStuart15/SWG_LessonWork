@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author jstuart15
  */
-public interface LocationsDao {
+public interface LocationDao {
 
     public void addLocation(Location location);
 
