@@ -112,8 +112,5 @@ public class DvdLibraryDaoJdbcTemplateImpl implements DvdLibraryDao {
             dvd.setNotes(rs.getString("notes"));
             return dvd;
         }
-
-        
     }
-    
 }
