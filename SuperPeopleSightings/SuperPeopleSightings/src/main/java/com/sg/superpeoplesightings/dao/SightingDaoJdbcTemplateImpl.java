@@ -9,7 +9,7 @@ import com.sg.superpeoplesightings.model.Sighting;
 import com.sg.superpeoplesightings.model.SuperPerson;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -123,7 +123,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
             Sighting s = new Sighting();
             s.setSightingId(rs.getInt("sighting_id"));
             s.setLocationId(rs.getInt("location_id"));
-            s.setDate(LocalDateTime.parse(rs.getString("date")));
+            s.setDate(LocalDate.parse(rs.getString("date")));
             return s;
         }
     }

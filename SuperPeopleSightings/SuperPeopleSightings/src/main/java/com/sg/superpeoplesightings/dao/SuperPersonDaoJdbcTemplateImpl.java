@@ -5,6 +5,7 @@
  */
 package com.sg.superpeoplesightings.dao;
 
+import com.sg.superpeoplesightings.model.Organization;
 import com.sg.superpeoplesightings.model.SuperPerson;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,12 +42,25 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     private static final String SQL_INSERT_SUPER_PERSON
             = "insert into super_people (super_power_id, name, description) "
             + "values (?, ?, ?)";
+    
+    private static final String SQL_INSERT_SUPER_PEOPLE_ORGANIZATIONS
+            = "insert into super_people_organizations "
+            + "(super_person_id, organization_id) values (?, ?)";
 
     //METHODS
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public void addSuperPerson(SuperPerson siting) {
+    public void addSuperPerson(SuperPerson superPerson) {
+        jdbcTemplate.update(SQL_INSERT_SUPER_PERSON,
+                superPerson.getSuperPowerId(),
+                superPerson.getName(),
+                superPerson.getDescription());
         
+        superPerson.setSuperPersonId(jdbcTemplate.queryForObject(
+                "select LAST_INSERT_ID()", Integer.class));
+        
+        //now update the super_people_organizations table
+        insertSuperPeopleOrganizations(superPerson);
     }
 
     @Override
@@ -72,7 +86,17 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
         return jdbcTemplate.query(SQL_GET_ALL_SUPER_PEOPLE,
                 new SuperPersonMapper());
     }
-
+    //HELPERS
+    private void insertSuperPeopleOrganizations(SuperPerson superPerson){
+        final int superPersonId = superPerson.getSuperPersonId();
+        final List<Organization> orgs = superPerson.getOrgs();
+        
+        for (Organization org : orgs) {
+            jdbcTemplate.update(SQL_INSERT_SUPER_PEOPLE_ORGANIZATIONS, 
+                    superPersonId, org.getOrganizationId());
+        }
+    }
+    
     //MAPPER
     private static final class SuperPersonMapper implements RowMapper<SuperPerson> {
 

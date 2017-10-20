@@ -5,7 +5,7 @@
  */
 package com.sg.superpeoplesightings.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Sighting {
     private int sightingId;
     private int locationId;
-    private LocalDateTime date;
+    private LocalDate date;
     private List<SuperPerson> superPeople;
 
     public int getSightingId() {
@@ -35,11 +35,11 @@ public class Sighting {
         this.locationId = locationId;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
