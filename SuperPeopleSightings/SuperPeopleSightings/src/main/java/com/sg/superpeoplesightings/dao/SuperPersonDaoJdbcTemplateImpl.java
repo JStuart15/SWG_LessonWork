@@ -54,6 +54,9 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
             = "select sp.* from super_powers sp "
             + "inner join super_people speople on speople.super_power_id = "
             + "sp.super_power_id where speople.super_person_id = ?";
+    
+    private static final String SQL_SELECT_SUPER_PERSON
+            = "select * from super_people where super_person_id = ?";
 
     //METHODS
     @Override
@@ -88,11 +91,13 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     public SuperPerson getSuperPersonById(int id) {
         try {
             //get info from super_people table
-            SuperPerson sp = jdbcTemplate.queryForObject("SQL_SELECT_SUPER_PERSON",
+            SuperPerson sp = jdbcTemplate.queryForObject(SQL_SELECT_SUPER_PERSON,
                     new SuperPersonMapper(),
                     id);
             //get organizations for the super person
-            
+            //sp.setOrgs(findOrgsForSuperPerson(sp));
+            //get super power for the super person
+            sp.setSuperPower(findSuperPowerForSuperPerson(sp));
             return sp;
         } catch (DataAccessException e) {
             return null;
@@ -122,7 +127,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     }
     
     //MAPPER
-    public static final class SuperPersonMapper implements RowMapper<SuperPerson> {
+    protected static final class SuperPersonMapper implements RowMapper<SuperPerson> {
 
         @Override
         public SuperPerson mapRow(ResultSet rs, int i) throws SQLException {

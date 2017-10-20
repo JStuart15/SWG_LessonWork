@@ -103,8 +103,8 @@ public class SuperPersonDaoTest {
         sp.setOrgs(orgs);
         superPersonDao.addSuperPerson(sp);
         assertEquals(1, superPersonDao.getAllSuperPeople().size());
-        
-        SuperPerson fromDao = superPersonDao.getSuperPersonById(sp.getSuperPersonId());
+        int spId = sp.getSuperPersonId();
+        SuperPerson fromDao = superPersonDao.getSuperPersonById(spId);
         
         assertEquals(fromDao, sp);
     }

@@ -85,7 +85,7 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
     }
     
     //MAPPER
-    public static final class SuperPowerMapper implements RowMapper<SuperPower> {
+    protected static final class SuperPowerMapper implements RowMapper<SuperPower> {
 
         @Override
         public SuperPower mapRow(ResultSet rs, int i) throws SQLException {
