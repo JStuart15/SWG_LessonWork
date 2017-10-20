@@ -34,9 +34,9 @@ public class Organization {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + this.organizationId;
-        hash = 29 * hash + Objects.hashCode(this.name);
+        int hash = 7;
+        hash = 89 * hash + this.organizationId;
+        hash = 89 * hash + Objects.hashCode(this.name);
         return hash;
     }
 
@@ -60,5 +60,7 @@ public class Organization {
         }
         return true;
     }
+
+   
 
 }

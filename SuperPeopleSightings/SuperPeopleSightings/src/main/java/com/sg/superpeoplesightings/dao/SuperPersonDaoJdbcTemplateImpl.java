@@ -5,6 +5,7 @@
  */
 package com.sg.superpeoplesightings.dao;
 
+import com.sg.superpeoplesightings.dao.OrganizationDaoJdbcTemplateImpl.OrganizationMapper;
 import com.sg.superpeoplesightings.dao.SuperPowerDaoJdbcTemplateImpl.SuperPowerMapper;
 import com.sg.superpeoplesightings.model.Organization;
 import com.sg.superpeoplesightings.model.SuperPerson;
@@ -45,31 +46,39 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     private static final String SQL_INSERT_SUPER_PERSON
             = "insert into super_people (super_power_id, name, description) "
             + "values (?, ?, ?)";
-    
+
     private static final String SQL_INSERT_SUPER_PEOPLE_ORGANIZATIONS
             = "insert into super_people_organizations "
             + "(super_person_id, organization_id) values (?, ?)";
-    
+
     private static final String SQL_SELECT_SUPER_POWER_BY_SUPER_PERSON_ID
             = "select sp.* from super_powers sp "
             + "inner join super_people speople on speople.super_power_id = "
             + "sp.super_power_id where speople.super_person_id = ?";
-    
+
     private static final String SQL_SELECT_SUPER_PERSON
             = "select * from super_people where super_person_id = ?";
+
+    private static final String SQL_SELECT_ORGS_BY_SUPER_PERSON_ID
+            = "select orgs.* from organizations orgs "
+            + "inner join super_people_organizations spo on "
+            + "spo.organization_id = orgs.organization_id "
+            + "where spo.super_person_id = ?";
 
     //METHODS
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    //@todo - a service validation should make sure that we have a superPower
+    // before calling the addSuperPerson method.
     public void addSuperPerson(SuperPerson superPerson) {
         jdbcTemplate.update(SQL_INSERT_SUPER_PERSON,
                 superPerson.getSuperPower().getSuperPowerId(),
                 superPerson.getName(),
                 superPerson.getDescription());
-        
+
         superPerson.setSuperPersonId(jdbcTemplate.queryForObject(
                 "select LAST_INSERT_ID()", Integer.class));
-        
+
         //now update the super_people_organizations table
         insertSuperPeopleOrganizations(superPerson);
     }
@@ -95,7 +104,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
                     new SuperPersonMapper(),
                     id);
             //get organizations for the super person
-            //sp.setOrgs(findOrgsForSuperPerson(sp));
+            sp.setOrgs(findOrgsForSuperPerson(sp));
             //get super power for the super person
             sp.setSuperPower(findSuperPowerForSuperPerson(sp));
             return sp;
@@ -109,23 +118,34 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
         return jdbcTemplate.query(SQL_GET_ALL_SUPER_PEOPLE,
                 new SuperPersonMapper());
     }
+
     //HELPERS
-    private void insertSuperPeopleOrganizations(SuperPerson superPerson){
+    private void insertSuperPeopleOrganizations(SuperPerson superPerson) {
         final int superPersonId = superPerson.getSuperPersonId();
         final List<Organization> orgs = superPerson.getOrgs();
-        
-        for (Organization org : orgs) {
-            jdbcTemplate.update(SQL_INSERT_SUPER_PEOPLE_ORGANIZATIONS, 
-                    superPersonId, org.getOrganizationId());
+        try {
+            for (Organization org : orgs) {
+                jdbcTemplate.update(SQL_INSERT_SUPER_PEOPLE_ORGANIZATIONS,
+                        superPersonId, org.getOrganizationId());
+            }
+        } catch (DataAccessException | NullPointerException e) {
+            //no action since we want to allow a super person add without
+            //organizations
         }
     }
-    
-    private SuperPower findSuperPowerForSuperPerson(SuperPerson sp){
+
+    private SuperPower findSuperPowerForSuperPerson(SuperPerson sp) {
         return jdbcTemplate.queryForObject(SQL_SELECT_SUPER_POWER_BY_SUPER_PERSON_ID,
                 new SuperPowerMapper(),
                 sp.getSuperPersonId());
     }
-    
+
+    private List<Organization> findOrgsForSuperPerson(SuperPerson sp) {
+        return jdbcTemplate.query(SQL_SELECT_ORGS_BY_SUPER_PERSON_ID,
+                new OrganizationMapper(),
+                sp.getSuperPersonId());
+    }
+
     //MAPPER
     protected static final class SuperPersonMapper implements RowMapper<SuperPerson> {
 

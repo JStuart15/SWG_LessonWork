@@ -34,9 +34,9 @@ public class SuperPower {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + this.superPowerId;
-        hash = 29 * hash + Objects.hashCode(this.description);
+        int hash = 5;
+        hash = 71 * hash + this.superPowerId;
+        hash = 71 * hash + Objects.hashCode(this.description);
         return hash;
     }
 
@@ -60,5 +60,4 @@ public class SuperPower {
         }
         return true;
     }
-
 }

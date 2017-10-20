@@ -92,7 +92,7 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
                 new OrganizationMapper());
     }
 
-    private static final class OrganizationMapper implements RowMapper<Organization> {
+    protected static final class OrganizationMapper implements RowMapper<Organization> {
 
         @Override
         public Organization mapRow(ResultSet rs, int i) throws SQLException {

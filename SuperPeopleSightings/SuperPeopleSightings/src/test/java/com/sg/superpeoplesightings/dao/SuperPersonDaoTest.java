@@ -13,6 +13,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -82,6 +83,9 @@ public class SuperPersonDaoTest {
         superPower.setDescription("Supersonic Flight");
         superPowerDao.addSuperPower(superPower);
         assertEquals(1, superPowerDao.getAllSuperPowers().size());
+        SuperPower fromDao = superPowerDao
+                .getSuperPowerById(superPower.getSuperPowerId());
+        assertEquals(fromDao, superPower);
 
         //add 2 organizations
         Organization org = new Organization();
@@ -104,8 +108,63 @@ public class SuperPersonDaoTest {
         superPersonDao.addSuperPerson(sp);
         assertEquals(1, superPersonDao.getAllSuperPeople().size());
         int spId = sp.getSuperPersonId();
-        SuperPerson fromDao = superPersonDao.getSuperPersonById(spId);
-        
-        assertEquals(fromDao, sp);
+        SuperPerson superPersonFromDao = superPersonDao.getSuperPersonById(spId);
+
+        assertEquals(superPersonFromDao, sp);
     }
+
+    @Test
+    public void testAddSuperPersonNoSuperPower() {
+        assertEquals(0, superPersonDao.getAllSuperPeople().size());
+        //add 2 organizations
+        Organization org = new Organization();
+        org.setName("Justice League");
+        orgDao.addOrganization(org);
+
+        Organization org2 = new Organization();
+        org2.setName("Avengers");
+        orgDao.addOrganization(org2);
+        assertEquals(2, orgDao.getAllOrganizations().size());
+
+        //add super person
+        SuperPerson sp = new SuperPerson();
+        sp.setName("Superman");
+        List<Organization> orgs = new ArrayList<>();
+        orgs.add(org);
+        orgs.add(org2);
+        sp.setOrgs(orgs);
+        try {
+            superPersonDao.addSuperPerson(sp);
+            fail();
+        } catch (Exception e) {
+            assertEquals(0, superPersonDao.getAllSuperPeople().size());
+        }
+    }
+
+    //@todo - unhappy path
+//    @Test
+//    public void testAddSuperPersonNoOrgs() {
+//        //adding super person without orgs should be allowed
+//        //@todo - make changes to allow adding without orgs
+//        assertEquals(0, superPersonDao.getAllSuperPeople().size());
+//
+//        //add a super power
+//        SuperPower superPower = new SuperPower();
+//        superPower.setDescription("Supersonic Flight");
+//        superPowerDao.addSuperPower(superPower);
+//        assertEquals(1, superPowerDao.getAllSuperPowers().size());
+//        SuperPower fromDao = superPowerDao
+//                .getSuperPowerById(superPower.getSuperPowerId());
+//        assertEquals(fromDao, superPower);
+//
+//        //add super person
+//        SuperPerson sp = new SuperPerson();
+//        sp.setName("Superman");
+//        sp.setSuperPower(superPower);
+//        superPersonDao.addSuperPerson(sp);
+//        assertEquals(1, superPersonDao.getAllSuperPeople().size());
+//        int spId = sp.getSuperPersonId();
+//        SuperPerson superPersonFromDao = superPersonDao.getSuperPersonById(spId);
+//        assertEquals(superPersonFromDao, sp);
+//    }
 }
