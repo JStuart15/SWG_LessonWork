@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -44,14 +45,14 @@ public class SuperPowerDaoTest {
 
         superPowerDao = ctx.getBean("superPowerDao", SuperPowerDao.class);
         superPersonDao = ctx.getBean("superPersonDao", SuperPersonDao.class);
-        
+
         //delete all super people which deletes super_people_sightings
         // and super_people_organizations
         List<SuperPerson> superPeople = superPersonDao.getAllSuperPeople();
         for (SuperPerson sp : superPeople) {
             superPersonDao.deleteSuperPerson(sp.getSuperPersonId());
         }
-        
+
         //delete all super powers
         List<SuperPower> superPowers = superPowerDao.getAllSuperPowers();
         for (SuperPower sp : superPowers) {
@@ -64,15 +65,38 @@ public class SuperPowerDaoTest {
     }
 
     @Test
-    public void testAddGetSuperPower() {
+    public void testAdd_Get_GetAll_DeleteSuperPower() {
         assertEquals(0, superPowerDao.getAllSuperPowers().size());
-        
+
         SuperPower sp = new SuperPower();
         sp.setDescription("Flight");
-        
+
         superPowerDao.addSuperPower(sp);
+        assertEquals(1, superPowerDao.getAllSuperPowers().size());
         
         SuperPower fromDao = superPowerDao.getSuperPowerById(sp.getSuperPowerId());
         assertEquals(fromDao, sp);
+
+        superPowerDao.deleteSuperPower(sp.getSuperPowerId());
+        assertNull(superPowerDao.getSuperPowerById(sp.getSuperPowerId()));
+        assertEquals(0, superPowerDao.getAllSuperPowers().size());
+    }
+
+    @Test
+    public void testAddUpdateSuperPower() {
+        assertEquals(0, superPowerDao.getAllSuperPowers().size());
+
+        SuperPower sp = new SuperPower();
+        sp.setDescription("Flight");
+        superPowerDao.addSuperPower(sp);
+
+        SuperPower fromDao = superPowerDao.getSuperPowerById(sp.getSuperPowerId());
+        assertEquals(fromDao, sp);
+
+        sp.setDescription("Supersonic Flight");
+        superPowerDao.updateSuperPower(sp);
+        
+        SuperPower fromDao2 = superPowerDao.getSuperPowerById(sp.getSuperPowerId());
+        assertEquals(fromDao2, sp);
     }
 }

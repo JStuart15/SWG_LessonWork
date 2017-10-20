@@ -40,6 +40,10 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
     private static final String SQL_SELECT_SUPER_POWER_BY_SUPER_POWER_ID
             = "select * from super_powers where super_power_id = ?";
     
+    private static final String SQL_UPDATE_SUPER_POWER
+            = "update super_powers set description = ? where super_power_id = ?";
+    
+    // METHODS
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addSuperPower(SuperPower superPower) {
@@ -59,7 +63,9 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
 
     @Override
     public void updateSuperPower(SuperPower superPower) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbcTemplate.update(SQL_UPDATE_SUPER_POWER,
+                superPower.getDescription(),
+                superPower.getSuperPowerId());
     }
 
     @Override

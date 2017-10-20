@@ -31,17 +31,22 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
 
     private static final String SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS
             = "delete from super_people_organizations where super_person_id = ?";
-    
+
     private static final String SQL_DELETE_SUPER_PEOPLE_SITINGS
             = "delete from super_people_sightings where super_person_id = ?";
 
     private static final String SQL_GET_ALL_SUPER_PEOPLE
             = "select * from super_people";
 
+    private static final String SQL_INSERT_SUPER_PERSON
+            = "insert into super_people (super_power_id, name, description) "
+            + "values (?, ?, ?)";
+
     //METHODS
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addSuperPerson(SuperPerson siting) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
