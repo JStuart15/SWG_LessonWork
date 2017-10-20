@@ -9,6 +9,7 @@ import com.sg.superpeoplesightings.model.Sighting;
 import com.sg.superpeoplesightings.model.SuperPeople;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -43,6 +44,9 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
     
     private static final String SQL_SELECT_ALL_SIGHTINGS
             = "select * from sightings";
+    
+    private static final String SQL_SELECT_SIGHTING
+            = "select * from sightings where sighting_id = ?";
 
     @Override
     public void addSighting(Sighting sighting) {
@@ -70,7 +74,13 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
 
     @Override
     public Sighting getSightingById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return jdbcTemplate.queryForObject(SQL_SELECT_SIGHTING,
+                    new SightingMapper(),
+                    id);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
@@ -85,7 +95,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
             Sighting s = new Sighting();
             s.setSightingId(rs.getInt("sighting_id"));
             s.setLocationId(rs.getInt("location_id"));
-            //s.setDate(rs.getDate("date"));  @todo
+            s.setDate(LocalDateTime.parse(rs.getString("date")));
             return s;
         }
     }
