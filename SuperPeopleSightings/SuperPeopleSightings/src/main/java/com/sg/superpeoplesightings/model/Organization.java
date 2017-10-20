@@ -16,7 +16,7 @@ public class Organization {
 
     private int organizationId;
     private String name;
-    private List<SuperPeople> superPeople;
+    private List<SuperPerson> superPeople;
 
     public int getOrganizationId() {
         return organizationId;
@@ -34,11 +34,11 @@ public class Organization {
         this.name = name;
     }
 
-    public List<SuperPeople> getSuperPeople() {
+    public List<SuperPerson> getSuperPeople() {
         return superPeople;
     }
 
-    public void setSuperPeople(List<SuperPeople> superPeople) {
+    public void setSuperPeople(List<SuperPerson> superPeople) {
         this.superPeople = superPeople;
     }
 

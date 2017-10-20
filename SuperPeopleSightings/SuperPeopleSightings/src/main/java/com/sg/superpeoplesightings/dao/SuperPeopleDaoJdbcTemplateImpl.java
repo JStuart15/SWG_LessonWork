@@ -5,7 +5,7 @@
  */
 package com.sg.superpeoplesightings.dao;
 
-import com.sg.superpeoplesightings.model.SuperPeople;
+import com.sg.superpeoplesightings.model.SuperPerson;
 import java.util.List;
 
 /**
@@ -18,7 +18,7 @@ public class SuperPeopleDaoJdbcTemplateImpl implements SuperPeopleDao {
     
     //METHODS
     @Override
-    public void addSuperPeople(SuperPeople siting) {
+    public void addSuperPeople(SuperPerson siting) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -28,17 +28,17 @@ public class SuperPeopleDaoJdbcTemplateImpl implements SuperPeopleDao {
     }
 
     @Override
-    public void updateSuperPeople(SuperPeople siting) {
+    public void updateSuperPeople(SuperPerson siting) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public SuperPeople getSuperPeopleById(int id) {
+    public SuperPerson getSuperPeopleById(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<SuperPeople> getAllSuperPeoples() {
+    public List<SuperPerson> getAllSuperPeoples() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

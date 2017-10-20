@@ -5,7 +5,7 @@
  */
 package com.sg.superpeoplesightings.dao;
 
-import com.sg.superpeoplesightings.model.SuperPeople;
+import com.sg.superpeoplesightings.model.SuperPerson;
 import java.util.List;
 
 /**
@@ -14,13 +14,13 @@ import java.util.List;
  */
 public interface SuperPeopleDao {
 
-    public void addSuperPeople(SuperPeople siting);
+    public void addSuperPeople(SuperPerson siting);
 
     public void deleteSuperPeople(int sitingId);
 
-    public void updateSuperPeople(SuperPeople siting);
+    public void updateSuperPeople(SuperPerson siting);
 
-    public SuperPeople getSuperPeopleById(int id);
+    public SuperPerson getSuperPeopleById(int id);
 
-    public List<SuperPeople> getAllSuperPeoples();
+    public List<SuperPerson> getAllSuperPeoples();
 }

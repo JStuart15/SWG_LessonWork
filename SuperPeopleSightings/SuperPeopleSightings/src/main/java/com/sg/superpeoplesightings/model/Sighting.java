@@ -17,7 +17,7 @@ public class Sighting {
     private int sightingId;
     private int locationId;
     private LocalDateTime date;
-    private List<SuperPeople> superPeople;
+    private List<SuperPerson> superPeople;
 
     public int getSightingId() {
         return sightingId;
@@ -43,11 +43,11 @@ public class Sighting {
         this.date = date;
     }
 
-    public List<SuperPeople> getSuperPeople() {
+    public List<SuperPerson> getSuperPeople() {
         return superPeople;
     }
 
-    public void setSuperPeople(List<SuperPeople> superPeople) {
+    public void setSuperPeople(List<SuperPerson> superPeople) {
         this.superPeople = superPeople;
     }
 

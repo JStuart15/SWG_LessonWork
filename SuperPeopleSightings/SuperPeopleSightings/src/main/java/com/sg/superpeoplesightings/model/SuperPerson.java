@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @author jstuart15
  */
-public class SuperPeople {
+public class SuperPerson {
 
     private int superPersonId;
     private int superPowerId;
@@ -82,7 +82,7 @@ public class SuperPeople {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final SuperPeople other = (SuperPeople) obj;
+        final SuperPerson other = (SuperPerson) obj;
         if (this.superPersonId != other.superPersonId) {
             return false;
         }
