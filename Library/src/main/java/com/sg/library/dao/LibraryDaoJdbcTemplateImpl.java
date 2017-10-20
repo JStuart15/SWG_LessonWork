@@ -183,6 +183,7 @@ public class LibraryDaoJdbcTemplateImpl implements LibraryDao {
                 book.getPublisher().getPublisherId(),
                 book.getPrice(),
                 book.getPublishDate().toString());
+        
         book.setBookId(jdbcTemplate.queryForObject("select LAST_INSERT_ID()",
                 Integer.class));
         //now update the books_authors table

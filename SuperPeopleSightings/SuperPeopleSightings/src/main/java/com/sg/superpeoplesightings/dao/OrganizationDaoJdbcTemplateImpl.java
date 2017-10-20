@@ -28,8 +28,8 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
 
     //PREPARED STATEMENTS
     private static final String SQL_INSERT_ORGANIZATION
-            = "insert into organizations (organization_id, name) "
-            + "values (?, ?)";
+            = "insert into organizations (name) "
+            + "values (?)";
 
     private static final String SQL_DELETE_ORGANIZATION
             = "delete from organizations where organization_id = ?";
@@ -63,7 +63,7 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public void deleteOrganization(Organization orgId) {
+    public void deleteOrganization(int orgId) {
         //delete from bridge table
         jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS, orgId);
         //delete from org table

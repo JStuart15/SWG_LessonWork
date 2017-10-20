@@ -9,7 +9,6 @@ import com.sg.superpeoplesightings.model.Sighting;
 import com.sg.superpeoplesightings.model.SuperPerson;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -115,19 +114,6 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
         return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS, new SightingMapper());
     }
 
-    //MAPPER
-    private static final class SightingMapper implements RowMapper<Sighting> {
-
-        @Override
-        public Sighting mapRow(ResultSet rs, int i) throws SQLException {
-            Sighting s = new Sighting();
-            s.setSightingId(rs.getInt("sighting_id"));
-            s.setLocationId(rs.getInt("location_id"));
-            s.setDate(LocalDate.parse(rs.getString("date")));
-            return s;
-        }
-    }
-
     // @todo - high - move this to the SuperPerson Impl and make it public
     private static final class SuperPersonMapper implements RowMapper<SuperPerson> {
 
@@ -158,5 +144,18 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
         return jdbcTemplate.query(SQL_SELECT_SUPER_PEOPLE_BY_SIGHTING_ID,
                 new SuperPersonMapper(), sighting.getSightingId());
 
+    }
+    
+    //MAPPER
+    private static final class SightingMapper implements RowMapper<Sighting> {
+
+        @Override
+        public Sighting mapRow(ResultSet rs, int i) throws SQLException {
+            Sighting s = new Sighting();
+            s.setSightingId(rs.getInt("sighting_id"));
+            s.setLocationId(rs.getInt("location_id"));
+            s.setDate(rs.getTimestamp("date").toLocalDateTime().toLocalDate());
+            return s;
+        }
     }
 }

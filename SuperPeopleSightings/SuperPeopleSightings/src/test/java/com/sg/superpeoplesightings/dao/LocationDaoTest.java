@@ -47,8 +47,8 @@ public class LocationDaoTest {
         sightingDao = ctx.getBean("sightingDao", SightingDao.class);
 
         //delete all sitings, which deletes super_people_sightings
-        List<Sighting> sitings = sightingDao.getAllSightings();
-        for (Sighting s : sitings) {
+        List<Sighting> sighting = sightingDao.getAllSightings();
+        for (Sighting s : sighting) {
             sightingDao.deleteSighting(s.getSightingId());
         }
 

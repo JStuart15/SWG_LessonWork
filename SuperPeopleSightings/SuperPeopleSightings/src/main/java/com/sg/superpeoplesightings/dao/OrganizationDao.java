@@ -16,7 +16,7 @@ public interface OrganizationDao {
     
     public void addOrganization(Organization org);
     
-    public void deleteOrganization (Organization orgId);
+    public void deleteOrganization (int orgId);
     
     public void updateOrganization (Organization orgId);
     
