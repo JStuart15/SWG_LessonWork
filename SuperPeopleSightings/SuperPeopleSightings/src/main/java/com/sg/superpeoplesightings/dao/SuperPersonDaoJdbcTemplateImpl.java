@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -27,6 +29,12 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     private static final String SQL_DELETE_SUPER_PERSON
             = "delete from super_people where super_person_id = ?";
 
+    private static final String SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS
+            = "delete from super_people_organizations where super_person_id = ?";
+    
+    private static final String SQL_DELETE_SUPER_PEOPLE_SITINGS
+            = "delete from super_people_sightings where super_person_id = ?";
+
     private static final String SQL_GET_ALL_SUPER_PEOPLE
             = "select * from super_people";
 
@@ -37,7 +45,10 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteSuperPerson(int superPersonId) {
+        jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_SITINGS, superPersonId);
+        jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS, superPersonId);
         jdbcTemplate.update(SQL_DELETE_SUPER_PERSON, superPersonId);
     }
 
@@ -53,7 +64,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
 
     @Override
     public List<SuperPerson> getAllSuperPeople() {
-        return jdbcTemplate.query(SQL_GET_ALL_SUPER_PEOPLE, 
+        return jdbcTemplate.query(SQL_GET_ALL_SUPER_PEOPLE,
                 new SuperPersonMapper());
     }
 
@@ -70,5 +81,5 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
             return sp;
         }
     }
-    
+
 }

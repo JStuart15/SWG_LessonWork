@@ -46,6 +46,7 @@ public class SuperPowerDaoTest {
         superPersonDao = ctx.getBean("superPersonDao", SuperPersonDao.class);
         
         //delete all super people which deletes super_people_sightings
+        // and super_people_organizations
         List<SuperPerson> superPeople = superPersonDao.getAllSuperPeople();
         for (SuperPerson sp : superPeople) {
             superPersonDao.deleteSuperPerson(sp.getSuperPersonId());
