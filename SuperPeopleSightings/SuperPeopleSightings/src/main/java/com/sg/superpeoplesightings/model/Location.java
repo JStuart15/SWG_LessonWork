@@ -12,6 +12,7 @@ import java.util.Objects;
  * @author jstuart15
  */
 public class Location {
+
     private int locationId;
     private String name;
     private String description;
@@ -19,9 +20,10 @@ public class Location {
     private String city;
     private String state;
     private String zip;
-    private String phone;
+    //private String phone;
     private double latitude;
     private double longitude;
+    private boolean isActive;
 
     public int getLocationId() {
         return locationId;
@@ -79,14 +81,6 @@ public class Location {
         this.zip = zip;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public double getLatitude() {
         return latitude;
     }
@@ -103,19 +97,27 @@ public class Location {
         this.longitude = longitude;
     }
 
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + this.locationId;
-        hash = 29 * hash + Objects.hashCode(this.name);
-        hash = 29 * hash + Objects.hashCode(this.description);
-        hash = 29 * hash + Objects.hashCode(this.street);
-        hash = 29 * hash + Objects.hashCode(this.city);
-        hash = 29 * hash + Objects.hashCode(this.state);
-        hash = 29 * hash + Objects.hashCode(this.zip);
-        hash = 29 * hash + Objects.hashCode(this.phone);
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.latitude) ^ (Double.doubleToLongBits(this.latitude) >>> 32));
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.longitude) ^ (Double.doubleToLongBits(this.longitude) >>> 32));
+        int hash = 3;
+        hash = 61 * hash + this.locationId;
+        hash = 61 * hash + Objects.hashCode(this.name);
+        hash = 61 * hash + Objects.hashCode(this.description);
+        hash = 61 * hash + Objects.hashCode(this.street);
+        hash = 61 * hash + Objects.hashCode(this.city);
+        hash = 61 * hash + Objects.hashCode(this.state);
+        hash = 61 * hash + Objects.hashCode(this.zip);
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.latitude) ^ (Double.doubleToLongBits(this.latitude) >>> 32));
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.longitude) ^ (Double.doubleToLongBits(this.longitude) >>> 32));
+        hash = 61 * hash + (this.isActive ? 1 : 0);
         return hash;
     }
 
@@ -140,6 +142,9 @@ public class Location {
         if (Double.doubleToLongBits(this.longitude) != Double.doubleToLongBits(other.longitude)) {
             return false;
         }
+        if (this.isActive != other.isActive) {
+            return false;
+        }
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
@@ -158,11 +163,9 @@ public class Location {
         if (!Objects.equals(this.zip, other.zip)) {
             return false;
         }
-        if (!Objects.equals(this.phone, other.phone)) {
-            return false;
-        }
         return true;
     }
-    
+
+
     
 }

@@ -180,6 +180,8 @@ public class LibraryDaoTest {
         Book fromDao = dao.getBookById(b.getBookId());
 
         assertEquals(fromDao, b);
+        
+        dao.deletePublisher(publisher.getPublisherId());
 
     }
 

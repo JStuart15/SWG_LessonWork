@@ -6,6 +6,7 @@
 package com.sg.superpeoplesightings.dao;
 
 import com.sg.superpeoplesightings.model.Location;
+import com.sg.superpeoplesightings.model.Siting;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -22,7 +23,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class LocationDaoTest {
 
-    LocationDao dao;
+    LocationDao locationDao;
+    SitingDao sitingDao;
 
     public LocationDaoTest() {
     }
@@ -40,12 +42,19 @@ public class LocationDaoTest {
         ApplicationContext ctx
                 = new ClassPathXmlApplicationContext("test-applicationContext.xml");
 
-        dao = ctx.getBean("locationDao", LocationDao.class);
+        locationDao = ctx.getBean("locationDao", LocationDao.class);
+        sitingDao = ctx.getBean("sitingDao", SitingDao.class);
+
+        //delete all sitings
+        List<Siting> sitings = sitingDao.getAllSitings();
+        for (Siting s : sitings) {
+            sitingDao.deleteSiting(s.getSitingId());
+        }
 
         //delete all locations
-        List<Location> locations = dao.getAllLocations();
+        List<Location> locations = locationDao.getAllLocations();
         for (Location l : locations) {
-            dao.deleteLocation(l.getLocationId());
+            locationDao.deleteLocation(l.getLocationId());
         }
     }
 
@@ -62,13 +71,13 @@ public class LocationDaoTest {
         l.setCity("Plymouth");
         l.setState("MN");
         l.setZip("55441");
-        l.setPhone("7634126674");
         l.setLatitude(45.023046);
         l.setLongitude(-93.4202007);
+        l.setIsActive(true);
 
-        dao.addLocation(l);
-        
-        Location fromDao = dao.getLocationById(l.getLocationId());
+        locationDao.addLocation(l);
+
+        Location fromDao = locationDao.getLocationById(l.getLocationId());
         assertEquals(fromDao, l);
     }
 

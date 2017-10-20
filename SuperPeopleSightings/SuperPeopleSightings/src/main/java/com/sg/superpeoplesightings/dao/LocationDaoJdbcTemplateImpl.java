@@ -29,9 +29,11 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
 
     //PREPARED STATEMENTS
     private static final String SQL_INSERT_LOCATION
-            = "insert into locations (locations_id, name, description, street, city, state, zip, phone, latitude, longitude) "
+            = "insert into locations (location_id, name, description, street, city, state, zip, phone, latitude, longitude) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+//    private static final String SQL_INACTIVATE_LOCATION
+//            = "update locations set isActive = 0 where location_id = ?";
     private static final String SQL_DELETE_LOCATION
             = "delete from locations where location_id = ?";
 
@@ -43,16 +45,16 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
             + "city = ?, "
             + "state = ?, "
             + "zip = ?, "
-            + "phone = ?, "
             + "latitude = ?, "
             + "longitude + ? "
-            + "where locations_id = ?";
+            + "isActive = ?, "
+            + "where location_id = ?";
 
     private static final String SQL_SELECT_LOCATION
             = "select * from locations where location_id = ?";
 
     private static final String SQL_SELECT_ALL_LOCATIONS
-            = "select * from locations";
+            = "select * from locations where isActive = 1";
 
     //METHODS
     @Override
@@ -65,7 +67,6 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
                 l.getCity(),
                 l.getState(),
                 l.getZip(),
-                l.getPhone(),
                 l.getLatitude(),
                 l.getLongitude());
 
@@ -76,7 +77,10 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
         l.setLocationId(locationId);
     }
 
-    @Override
+//    @Override
+//    public void inActivateLocation(int locationId) {
+//        jdbcTemplate.update(SQL_INACTIVATE_LOCATION, locationId);
+//    }
     public void deleteLocation(int locationId) {
         jdbcTemplate.update(SQL_DELETE_LOCATION, locationId);
     }
@@ -89,7 +93,7 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
     @Override
     public Location getLocationById(int id) {
         try {
-            return jdbcTemplate.queryForObject(SQL_SELECT_LOCATION, 
+            return jdbcTemplate.queryForObject(SQL_SELECT_LOCATION,
                     new LocationMapper(),
                     id);
         } catch (DataAccessException e) {
@@ -115,9 +119,9 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
             l.setCity(rs.getString("city"));
             l.setState(rs.getString("state"));
             l.setZip(rs.getString("zip"));
-            l.setPhone(rs.getString("phone"));
             l.setLatitude(rs.getDouble("latitude"));
             l.setLongitude(rs.getDouble("longitude"));
+            l.setIsActive(rs.getBoolean("isActive"));
             l.setLocationId(rs.getInt("location_id"));
             return l;
         }

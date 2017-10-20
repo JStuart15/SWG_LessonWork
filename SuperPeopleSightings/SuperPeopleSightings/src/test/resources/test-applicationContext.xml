@@ -43,5 +43,10 @@
           class="com.sg.superpeoplesightings.dao.LocationDaoJdbcTemplateImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>   
+    
+    <bean id="sitingDao" 
+              class="com.sg.superpeoplesightings.dao.SitingDaoJdbcTemplateImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>   
 </beans>
 
