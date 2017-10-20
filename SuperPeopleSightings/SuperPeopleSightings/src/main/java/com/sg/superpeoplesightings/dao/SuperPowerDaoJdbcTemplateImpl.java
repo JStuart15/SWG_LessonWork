@@ -9,6 +9,7 @@ import com.sg.superpeoplesightings.model.SuperPower;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Propagation;
@@ -36,6 +37,9 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
     private static final String SQL_DELETE_SUPER_POWER
             = "delete from super_powers where super_power_id = ?";
     
+    private static final String SQL_SELECT_SUPER_POWER_BY_SUPER_POWER_ID
+            = "select * from super_powers where super_power_id = ?";
+    
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addSuperPower(SuperPower superPower) {
@@ -60,7 +64,12 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
 
     @Override
     public SuperPower getSuperPowerById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return jdbcTemplate.queryForObject(SQL_SELECT_SUPER_POWER_BY_SUPER_POWER_ID,
+                    new SuperPowerMapper(), id);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     @Override

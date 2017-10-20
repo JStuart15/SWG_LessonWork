@@ -50,7 +50,6 @@ public class SuperPowerDaoTest {
         List<SuperPerson> superPeople = superPersonDao.getAllSuperPeople();
         for (SuperPerson sp : superPeople) {
             superPersonDao.deleteSuperPerson(sp.getSuperPersonId());
-            
         }
         
         //delete all super powers
@@ -65,11 +64,15 @@ public class SuperPowerDaoTest {
     }
 
     @Test
-    public void testAddSuperPower() {
+    public void testAddGetSuperPower() {
         assertEquals(0, superPowerDao.getAllSuperPowers().size());
-//        SuperPower sp = new SuperPower();
-//        sp.setDescription("Flight");
         
+        SuperPower sp = new SuperPower();
+        sp.setDescription("Flight");
         
+        superPowerDao.addSuperPower(sp);
+        
+        SuperPower fromDao = superPowerDao.getSuperPowerById(sp.getSuperPowerId());
+        assertEquals(fromDao, sp);
     }
 }
