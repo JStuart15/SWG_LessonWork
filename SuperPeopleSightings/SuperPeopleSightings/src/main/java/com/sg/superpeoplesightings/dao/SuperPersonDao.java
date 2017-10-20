@@ -12,15 +12,15 @@ import java.util.List;
  *
  * @author jstuart15
  */
-public interface SuperPeopleDao {
+public interface SuperPersonDao {
 
-    public void addSuperPeople(SuperPerson siting);
+    public void addSuperPerson(SuperPerson superPerson);
 
-    public void deleteSuperPeople(int sitingId);
+    public void deleteSuperPerson(int superPersonId);
 
-    public void updateSuperPeople(SuperPerson siting);
+    public void updateSuperPerson(SuperPerson superPerson);
 
     public SuperPerson getSuperPeopleById(int id);
 
-    public List<SuperPerson> getAllSuperPeoples();
+    public List<SuperPerson> getAllSuperPeople();
 }

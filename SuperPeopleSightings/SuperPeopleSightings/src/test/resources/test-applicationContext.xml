@@ -39,6 +39,11 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean id="superPowerDao" 
+          class="com.sg.superpeoplesightings.dao.SuperPowerDaoJdbcTemplateImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>   
+    
     <bean id="locationDao" 
           class="com.sg.superpeoplesightings.dao.LocationDaoJdbcTemplateImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
@@ -54,9 +59,9 @@
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>   
     
-    <!-- <bean id="superPeopleDao" 
-               class="com.sg.superpeoplesightings.dao.SuperPeopleDaoJdbcTemplateImpl">
+    <bean id="superPersonDao" 
+               class="com.sg.superpeoplesightings.dao.SuperPersonDaoJdbcTemplateImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>   -->
+    </bean>
 </beans>
 
