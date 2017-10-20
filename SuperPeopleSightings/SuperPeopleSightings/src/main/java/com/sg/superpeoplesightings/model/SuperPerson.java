@@ -15,7 +15,7 @@ import java.util.Objects;
 public class SuperPerson {
 
     private int superPersonId;
-    private int superPowerId;
+    private SuperPower superPower;
     private String name;
     private String description;
     private List<Organization> orgs;
@@ -28,12 +28,12 @@ public class SuperPerson {
         this.superPersonId = superPersonId;
     }
 
-    public int getSuperPowerId() {
-        return superPowerId;
+    public SuperPower getSuperPower() {
+        return superPower;
     }
 
-    public void setSuperPowerId(int superPowerId) {
-        this.superPowerId = superPowerId;
+    public void setSuperPower(SuperPower superPower) {
+        this.superPower = superPower;
     }
 
     public String getName() {
@@ -62,12 +62,12 @@ public class SuperPerson {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + this.superPersonId;
-        hash = 53 * hash + this.superPowerId;
-        hash = 53 * hash + Objects.hashCode(this.name);
-        hash = 53 * hash + Objects.hashCode(this.description);
-        hash = 53 * hash + Objects.hashCode(this.orgs);
+        int hash = 7;
+        hash = 43 * hash + this.superPersonId;
+        hash = 43 * hash + Objects.hashCode(this.superPower);
+        hash = 43 * hash + Objects.hashCode(this.name);
+        hash = 43 * hash + Objects.hashCode(this.description);
+        hash = 43 * hash + Objects.hashCode(this.orgs);
         return hash;
     }
 
@@ -86,13 +86,13 @@ public class SuperPerson {
         if (this.superPersonId != other.superPersonId) {
             return false;
         }
-        if (this.superPowerId != other.superPowerId) {
-            return false;
-        }
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        if (!Objects.equals(this.superPower, other.superPower)) {
             return false;
         }
         if (!Objects.equals(this.orgs, other.orgs)) {

@@ -5,6 +5,7 @@
  */
 package com.sg.superpeoplesightings.dao;
 
+import com.sg.superpeoplesightings.dao.SuperPersonDaoJdbcTemplateImpl.SuperPersonMapper;
 import com.sg.superpeoplesightings.model.Sighting;
 import com.sg.superpeoplesightings.model.SuperPerson;
 import java.sql.ResultSet;
@@ -114,20 +115,6 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
         return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS, new SightingMapper());
     }
 
-    // @todo - high - move this to the SuperPerson Impl and make it public
-    private static final class SuperPersonMapper implements RowMapper<SuperPerson> {
-
-        @Override
-        public SuperPerson mapRow(ResultSet rs, int i) throws SQLException {
-            SuperPerson sp = new SuperPerson();
-            sp.setSuperPersonId(rs.getInt("super_person_id"));
-            sp.setSuperPowerId(rs.getInt("super_power_id"));
-            sp.setName(rs.getString("name"));
-            sp.setDescription(rs.getString("description"));
-            return sp;
-        }
-    }
-
     // HELPER METHODS
     // ==============
     private void insertSuperPeopleSightings(Sighting sighting) {
@@ -143,7 +130,6 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
     private List<SuperPerson> findSuperPeopleForSighting(Sighting sighting) {
         return jdbcTemplate.query(SQL_SELECT_SUPER_PEOPLE_BY_SIGHTING_ID,
                 new SuperPersonMapper(), sighting.getSightingId());
-
     }
     
     //MAPPER

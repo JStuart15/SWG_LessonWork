@@ -96,7 +96,7 @@ public class SuperPersonDaoTest {
         //add super person
         SuperPerson sp = new SuperPerson();
         sp.setName("Superman");
-        sp.setSuperPowerId(superPower.getSuperPowerId());
+        sp.setSuperPower(superPower);
         List<Organization> orgs = new ArrayList<>();
         orgs.add(org);
         orgs.add(org2);
@@ -104,7 +104,8 @@ public class SuperPersonDaoTest {
         superPersonDao.addSuperPerson(sp);
         assertEquals(1, superPersonDao.getAllSuperPeople().size());
         
-        SuperPerson fromDao = superPersonDao.getSuperPeopleById(sp.getSuperPersonId());
+        SuperPerson fromDao = superPersonDao.getSuperPersonById(sp.getSuperPersonId());
+        
         assertEquals(fromDao, sp);
     }
 }

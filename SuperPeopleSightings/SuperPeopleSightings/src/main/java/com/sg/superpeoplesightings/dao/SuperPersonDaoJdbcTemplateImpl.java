@@ -5,11 +5,14 @@
  */
 package com.sg.superpeoplesightings.dao;
 
+import com.sg.superpeoplesightings.dao.SuperPowerDaoJdbcTemplateImpl.SuperPowerMapper;
 import com.sg.superpeoplesightings.model.Organization;
 import com.sg.superpeoplesightings.model.SuperPerson;
+import com.sg.superpeoplesightings.model.SuperPower;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Propagation;
@@ -46,13 +49,18 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     private static final String SQL_INSERT_SUPER_PEOPLE_ORGANIZATIONS
             = "insert into super_people_organizations "
             + "(super_person_id, organization_id) values (?, ?)";
+    
+    private static final String SQL_SELECT_SUPER_POWER_BY_SUPER_PERSON_ID
+            = "select sp.* from super_powers sp "
+            + "inner join super_people speople on speople.super_power_id = "
+            + "sp.super_power_id where speople.super_person_id = ?";
 
     //METHODS
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addSuperPerson(SuperPerson superPerson) {
         jdbcTemplate.update(SQL_INSERT_SUPER_PERSON,
-                superPerson.getSuperPowerId(),
+                superPerson.getSuperPower().getSuperPowerId(),
                 superPerson.getName(),
                 superPerson.getDescription());
         
@@ -77,8 +85,18 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     }
 
     @Override
-    public SuperPerson getSuperPeopleById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public SuperPerson getSuperPersonById(int id) {
+        try {
+            //get info from super_people table
+            SuperPerson sp = jdbcTemplate.queryForObject("SQL_SELECT_SUPER_PERSON",
+                    new SuperPersonMapper(),
+                    id);
+            //get organizations for the super person
+            
+            return sp;
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -97,18 +115,23 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
         }
     }
     
+    private SuperPower findSuperPowerForSuperPerson(SuperPerson sp){
+        return jdbcTemplate.queryForObject(SQL_SELECT_SUPER_POWER_BY_SUPER_PERSON_ID,
+                new SuperPowerMapper(),
+                sp.getSuperPersonId());
+    }
+    
     //MAPPER
-    private static final class SuperPersonMapper implements RowMapper<SuperPerson> {
+    public static final class SuperPersonMapper implements RowMapper<SuperPerson> {
 
         @Override
         public SuperPerson mapRow(ResultSet rs, int i) throws SQLException {
             SuperPerson sp = new SuperPerson();
             sp.setSuperPersonId(rs.getInt("super_person_id"));
-            sp.setSuperPowerId(rs.getInt("super_power_id"));
+            //sp.setSuperPowerId(rs.getInt("super_power_id"));
             sp.setName(rs.getString("name"));
             sp.setDescription(rs.getString("description"));
             return sp;
         }
     }
-
 }

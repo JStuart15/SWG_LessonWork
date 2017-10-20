@@ -20,7 +20,7 @@ public interface SuperPersonDao {
 
     public void updateSuperPerson(SuperPerson superPerson);
 
-    public SuperPerson getSuperPeopleById(int id);
+    public SuperPerson getSuperPersonById(int id);
 
     public List<SuperPerson> getAllSuperPeople();
 }

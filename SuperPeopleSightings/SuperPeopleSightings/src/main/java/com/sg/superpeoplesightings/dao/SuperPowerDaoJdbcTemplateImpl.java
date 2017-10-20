@@ -32,27 +32,27 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
             = "insert into super_powers (description) values (?)";
 
     private static final String SQL_SELECT_ALL_SUPER_POWERS
-           = "select * from super_powers";
-    
+            = "select * from super_powers";
+
     private static final String SQL_DELETE_SUPER_POWER
             = "delete from super_powers where super_power_id = ?";
-    
+
     private static final String SQL_SELECT_SUPER_POWER_BY_SUPER_POWER_ID
             = "select * from super_powers where super_power_id = ?";
-    
+
     private static final String SQL_UPDATE_SUPER_POWER
             = "update super_powers set description = ? where super_power_id = ?";
-    
+
     // METHODS
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addSuperPower(SuperPower superPower) {
         jdbcTemplate.update(SQL_INSERT_SUPER_POWER,
                 superPower.getDescription());
-        
+
         int superPowerId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()",
                 Integer.class);
-        
+
         superPower.setSuperPowerId(superPowerId);
     }
 
@@ -83,9 +83,9 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
         return jdbcTemplate.query(SQL_SELECT_ALL_SUPER_POWERS,
                 new SuperPowerMapper());
     }
-
+    
     //MAPPER
-    private static final class SuperPowerMapper implements RowMapper<SuperPower>{
+    public static final class SuperPowerMapper implements RowMapper<SuperPower> {
 
         @Override
         public SuperPower mapRow(ResultSet rs, int i) throws SQLException {
@@ -94,6 +94,6 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
             sp.setDescription(rs.getString("description"));
             return sp;
         }
+
     }
-    
 }
