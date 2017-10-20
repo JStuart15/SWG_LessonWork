@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -63,7 +64,7 @@ public class LocationDaoTest {
     }
 
     @Test
-    public void testAddGetLocation() {
+    public void testAddGetDeleteLocation() {
         Location l = new Location();
         l.setName("Plymouth");
         l.setDescription("City of Plymouth");
@@ -73,12 +74,15 @@ public class LocationDaoTest {
         l.setZip("55441");
         l.setLatitude(45.023046);
         l.setLongitude(-93.4202007);
-        l.setIsActive(true);
+        l.setIsActive(1);
 
         locationDao.addLocation(l);
 
         Location fromDao = locationDao.getLocationById(l.getLocationId());
         assertEquals(fromDao, l);
+        
+        locationDao.deleteLocation(l.getLocationId());
+        assertNull(locationDao.getLocationById(l.getLocationId()));
     }
 
 }

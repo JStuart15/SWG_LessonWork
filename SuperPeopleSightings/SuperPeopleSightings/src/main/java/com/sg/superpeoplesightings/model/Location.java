@@ -23,7 +23,7 @@ public class Location {
     //private String phone;
     private double latitude;
     private double longitude;
-    private boolean isActive;
+    private int isActive;
 
     public int getLocationId() {
         return locationId;
@@ -97,27 +97,27 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public boolean isIsActive() {
+    public int getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(boolean isActive) {
+    public void setIsActive(int isActive) {
         this.isActive = isActive;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 61 * hash + this.locationId;
-        hash = 61 * hash + Objects.hashCode(this.name);
-        hash = 61 * hash + Objects.hashCode(this.description);
-        hash = 61 * hash + Objects.hashCode(this.street);
-        hash = 61 * hash + Objects.hashCode(this.city);
-        hash = 61 * hash + Objects.hashCode(this.state);
-        hash = 61 * hash + Objects.hashCode(this.zip);
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.latitude) ^ (Double.doubleToLongBits(this.latitude) >>> 32));
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.longitude) ^ (Double.doubleToLongBits(this.longitude) >>> 32));
-        hash = 61 * hash + (this.isActive ? 1 : 0);
+        int hash = 5;
+        hash = 97 * hash + this.locationId;
+        hash = 97 * hash + Objects.hashCode(this.name);
+        hash = 97 * hash + Objects.hashCode(this.description);
+        hash = 97 * hash + Objects.hashCode(this.street);
+        hash = 97 * hash + Objects.hashCode(this.city);
+        hash = 97 * hash + Objects.hashCode(this.state);
+        hash = 97 * hash + Objects.hashCode(this.zip);
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.latitude) ^ (Double.doubleToLongBits(this.latitude) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.longitude) ^ (Double.doubleToLongBits(this.longitude) >>> 32));
+        hash = 97 * hash + this.isActive;
         return hash;
     }
 
@@ -165,7 +165,5 @@ public class Location {
         }
         return true;
     }
-
-
     
 }

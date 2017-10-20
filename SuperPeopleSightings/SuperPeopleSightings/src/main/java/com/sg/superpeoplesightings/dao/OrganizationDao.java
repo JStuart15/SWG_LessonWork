@@ -5,10 +5,23 @@
  */
 package com.sg.superpeoplesightings.dao;
 
+import com.sg.superpeoplesightings.model.Organization;
+import java.util.List;
+
 /**
  *
  * @author jstuart15
  */
 public interface OrganizationDao {
+    
+    public void addOrganization(Organization org);
+    
+    public void deleteOrganization (Organization orgId);
+    
+    public void updateOrganization (Organization orgId);
+    
+    public Organization getOrganizationById (int id);
+    
+    public List<Organization> getAllOrganizations();
     
 }

@@ -29,8 +29,8 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
 
     //PREPARED STATEMENTS
     private static final String SQL_INSERT_LOCATION
-            = "insert into locations (location_id, name, description, street, city, state, zip, phone, latitude, longitude) "
-            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            = "insert into locations (name, description, street, city, state, zip, latitude, longitude, isActive) "
+            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 //    private static final String SQL_INACTIVATE_LOCATION
 //            = "update locations set isActive = 0 where location_id = ?";
@@ -46,7 +46,7 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
             + "state = ?, "
             + "zip = ?, "
             + "latitude = ?, "
-            + "longitude + ? "
+            + "longitude + ?, "
             + "isActive = ?, "
             + "where location_id = ?";
 
@@ -68,7 +68,8 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
                 l.getState(),
                 l.getZip(),
                 l.getLatitude(),
-                l.getLongitude());
+                l.getLongitude(),
+                l.getIsActive());
 
         int locationId
                 = jdbcTemplate.queryForObject("select LAST_INSERT_ID()",
@@ -121,7 +122,7 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
             l.setZip(rs.getString("zip"));
             l.setLatitude(rs.getDouble("latitude"));
             l.setLongitude(rs.getDouble("longitude"));
-            l.setIsActive(rs.getBoolean("isActive"));
+            l.setIsActive(rs.getInt("isActive"));
             l.setLocationId(rs.getInt("location_id"));
             return l;
         }
