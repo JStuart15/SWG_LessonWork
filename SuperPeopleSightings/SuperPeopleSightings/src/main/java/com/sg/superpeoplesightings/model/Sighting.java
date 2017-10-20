@@ -11,17 +11,17 @@ import java.time.LocalDateTime;
  *
  * @author jstuart15
  */
-public class Siting {
-    private int sitingId;
+public class Sighting {
+    private int sightingId;
     private int locationId;
     private LocalDateTime date;
 
-    public int getSitingId() {
-        return sitingId;
+    public int getSightingId() {
+        return sightingId;
     }
 
-    public void setSitingId(int sitingId) {
-        this.sitingId = sitingId;
+    public void setSightingId(int sightingId) {
+        this.sightingId = sightingId;
     }
 
     public int getLocationId() {
@@ -39,7 +39,6 @@ public class Siting {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
-    
     
     
 }

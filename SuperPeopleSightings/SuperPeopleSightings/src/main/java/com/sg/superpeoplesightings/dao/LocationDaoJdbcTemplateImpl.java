@@ -32,8 +32,6 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
             = "insert into locations (name, description, street, city, state, zip, latitude, longitude, isActive) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-//    private static final String SQL_INACTIVATE_LOCATION
-//            = "update locations set isActive = 0 where location_id = ?";
     private static final String SQL_DELETE_LOCATION
             = "delete from locations where location_id = ?";
 
@@ -46,8 +44,8 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
             + "state = ?, "
             + "zip = ?, "
             + "latitude = ?, "
-            + "longitude + ?, "
-            + "isActive = ?, "
+            + "longitude = ?, "
+            + "isActive = ? "
             + "where location_id = ?";
 
     private static final String SQL_SELECT_LOCATION
@@ -78,17 +76,24 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
         l.setLocationId(locationId);
     }
 
-//    @Override
-//    public void inActivateLocation(int locationId) {
-//        jdbcTemplate.update(SQL_INACTIVATE_LOCATION, locationId);
-//    }
     public void deleteLocation(int locationId) {
         jdbcTemplate.update(SQL_DELETE_LOCATION, locationId);
     }
 
     @Override
-    public void updateLocation(Location location) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updateLocation(Location l) {
+        jdbcTemplate.update(SQL_UPDATE_LOCATION,
+                l.getName(),
+                l.getDescription(),
+                l.getStreet(),
+                l.getCity(),
+                l.getState(),
+                l.getZip(),
+                l.getLatitude(),
+                l.getLongitude(),
+                l.getIsActive(),
+                l.getLocationId()
+                );
     }
 
     @Override

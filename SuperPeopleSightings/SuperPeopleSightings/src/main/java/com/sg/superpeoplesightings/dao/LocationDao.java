@@ -16,15 +16,14 @@ public interface LocationDao {
 
     public void addLocation(Location location);
 
-    //public void inActivateLocation(int locationId);
-    
     public void deleteLocation(int locationId);
 
     public void updateLocation(Location location);
 
     public Location getLocationById(int id);
 
-    //public List<Location> getAllActiveLocations();
-    
     public List<Location> getAllLocations();
+
+    //public List<Location> getAllActiveLocations();
+    //public void inActivateLocation(int locationId);
 }

@@ -37,12 +37,16 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
     private static final String SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS
             = "delete from super_people_organizations where "
             + "organization_id = ?";
-    
+
     private static final String SQL_SELECT_ORGANIZATION
             = "select * from organizations where organization_id = ?";
-    
+
     private static final String SQL_SELECT_ALL_ORGANIZATIONS
             = "select * from organizations";
+
+    private static final String SQL_UPDATE_ORGANIZATION
+            = "update organizations set name = ?, description = ?"
+            + "where organization_id = ?";
 
     //METHODS
     @Override
@@ -58,6 +62,7 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteOrganization(Organization orgId) {
         //delete from bridge table
         jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS, orgId);
@@ -74,7 +79,7 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
     public Organization getOrganizationById(int id) {
         try {
             return jdbcTemplate.queryForObject(SQL_SELECT_ORGANIZATION,
-                    new OrganizationMapper(), 
+                    new OrganizationMapper(),
                     id);
         } catch (Exception e) {
             return null;
@@ -97,5 +102,5 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
             return o;
         }
     }
-    
+
 }

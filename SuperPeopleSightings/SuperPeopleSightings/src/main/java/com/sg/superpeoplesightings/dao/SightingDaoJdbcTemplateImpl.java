@@ -5,7 +5,7 @@
  */
 package com.sg.superpeoplesightings.dao;
 
-import com.sg.superpeoplesightings.model.Siting;
+import com.sg.superpeoplesightings.model.Sighting;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.RowMapper;
  *
  * @author jstuart15
  */
-public class SitingDaoJdbcTemplateImpl implements SitingDao {
+public class SightingDaoJdbcTemplateImpl implements SightingDao {
 
     private JdbcTemplate jdbcTemplate;
 
@@ -25,47 +25,47 @@ public class SitingDaoJdbcTemplateImpl implements SitingDao {
     }
 
     //PREPARED STATEMENTS
-    private static final String SQL_DELETE_SITING
-            = "delete from sitings where siting_id = ?";
+    private static final String SQL_DELETE_SIGHTING
+            = "delete from sightings where sighting_id = ?";
     
-    private static final String SQL_DELETE_SUPER_PEOPLE_SITINGS
-            = "delete from super_people_sitings where siting_id = ?";
+    private static final String SQL_DELETE_SUPER_PEOPLE_SIGHTINGS
+            = "delete from super_people_sightings where sighting_id = ?";
     
-    private static final String SQL_SELECT_ALL_SITINGS
-            = "select * from sitings";
+    private static final String SQL_SELECT_ALL_SIGHTINGS
+            = "select * from sightings";
 
     @Override
-    public void addSiting(Siting siting) {
+    public void addSighting(Sighting sighting) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void deleteSiting(int sitingId) {
-        jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_SITINGS, sitingId);
-        jdbcTemplate.update(SQL_DELETE_SITING, sitingId);
+    public void deleteSighting(int sightingId) {
+        jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_SIGHTINGS, sightingId);
+        jdbcTemplate.update(SQL_DELETE_SIGHTING, sightingId);
     }
 
     @Override
-    public void updateSiting(Siting siting) {
+    public void updateSighting(Sighting sighting) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Siting getSitingById(int id) {
+    public Sighting getSightingById(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Siting> getAllSitings() {
-        return jdbcTemplate.query(SQL_SELECT_ALL_SITINGS, new SitingMapper());
+    public List<Sighting> getAllSightings() {
+        return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS, new SightingMapper());
     }
     
     //MAPPER
-    private static final class SitingMapper implements RowMapper<Siting> {
+    private static final class SightingMapper implements RowMapper<Sighting> {
         @Override
-        public Siting mapRow(ResultSet rs, int i) throws SQLException {
-            Siting s = new Siting();
-            s.setSitingId(rs.getInt("siting_id"));
+        public Sighting mapRow(ResultSet rs, int i) throws SQLException {
+            Sighting s = new Sighting();
+            s.setSightingId(rs.getInt("sighting_id"));
             s.setLocationId(rs.getInt("location_id"));
             //s.setDate(rs.getDate("date"));  @todo
             return s;

@@ -44,9 +44,19 @@
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>   
     
-    <bean id="sitingDao" 
-              class="com.sg.superpeoplesightings.dao.SitingDaoJdbcTemplateImpl">
+    <bean id="sightingDao" 
+          class="com.sg.superpeoplesightings.dao.SightingDaoJdbcTemplateImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean> 
+    
+    <bean id="organizationDao" 
+          class="com.sg.superpeoplesightings.dao.OrganizationDaoJdbcTemplateImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>   
+    
+    <!-- <bean id="superPeopleDao" 
+               class="com.sg.superpeoplesightings.dao.SuperPeopleDaoJdbcTemplateImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>   -->
 </beans>
 

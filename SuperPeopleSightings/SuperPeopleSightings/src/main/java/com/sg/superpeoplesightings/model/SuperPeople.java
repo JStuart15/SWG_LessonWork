@@ -5,6 +5,7 @@
  */
 package com.sg.superpeoplesightings.model;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,6 +18,7 @@ public class SuperPeople {
     private int superPowerId;
     private String name;
     private String description;
+    private List<Organization> orgs;
 
     public int getSuperPersonId() {
         return superPersonId;
@@ -50,13 +52,22 @@ public class SuperPeople {
         this.description = description;
     }
 
+    public List<Organization> getOrgs() {
+        return orgs;
+    }
+
+    public void setOrgs(List<Organization> orgs) {
+        this.orgs = orgs;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + this.superPersonId;
-        hash = 79 * hash + this.superPowerId;
-        hash = 79 * hash + Objects.hashCode(this.name);
-        hash = 79 * hash + Objects.hashCode(this.description);
+        int hash = 3;
+        hash = 53 * hash + this.superPersonId;
+        hash = 53 * hash + this.superPowerId;
+        hash = 53 * hash + Objects.hashCode(this.name);
+        hash = 53 * hash + Objects.hashCode(this.description);
+        hash = 53 * hash + Objects.hashCode(this.orgs);
         return hash;
     }
 
@@ -84,7 +95,9 @@ public class SuperPeople {
         if (!Objects.equals(this.description, other.description)) {
             return false;
         }
+        if (!Objects.equals(this.orgs, other.orgs)) {
+            return false;
+        }
         return true;
     }
-
 }
