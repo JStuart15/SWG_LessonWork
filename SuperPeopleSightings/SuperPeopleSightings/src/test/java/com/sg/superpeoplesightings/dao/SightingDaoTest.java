@@ -93,7 +93,7 @@ public class SightingDaoTest {
     }
 
     @Test
-    public void testAddGetDeleteSighting() {
+    public void testAdd_GetAll_Get_DeleteSighting() {
         //ADD A SIGHTING
         //add two super powers
         SuperPower flight = new SuperPower();
@@ -157,9 +157,20 @@ public class SightingDaoTest {
         moaSighting.setLocation(l);
         sightingDao.addSighting(moaSighting);
      
+        //GET ALL SIGHTINGS
         assertEquals(1, sightingDao.getAllSightings().size());
+        
+        //GET A SIGHTING
         Sighting moaSightingFromDao = sightingDao.getSightingById(moaSighting.getSightingId());
         assertEquals(moaSighting.getDate(), moaSightingFromDao.getDate());
         assertEquals(moaSighting, moaSightingFromDao);
+        
+        //@todo - test update sighting
+        
+        //DELETE A SIGHTING
+        sightingDao.deleteSighting(moaSighting.getSightingId());
+        assertEquals(0, sightingDao.getAllSightings().size());
     }
+    
+    
 }
