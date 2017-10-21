@@ -205,7 +205,7 @@ public class SuperPersonDaoTest {
         assertEquals(Batman2017, sp);
         
     }
-    //@todo - unhappy path
+    
     @Test
     public void testAddSuperPersonNoOrgs() {
         //adding super person without orgs should be allowed
@@ -229,6 +229,7 @@ public class SuperPersonDaoTest {
         assertEquals(1, superPersonDao.getAllSuperPeople().size());
         int spId = sp.getSuperPersonId();
         SuperPerson superPersonFromDao = superPersonDao.getSuperPersonById(spId);
+        superPersonFromDao.setOrgs(null);//need to set to null because it comes back from db as size 0
         assertEquals(superPersonFromDao, sp);
     }
 }

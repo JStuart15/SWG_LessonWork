@@ -138,4 +138,10 @@ public class Organization {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Organization{" + "organizationId=" + organizationId + ", name=" + name + ", description=" + description + ", street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip + ", phone=" + phone + '}';
+    }
+    
 }

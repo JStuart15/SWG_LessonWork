@@ -88,6 +88,7 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
                     new OrganizationMapper(),
                     id);
         } catch (DataAccessException e) {
+            //return a blank organization
             return null;
         }
     }

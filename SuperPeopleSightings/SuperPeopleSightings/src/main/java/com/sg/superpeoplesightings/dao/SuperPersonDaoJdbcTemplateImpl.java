@@ -51,7 +51,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
             = "insert into super_people_organizations "
             + "(super_person_id, organization_id) values (?, ?)";
 
-    private static final String SQL_SELECT_SUPER_POWER_BY_SUPER_PERSON_ID
+    protected static final String SQL_SELECT_SUPER_POWER_BY_SUPER_PERSON_ID
             = "select sp.* from super_powers sp "
             + "inner join super_people speople on speople.super_power_id = "
             + "sp.super_power_id where speople.super_person_id = ?";
@@ -59,7 +59,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     private static final String SQL_SELECT_SUPER_PERSON
             = "select * from super_people where super_person_id = ?";
 
-    private static final String SQL_SELECT_ORGS_BY_SUPER_PERSON_ID
+    protected static final String SQL_SELECT_ORGS_BY_SUPER_PERSON_ID
             = "select orgs.* from organizations orgs "
             + "inner join super_people_organizations spo on "
             + "spo.organization_id = orgs.organization_id "
@@ -137,7 +137,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     }
 
     //HELPERS
-    private void insertSuperPeopleOrganizations(SuperPerson superPerson) {
+    private void insertSuperPeopleOrganizations(SuperPerson superPerson){
         final int superPersonId = superPerson.getSuperPersonId();
         final List<Organization> orgs = superPerson.getOrgs();
         try {
@@ -146,12 +146,11 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
                         superPersonId, org.getOrganizationId());
             }
         } catch (DataAccessException | NullPointerException e) {
-            //no action since we want to allow a super person add without
-            //organizations
+            //do nothing because we want a super hero to be created without orgs
         }
     }
 
-    private SuperPower findSuperPowerForSuperPerson(SuperPerson sp) {
+    public SuperPower findSuperPowerForSuperPerson(SuperPerson sp) {
         return jdbcTemplate.queryForObject(SQL_SELECT_SUPER_POWER_BY_SUPER_PERSON_ID,
                 new SuperPowerMapper(),
                 sp.getSuperPersonId());

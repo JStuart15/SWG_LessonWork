@@ -95,7 +95,7 @@ public class SightingDaoTest {
     @Test
     public void testAddGetDeleteSighting() {
         //ADD A SIGHTING
-        //add two super power
+        //add two super powers
         SuperPower flight = new SuperPower();
         flight.setDescription("Supersonic Flight");
         superPowerDao.addSuperPower(flight);
@@ -150,13 +150,16 @@ public class SightingDaoTest {
         //add a sighting
         Sighting moaSighting = new Sighting();
         List<SuperPerson> sightingSuperPeople = new ArrayList<>();
-        sightingSuperPeople.add(batMan);
         sightingSuperPeople.add(superMan);
+        sightingSuperPeople.add(batMan);
         moaSighting.setSuperPeople(sightingSuperPeople);
         moaSighting.setDate(LocalDate.now());
         moaSighting.setLocation(l);
         sightingDao.addSighting(moaSighting);
-        
-        System.out.println(LocalDate.now());
+     
+        assertEquals(1, sightingDao.getAllSightings().size());
+        Sighting moaSightingFromDao = sightingDao.getSightingById(moaSighting.getSightingId());
+        assertEquals(moaSighting.getDate(), moaSightingFromDao.getDate());
+        assertEquals(moaSighting, moaSightingFromDao);
     }
 }

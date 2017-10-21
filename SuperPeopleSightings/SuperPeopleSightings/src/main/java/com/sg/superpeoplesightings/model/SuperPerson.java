@@ -100,4 +100,10 @@ public class SuperPerson {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "SuperPerson{" + "superPersonId=" + superPersonId + ", superPower=" + superPower + ", name=" + name + ", description=" + description + ", orgs=" + orgs + '}';
+    }
+    
 }
