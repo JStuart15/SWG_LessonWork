@@ -68,12 +68,12 @@ public class LocationDaoTest {
         Location l = new Location();
         l.setName("Plymouth");
         l.setDescription("City of Plymouth");
-        l.setStreet("3635 Wellington Ln N");
+        l.setStreet("2000 Wellington Ln N");
         l.setCity("Plymouth");
         l.setState("MN");
-        l.setZip("55441");
-        l.setLatitude(45.023046);
-        l.setLongitude(-93.4202007);
+        l.setZip("55300");
+        l.setLatitude(55.023046);
+        l.setLongitude(-83.4202007);
         l.setIsActive(1);
 
         locationDao.addLocation(l);
@@ -90,12 +90,12 @@ public class LocationDaoTest {
         Location l = new Location();
         l.setName("Plymouth");
         l.setDescription("City of Plymouth");
-        l.setStreet("3635 Wellington Ln N");
+        l.setStreet("2000 Wellington Ln N");
         l.setCity("Plymouth");
         l.setState("MN");
-        l.setZip("55441");
-        l.setLatitude(45.023046);
-        l.setLongitude(-93.4202007);
+        l.setZip("55300");
+        l.setLatitude(55.023046);
+        l.setLongitude(-83.4202007);
         l.setIsActive(1);
 
         locationDao.addLocation(l);
@@ -104,12 +104,16 @@ public class LocationDaoTest {
         assertEquals(fromDao, l);
         assertEquals(fromDao.getCity(), "Plymouth");
 
-        //@todo expand the changes here
+        //make changes to the location
+        l.setDescription("Plymouth Headquarters");
         l.setCity("Minneapolis");
+        l.setLatitude(44.023046);
+        l.setLongitude(-92.4202007);
+        l.setIsActive(0);
         locationDao.updateLocation(l);
 
-        Location fromDao2 = locationDao.getLocationById(l.getLocationId());
-        assertEquals(fromDao2, l);
+        Location changedLoc = locationDao.getLocationById(l.getLocationId());
+        assertEquals(changedLoc, l);
     }
 
     @Test
@@ -117,12 +121,12 @@ public class LocationDaoTest {
         Location l = new Location();
         l.setName("Plymouth");
         l.setDescription("City of Plymouth");
-        l.setStreet("3635 Wellington Ln N");
+        l.setStreet("2000 Wellington Ln N");
         l.setCity("Plymouth");
         l.setState("MN");
-        l.setZip("55441");
-        l.setLatitude(45.023046);
-        l.setLongitude(-93.4202007);
+        l.setZip("55300");
+        l.setLatitude(55.023046);
+        l.setLongitude(-83.4202007);
         l.setIsActive(1);
 
         locationDao.addLocation(l);

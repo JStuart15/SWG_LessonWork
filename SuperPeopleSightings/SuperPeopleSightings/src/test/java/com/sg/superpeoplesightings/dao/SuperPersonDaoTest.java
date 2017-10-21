@@ -201,7 +201,8 @@ public class SuperPersonDaoTest {
                 .getSuperPersonById(sp.getSuperPersonId());
         assertEquals("Batman 2017", Batman2017.getName());
         assertEquals("Justice League", Batman2017.getOrgs().get(0).getName());
-        assertEquals("High Tech Gadgets", Batman2017.getSuperPower().getDescription());        
+        assertEquals("High Tech Gadgets", Batman2017.getSuperPower().getDescription());    
+        assertEquals(Batman2017, sp);
         
     }
     //@todo - unhappy path
