@@ -10,9 +10,12 @@ import com.sg.superpeoplesightings.model.Organization;
 import com.sg.superpeoplesightings.model.Sighting;
 import com.sg.superpeoplesightings.model.SuperPerson;
 import com.sg.superpeoplesightings.model.SuperPower;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -48,6 +51,10 @@ public class SightingDaoTest {
                 = new ClassPathXmlApplicationContext("test-applicationContext.xml");
 
         sightingDao = ctx.getBean("sightingDao", SightingDao.class);
+        orgDao = ctx.getBean("organizationDao", OrganizationDao.class);
+        superPersonDao = ctx.getBean("superPersonDao", SuperPersonDao.class);
+        superPowerDao = ctx.getBean("superPowerDao", SuperPowerDao.class);
+        locationDao = ctx.getBean("locationDao", LocationDao.class);
 
         //delete sightings, which deletes all super_people_sightings
         List<Sighting> sightings = sightingDao.getAllSightings();
@@ -88,10 +95,68 @@ public class SightingDaoTest {
     @Test
     public void testAddGetDeleteSighting() {
         //ADD A SIGHTING
-        //add a super power
-        //add an org
-        //add a super person
+        //add two super power
+        SuperPower flight = new SuperPower();
+        flight.setDescription("Supersonic Flight");
+        superPowerDao.addSuperPower(flight);
+        SuperPower gadgets = new SuperPower();
+        gadgets.setDescription("High Tech Gadgets");
+        superPowerDao.addSuperPower(gadgets);
+        assertEquals(2, superPowerDao.getAllSuperPowers().size());
+        SuperPower superPowerFromDao = superPowerDao
+                .getSuperPowerById(flight.getSuperPowerId());
+        assertEquals(superPowerFromDao, flight);
+        //add two orgs
+        Organization justiceLeague = new Organization();
+        justiceLeague.setName("Justice League");
+        orgDao.addOrganization(justiceLeague);
+        Organization avengers = new Organization();
+        avengers.setName("Avengers");
+        orgDao.addOrganization(avengers);
+        assertEquals(2, orgDao.getAllOrganizations().size());        
+        //add two super people
+        SuperPerson superMan = new SuperPerson();
+        superMan.setName("Superman");
+        superMan.setSuperPower(flight);
+        List<Organization> orgs = new ArrayList<>();
+        orgs.add(justiceLeague);
+        orgs.add(avengers);
+        superMan.setOrgs(orgs);
+        superPersonDao.addSuperPerson(superMan);
+        SuperPerson batMan = new SuperPerson();
+        batMan.setName("Batman");
+        batMan.setDescription("darkness, no parents");
+        batMan.setSuperPower(gadgets);
+        batMan.setOrgs(orgs);
+        superPersonDao.addSuperPerson(batMan);
+        assertEquals(2, superPersonDao.getAllSuperPeople().size());
+        int spId = superMan.getSuperPersonId();
+        SuperPerson superPersonFromDao = superPersonDao.getSuperPersonById(spId);
+        assertEquals(superPersonFromDao, superMan);        
         //add a location
+        Location l = new Location();
+        l.setName("MOA");
+        l.setDescription("Mall of America");
+        l.setStreet("2000 American Way");
+        l.setCity("Bloomington");
+        l.setState("MN");
+        l.setZip("55300");
+        l.setLatitude(55.023046);
+        l.setLongitude(-83.4202007);
+        l.setIsActive(1);
+        locationDao.addLocation(l);
+        Location locationFromDao = locationDao.getLocationById(l.getLocationId());
+        assertEquals(locationFromDao, l);
         //add a sighting
+        Sighting moaSighting = new Sighting();
+        List<SuperPerson> sightingSuperPeople = new ArrayList<>();
+        sightingSuperPeople.add(batMan);
+        sightingSuperPeople.add(superMan);
+        moaSighting.setSuperPeople(sightingSuperPeople);
+        moaSighting.setDate(LocalDate.now());
+        moaSighting.setLocation(l);
+        sightingDao.addSighting(moaSighting);
+        
+        System.out.println(LocalDate.now());
     }
 }

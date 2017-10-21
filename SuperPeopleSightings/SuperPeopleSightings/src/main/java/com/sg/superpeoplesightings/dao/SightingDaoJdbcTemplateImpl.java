@@ -34,7 +34,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
     //PREPARED STATEMENTS
     private static final String SQL_INSERT_SIGHTING
             = "insert into sightings "
-            + "(location_id, date) "
+            + "(location_id, `date`) "
             + "values(?, ?)";
 
     private static final String SQL_INSERT_SUPER_PEOPLE_SIGHTINGS
@@ -73,7 +73,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
         //first insert into sighting table and get new sighting id
         jdbcTemplate.update(SQL_INSERT_SIGHTING,
                 sighting.getLocation().getLocationId(),
-                sighting.getDate());
+                sighting.getDate().toString());
         sighting.setSightingId(jdbcTemplate
                 .queryForObject("select LAST_INSERT_ID()", Integer.class));
 
@@ -131,8 +131,8 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
         final List<SuperPerson> superPeople = sighting.getSuperPeople();
         for (SuperPerson superPerson : superPeople) {
             jdbcTemplate.update(SQL_INSERT_SUPER_PEOPLE_SIGHTINGS,
-                    sightingId,
-                    superPerson.getSuperPersonId());
+                    superPerson.getSuperPersonId(),
+                    sightingId);
         }
     }
 
