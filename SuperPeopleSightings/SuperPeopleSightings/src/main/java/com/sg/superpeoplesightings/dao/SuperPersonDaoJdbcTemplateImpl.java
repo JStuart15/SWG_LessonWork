@@ -64,6 +64,10 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
             + "inner join super_people_organizations spo on "
             + "spo.organization_id = orgs.organization_id "
             + "where spo.super_person_id = ?";
+    
+    private static final String SQL_UPDATE_SUPER_PERSON
+            = "update super_people set super_power_id = ?, name = ?, "
+            + "description = ? where super_person_id = ?";
 
     //METHODS
     @Override
@@ -92,8 +96,21 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     }
 
     @Override
-    public void updateSuperPerson(SuperPerson siting) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public void updateSuperPerson(SuperPerson superPerson) {
+        //update super_person table
+        jdbcTemplate.update(SQL_UPDATE_SUPER_PERSON,
+                superPerson.getSuperPower().getSuperPowerId(),
+                superPerson.getName(),
+                superPerson.getDescription(),
+                superPerson.getSuperPersonId());
+        
+        //delete org relationships and reset them
+        jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS, 
+                superPerson.getSuperPersonId());
+        
+        //now update the super_people_organizations table
+        insertSuperPeopleOrganizations(superPerson);
     }
 
     @Override

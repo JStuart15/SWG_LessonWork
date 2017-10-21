@@ -15,6 +15,7 @@ public class Organization {
 
     private int organizationId;
     private String name;
+    //@todo add additional fields here from DB
 
     public int getOrganizationId() {
         return organizationId;

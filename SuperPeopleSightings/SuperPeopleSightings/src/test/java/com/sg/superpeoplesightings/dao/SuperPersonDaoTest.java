@@ -141,6 +141,69 @@ public class SuperPersonDaoTest {
         }
     }
 
+    @Test
+    public void testAddUpdateSuperPerson() {
+        assertEquals(0, superPersonDao.getAllSuperPeople().size());
+
+        //add a super power
+        SuperPower superPower = new SuperPower();
+        superPower.setDescription("High Tech Gadgets");
+        superPowerDao.addSuperPower(superPower);
+        assertEquals(1, superPowerDao.getAllSuperPowers().size());
+        SuperPower fromDao = superPowerDao
+                .getSuperPowerById(superPower.getSuperPowerId());
+        assertEquals(fromDao, superPower);
+
+        //add another super power
+        SuperPower superPower2 = new SuperPower();
+        superPower2.setDescription("Supersonic Flight");
+        superPowerDao.addSuperPower(superPower2);
+        assertEquals(2, superPowerDao.getAllSuperPowers().size());
+        SuperPower superPowerFromDao = superPowerDao
+                .getSuperPowerById(superPower.getSuperPowerId());
+        assertEquals(superPowerFromDao, superPower);
+
+        //add 2 organizations
+        Organization org = new Organization();
+        org.setName("Justice League");
+        orgDao.addOrganization(org);
+
+        Organization org2 = new Organization();
+        org2.setName("Avengers");
+        orgDao.addOrganization(org2);
+        assertEquals(2, orgDao.getAllOrganizations().size());
+
+        //add super person, one org
+        SuperPerson sp = new SuperPerson();
+        sp.setName("Batman");
+        sp.setSuperPower(superPower2); //wrong super power for Batman
+        List<Organization> orgs = new ArrayList<>();
+        orgs.add(org2); //wrong org for Batman
+        sp.setOrgs(orgs);
+        superPersonDao.addSuperPerson(sp);
+        assertEquals(1, superPersonDao.getAllSuperPeople().size());
+        SuperPerson superPersonFromDao = superPersonDao
+                .getSuperPersonById(sp.getSuperPersonId());
+        assertEquals(superPersonFromDao, sp);
+        assertEquals("Avengers", superPersonFromDao
+                .getOrgs().get(0).getName());
+        assertEquals("Supersonic Flight", superPersonFromDao
+                .getSuperPower().getDescription());
+        
+        //Change name, org and superpower
+        sp.setName("Batman 2017");
+        sp.setSuperPower(superPower); //high tech gadgets
+        orgs.clear();
+        orgs.add(org);//Justice League
+        sp.setOrgs(orgs);
+        superPersonDao.updateSuperPerson(sp);
+        SuperPerson Batman2017 = superPersonDao
+                .getSuperPersonById(sp.getSuperPersonId());
+        assertEquals("Batman 2017", Batman2017.getName());
+        assertEquals("Justice League", Batman2017.getOrgs().get(0).getName());
+        assertEquals("High Tech Gadgets", Batman2017.getSuperPower().getDescription());        
+        
+    }
     //@todo - unhappy path
 //    @Test
 //    public void testAddSuperPersonNoOrgs() {
