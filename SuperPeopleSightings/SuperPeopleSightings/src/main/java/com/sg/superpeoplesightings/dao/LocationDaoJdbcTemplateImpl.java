@@ -114,7 +114,7 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
     }
 
     //MAPPER
-    private static final class LocationMapper implements RowMapper<Location> {
+    protected static final class LocationMapper implements RowMapper<Location> {
 
         @Override
         public Location mapRow(ResultSet rs, int i) throws SQLException {

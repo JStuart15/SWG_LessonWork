@@ -26,9 +26,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class SuperPersonDaoTest {
 
-    SuperPersonDao superPersonDao;
-    SuperPowerDao superPowerDao;
-    OrganizationDao orgDao;
+    private SuperPersonDao superPersonDao;
+    private SuperPowerDao superPowerDao;
+    private OrganizationDao orgDao;
 
     public SuperPersonDaoTest() {
     }
@@ -206,29 +206,29 @@ public class SuperPersonDaoTest {
         
     }
     //@todo - unhappy path
-//    @Test
-//    public void testAddSuperPersonNoOrgs() {
-//        //adding super person without orgs should be allowed
-//        //@todo - make changes to allow adding without orgs
-//        assertEquals(0, superPersonDao.getAllSuperPeople().size());
-//
-//        //add a super power
-//        SuperPower superPower = new SuperPower();
-//        superPower.setDescription("Supersonic Flight");
-//        superPowerDao.addSuperPower(superPower);
-//        assertEquals(1, superPowerDao.getAllSuperPowers().size());
-//        SuperPower fromDao = superPowerDao
-//                .getSuperPowerById(superPower.getSuperPowerId());
-//        assertEquals(fromDao, superPower);
-//
-//        //add super person
-//        SuperPerson sp = new SuperPerson();
-//        sp.setName("Superman");
-//        sp.setSuperPower(superPower);
-//        superPersonDao.addSuperPerson(sp);
-//        assertEquals(1, superPersonDao.getAllSuperPeople().size());
-//        int spId = sp.getSuperPersonId();
-//        SuperPerson superPersonFromDao = superPersonDao.getSuperPersonById(spId);
-//        assertEquals(superPersonFromDao, sp);
-//    }
+    @Test
+    public void testAddSuperPersonNoOrgs() {
+        //adding super person without orgs should be allowed
+        //@todo - make changes to allow adding without orgs
+        assertEquals(0, superPersonDao.getAllSuperPeople().size());
+
+        //add a super power
+        SuperPower superPower = new SuperPower();
+        superPower.setDescription("Supersonic Flight");
+        superPowerDao.addSuperPower(superPower);
+        assertEquals(1, superPowerDao.getAllSuperPowers().size());
+        SuperPower fromDao = superPowerDao
+                .getSuperPowerById(superPower.getSuperPowerId());
+        assertEquals(fromDao, superPower);
+
+        //add super person
+        SuperPerson sp = new SuperPerson();
+        sp.setName("Superman");
+        sp.setSuperPower(superPower);
+        superPersonDao.addSuperPerson(sp);
+        assertEquals(1, superPersonDao.getAllSuperPeople().size());
+        int spId = sp.getSuperPersonId();
+        SuperPerson superPersonFromDao = superPersonDao.getSuperPersonById(spId);
+        assertEquals(superPersonFromDao, sp);
+    }
 }

@@ -170,7 +170,6 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
         public SuperPerson mapRow(ResultSet rs, int i) throws SQLException {
             SuperPerson sp = new SuperPerson();
             sp.setSuperPersonId(rs.getInt("super_person_id"));
-            //sp.setSuperPowerId(rs.getInt("super_power_id"));
             sp.setName(rs.getString("name"));
             sp.setDescription(rs.getString("description"));
             return sp;
