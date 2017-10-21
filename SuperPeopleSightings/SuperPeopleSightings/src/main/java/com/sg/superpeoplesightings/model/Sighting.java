@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class Sighting {
     private int sightingId;
-    private int locationId;
+    private Location location;
     private LocalDate date;
     private List<SuperPerson> superPeople;
 
@@ -27,12 +27,12 @@ public class Sighting {
         this.sightingId = sightingId;
     }
 
-    public int getLocationId() {
-        return locationId;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public LocalDate getDate() {
@@ -54,10 +54,10 @@ public class Sighting {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + this.sightingId;
-        hash = 43 * hash + this.locationId;
-        hash = 43 * hash + Objects.hashCode(this.date);
-        hash = 43 * hash + Objects.hashCode(this.superPeople);
+        hash = 89 * hash + this.sightingId;
+        hash = 89 * hash + Objects.hashCode(this.location);
+        hash = 89 * hash + Objects.hashCode(this.date);
+        hash = 89 * hash + Objects.hashCode(this.superPeople);
         return hash;
     }
 
@@ -76,7 +76,7 @@ public class Sighting {
         if (this.sightingId != other.sightingId) {
             return false;
         }
-        if (this.locationId != other.locationId) {
+        if (!Objects.equals(this.location, other.location)) {
             return false;
         }
         if (!Objects.equals(this.date, other.date)) {
@@ -87,6 +87,4 @@ public class Sighting {
         }
         return true;
     }
-    
-    
 }

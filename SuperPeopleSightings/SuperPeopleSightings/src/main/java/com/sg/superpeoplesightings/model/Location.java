@@ -20,7 +20,6 @@ public class Location {
     private String city;
     private String state;
     private String zip;
-    //private String phone;
     private double latitude;
     private double longitude;
     private int isActive;

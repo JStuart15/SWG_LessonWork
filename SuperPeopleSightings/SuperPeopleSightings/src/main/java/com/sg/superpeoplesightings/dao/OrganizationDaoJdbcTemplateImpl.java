@@ -9,6 +9,7 @@ import com.sg.superpeoplesightings.model.Organization;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Propagation;
@@ -28,8 +29,8 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
 
     //PREPARED STATEMENTS
     private static final String SQL_INSERT_ORGANIZATION
-            = "insert into organizations (name) "
-            + "values (?)";
+            = "insert into organizations (name, description, street, city, "
+            + "state, zip, phone) values (?,?,?,?,?,?,?)";
 
     private static final String SQL_DELETE_ORGANIZATION
             = "delete from organizations where organization_id = ?";
@@ -45,7 +46,8 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
             = "select * from organizations";
 
     private static final String SQL_UPDATE_ORGANIZATION
-            = "update organizations set name = ?, description = ?"
+            = "update organizations set name = ?, description = ?, street = ?, "
+            + "city = ?, state = ?, zip = ?, phone = ? "
             + "where organization_id = ?";
 
     //METHODS
@@ -53,7 +55,8 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addOrganization(Organization org) {
         jdbcTemplate.update(SQL_INSERT_ORGANIZATION,
-                org.getName());
+                org.getName(), org.getDescription(), org.getStreet(), 
+                org.getCity(), org.getState(), org.getZip(), org.getPhone());
 
         int orgId = jdbcTemplate
                 .queryForObject("select LAST_INSERT_ID()", Integer.class);
@@ -71,8 +74,11 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
     }
 
     @Override
-    public void updateOrganization(Organization orgId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updateOrganization(Organization org) {
+        jdbcTemplate.update(SQL_UPDATE_ORGANIZATION,
+                org.getName(), org.getDescription(), org.getStreet(), 
+                org.getCity(), org.getState(), org.getZip(), org.getPhone(),
+                org.getOrganizationId());
     }
 
     @Override
@@ -81,7 +87,7 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
             return jdbcTemplate.queryForObject(SQL_SELECT_ORGANIZATION,
                     new OrganizationMapper(),
                     id);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             return null;
         }
     }
@@ -98,6 +104,12 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
         public Organization mapRow(ResultSet rs, int i) throws SQLException {
             Organization o = new Organization();
             o.setName(rs.getString("name"));
+            o.setDescription(rs.getString("description"));
+            o.setStreet(rs.getString("street"));
+            o.setCity(rs.getString("city"));
+            o.setState(rs.getString("state"));
+            o.setZip(rs.getString("zip"));
+            o.setPhone(rs.getString("phone"));
             o.setOrganizationId(rs.getInt("organization_id"));
             return o;
         }
