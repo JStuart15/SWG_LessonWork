@@ -12,6 +12,7 @@ import com.sg.superpeoplesightings.model.SuperPerson;
 import com.sg.superpeoplesightings.model.SuperPower;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -133,8 +134,15 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
 
     @Override
     public List<SuperPerson> getAllSuperPeople() {
-        return jdbcTemplate.query(SQL_GET_ALL_SUPER_PEOPLE,
+        List<SuperPerson> speople = new ArrayList<>();
+        speople = jdbcTemplate.query(SQL_GET_ALL_SUPER_PEOPLE,
                 new SuperPersonMapper());
+        
+        for (SuperPerson superPerson : speople) {
+            superPerson.setOrgs(findOrgsForSuperPerson(superPerson));
+            superPerson.setSuperPower(findSuperPowerForSuperPerson(superPerson));
+        }
+        return speople;
     }
 
     //HELPERS

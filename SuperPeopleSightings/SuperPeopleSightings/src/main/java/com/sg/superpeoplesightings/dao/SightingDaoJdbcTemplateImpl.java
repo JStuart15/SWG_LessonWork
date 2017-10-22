@@ -104,7 +104,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
         //update sighting table
         jdbcTemplate.update(SQL_UPDATE_SIGHTING,
                 sighting.getLocation().getLocationId(),
-                sighting.getDate(),
+                sighting.getDate().toString(),
                 sighting.getSightingId());
         //delete super_people_sightings relationships and then reset them
         jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_SIGHTINGS,

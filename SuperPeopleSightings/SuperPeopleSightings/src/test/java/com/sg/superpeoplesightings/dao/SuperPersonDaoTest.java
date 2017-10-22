@@ -209,7 +209,6 @@ public class SuperPersonDaoTest {
     @Test
     public void testAddSuperPersonNoOrgs() {
         //adding super person without orgs should be allowed
-        //@todo - make changes to allow adding without orgs
         assertEquals(0, superPersonDao.getAllSuperPeople().size());
 
         //add a super power

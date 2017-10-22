@@ -113,7 +113,7 @@ public class SightingDaoTest {
         Organization avengers = new Organization();
         avengers.setName("Avengers");
         orgDao.addOrganization(avengers);
-        assertEquals(2, orgDao.getAllOrganizations().size());        
+        assertEquals(2, orgDao.getAllOrganizations().size());
         //add two super people
         SuperPerson superMan = new SuperPerson();
         superMan.setName("Superman");
@@ -132,7 +132,7 @@ public class SightingDaoTest {
         assertEquals(2, superPersonDao.getAllSuperPeople().size());
         int spId = superMan.getSuperPersonId();
         SuperPerson superPersonFromDao = superPersonDao.getSuperPersonById(spId);
-        assertEquals(superPersonFromDao, superMan);        
+        assertEquals(superPersonFromDao, superMan);
         //add a location
         Location l = new Location();
         l.setName("MOA");
@@ -147,6 +147,7 @@ public class SightingDaoTest {
         locationDao.addLocation(l);
         Location locationFromDao = locationDao.getLocationById(l.getLocationId());
         assertEquals(locationFromDao, l);
+
         //add a sighting
         Sighting moaSighting = new Sighting();
         List<SuperPerson> sightingSuperPeople = new ArrayList<>();
@@ -156,21 +157,35 @@ public class SightingDaoTest {
         moaSighting.setDate(LocalDate.now());
         moaSighting.setLocation(l);
         sightingDao.addSighting(moaSighting);
-     
+
         //GET ALL SIGHTINGS
         assertEquals(1, sightingDao.getAllSightings().size());
-        
+
         //GET A SIGHTING
         Sighting moaSightingFromDao = sightingDao.getSightingById(moaSighting.getSightingId());
         assertEquals(moaSighting.getDate(), moaSightingFromDao.getDate());
         assertEquals(moaSighting, moaSightingFromDao);
+
+        //UPDATE A SIGHTING
+        //update superman
+        superMan.setDescription("alien");
+        orgs.remove(avengers);
+        superMan.setOrgs(orgs);
+        superPersonDao.updateSuperPerson(superMan);
+        //update the location
+        l.setZip("55000");
+        locationDao.updateLocation(l);
+        //remove batMan from the sighting
+        sightingSuperPeople.remove(batMan);
+        moaSighting.setSuperPeople(sightingSuperPeople);
+        moaSighting.setLocation(l);
+        sightingDao.updateSighting(moaSighting);
         
-        //@todo - test update sighting
-        
+        Sighting updatedSighting = sightingDao.getSightingById(moaSighting.getSightingId());
+        assertEquals(updatedSighting, moaSighting);
         //DELETE A SIGHTING
         sightingDao.deleteSighting(moaSighting.getSightingId());
         assertEquals(0, sightingDao.getAllSightings().size());
     }
-    
-    
+
 }

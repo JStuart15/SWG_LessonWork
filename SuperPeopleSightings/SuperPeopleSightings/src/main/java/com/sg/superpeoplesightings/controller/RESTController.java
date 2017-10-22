@@ -87,7 +87,6 @@ public class RESTController {
     @ResponseBody
     public List<SuperPerson> getAllSuperPeople() {
         return superPersonDao.getAllSuperPeople();
-        //@todo - high - make the people returned into fully formed objects
     }
 
     @RequestMapping(value = "/superperson/{id}", method = RequestMethod.GET)
@@ -162,6 +161,7 @@ public class RESTController {
     }
 
     //SIGHTING PATHS
+    //@todo - high - make this return a fully formed object
     @RequestMapping(value = "/sightings", method = RequestMethod.GET)
     @ResponseBody
     public List<Sighting> getAllSightings() {
