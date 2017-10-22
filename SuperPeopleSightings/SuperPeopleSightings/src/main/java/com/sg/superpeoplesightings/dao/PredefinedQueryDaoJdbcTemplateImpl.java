@@ -79,6 +79,7 @@ public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao{
             + "where sp.super_person_id = ?";
 
     //METHODS
+    @Override
     public List<SuperPerson> getAllSuperPeopleForALocation(int locationId) {
         List<SuperPerson> superPeople = new ArrayList<>();
         List<Integer> superPeopleIds = new ArrayList<>();
@@ -93,6 +94,7 @@ public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao{
         return superPeople;
     }
 
+    @Override
     public List<Location> getAllLocationsForASuperPerson(SuperPerson sp) {
         List<Location> locationsSeen = new ArrayList<>();
         List<Integer> locationSeenIds = new ArrayList<>();
@@ -107,6 +109,7 @@ public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao{
         return locationsSeen;
     }
 
+    @Override
     public List<Sighting> getAllSightingsForADate(LocalDate now) {
         List<Sighting> sightings = new ArrayList<>();
         List<Integer> sightingsIds = new ArrayList<>();
@@ -120,6 +123,7 @@ public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao{
         return sightings;
     }
 
+    @Override
     public List<SuperPerson> getAllSuperPeopleForAnOrg(Organization org) {
         List<SuperPerson> superPeople = new ArrayList<>();
         List<Integer> superPeopleIds = new ArrayList<>();
@@ -134,6 +138,7 @@ public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao{
         return superPeople;
     }
 
+    @Override
     public List<Organization> getAllOrgsForASuperPerson(SuperPerson sp) {
         List<Organization> orgs = new ArrayList<>();
         List<Integer> orgIds = new ArrayList<>();

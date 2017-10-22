@@ -194,4 +194,5 @@ public class RESTController {
         return queryDao.getAllSuperPeopleForALocation(id);
     }
 
+    
 }

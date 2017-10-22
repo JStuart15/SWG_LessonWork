@@ -133,7 +133,14 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
 
     @Override
     public List<Sighting> getAllSightings() {
-        return jdbcTemplate.query(SQL_SELECT_ALL_SIGHTINGS, new SightingMapper());
+        List<Sighting> sightings = new ArrayList<>();
+        sightings = jdbcTemplate
+                .query(SQL_SELECT_ALL_SIGHTINGS, new SightingMapper());
+        for (Sighting sighting : sightings) {
+            sighting.setSuperPeople(findSuperPeopleForSighting(sighting));
+            sighting.setLocation(findLocationForSighting(sighting));
+        }
+        return sightings;
     }
 
     // HELPER METHODS
@@ -157,11 +164,11 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
         superPeople.forEach((superPerson) -> {
             superPeopleIds.add(superPerson.getSuperPersonId());
         });
-        
+
         superPeople.clear();//empty the list, we will rebuild it
 
         for (Integer superPersonId : superPeopleIds) {
-            superPeople.add(superPersonDao.getSuperPersonById(superPersonId));   
+            superPeople.add(superPersonDao.getSuperPersonById(superPersonId));
         }
         return superPeople;
     }
