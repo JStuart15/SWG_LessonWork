@@ -159,14 +159,9 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
         
         superPeople.clear();//empty the list, we will rebuild it
 
-        for (Integer superPeopleId : superPeopleIds) {
-            SuperPerson superPerson = superPersonDao.getSuperPersonById(superPeopleId);
-            superPeople.add(superPerson);
-            
-            System.out.println(superPerson.toString());
+        for (Integer superPersonId : superPeopleIds) {
+            superPeople.add(superPersonDao.getSuperPersonById(superPersonId));   
         }
-        System.out.println(superPeople.size());
- 
         return superPeople;
     }
 
