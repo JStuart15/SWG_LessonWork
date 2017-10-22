@@ -46,7 +46,7 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
     // METHODS
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public void addSuperPower(SuperPower superPower) {
+    public SuperPower addSuperPower(SuperPower superPower) {
         jdbcTemplate.update(SQL_INSERT_SUPER_POWER,
                 superPower.getDescription());
 
@@ -54,6 +54,7 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
                 Integer.class);
 
         superPower.setSuperPowerId(superPowerId);
+        return superPower;
     }
 
     @Override

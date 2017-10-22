@@ -199,13 +199,13 @@ public class PredefinedQueryDaoTest {
 
         //TEST GET ALL SUPER PEOPLE SEEN FOR A LOCATION
         //test location l which has 4 heroes
-        List<SuperPerson> superPeopleFromDao = queryDao.getAllSuperPeopleForALocation(l);
+        List<SuperPerson> superPeopleFromDao = queryDao.getAllSuperPeopleForALocation(l.getLocationId());
         //superPeopleFromDao.forEach(sp -> System.out.println(sp.toString()));
         assertEquals(4, superPeopleFromDao.size());
         assertEquals(movieSightingSp, superPeopleFromDao);
 
         //test location l2 which has 2 heroes
-        List<SuperPerson> superPeopleFromDao2 = queryDao.getAllSuperPeopleForALocation(l2);
+        List<SuperPerson> superPeopleFromDao2 = queryDao.getAllSuperPeopleForALocation(l2.getLocationId());
         //superPeopleFromDao2.forEach(sp -> System.out.println(sp.toString()));
         assertEquals(2, superPeopleFromDao2.size());
         assertEquals(moaSightingSp, superPeopleFromDao2);

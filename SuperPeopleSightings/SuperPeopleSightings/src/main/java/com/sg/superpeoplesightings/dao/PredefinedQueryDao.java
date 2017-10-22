@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface PredefinedQueryDao {
 
-    public List<SuperPerson> getAllSuperPeopleForALocation(Location location);
+    public List<SuperPerson> getAllSuperPeopleForALocation(int locationId);
 
     public List<Location> getAllLocationsForASuperPerson(SuperPerson sp);
 

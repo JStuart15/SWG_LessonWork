@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface SuperPowerDao {
     
-    public void addSuperPower(SuperPower superPower);
+    public SuperPower addSuperPower(SuperPower superPower);
     
     public void deleteSuperPower(int superPowerId);
     

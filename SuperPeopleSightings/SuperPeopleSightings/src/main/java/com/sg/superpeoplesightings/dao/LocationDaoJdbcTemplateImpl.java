@@ -52,7 +52,7 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
             = "select * from locations where location_id = ?";
 
     private static final String SQL_SELECT_ALL_LOCATIONS
-            = "select * from locations where isActive = 1";
+            = "select * from locations";
 
     //METHODS
     @Override

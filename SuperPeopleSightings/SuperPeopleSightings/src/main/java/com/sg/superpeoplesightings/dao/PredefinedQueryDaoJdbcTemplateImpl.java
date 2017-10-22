@@ -79,13 +79,13 @@ public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao{
             + "where sp.super_person_id = ?";
 
     //METHODS
-    public List<SuperPerson> getAllSuperPeopleForALocation(Location location) {
+    public List<SuperPerson> getAllSuperPeopleForALocation(int locationId) {
         List<SuperPerson> superPeople = new ArrayList<>();
         List<Integer> superPeopleIds = new ArrayList<>();
 
         superPeopleIds = jdbcTemplate
                 .queryForList(SQL_ALL_SUPER_PEOPLE_FOR_A_LOCATION,
-                        Integer.class, location.getLocationId());
+                        Integer.class, locationId);
 
         for (Integer superPersonId : superPeopleIds) {
             superPeople.add(superPersonDao.getSuperPersonById(superPersonId));
