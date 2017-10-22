@@ -78,7 +78,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public void addSighting(Sighting sighting) {
+    public Sighting addSighting(Sighting sighting) {
         //first insert into sighting table and get new sighting id
         jdbcTemplate.update(SQL_INSERT_SIGHTING,
                 sighting.getLocation().getLocationId(),
@@ -88,6 +88,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
 
         //now update the super_people_sightings table
         insertSuperPeopleSightings(sighting);
+        return sighting;
     }
 
     @Override

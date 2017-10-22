@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface OrganizationDao {
     
-    public void addOrganization(Organization org);
+    public Organization addOrganization(Organization org);
     
     public void deleteOrganization (int orgId);
     

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface SightingDao {
 
-    public void addSighting(Sighting siting);
+    public Sighting addSighting(Sighting siting);
 
     public void deleteSighting(int sitingId);
 

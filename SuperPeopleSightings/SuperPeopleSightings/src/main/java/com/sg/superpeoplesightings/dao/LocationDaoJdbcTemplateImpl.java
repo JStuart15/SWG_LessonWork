@@ -57,7 +57,7 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
     //METHODS
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public void addLocation(Location l) {
+    public Location addLocation(Location l) {
         jdbcTemplate.update(SQL_INSERT_LOCATION,
                 l.getName(),
                 l.getDescription(),
@@ -74,6 +74,7 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
                         Integer.class);
 
         l.setLocationId(locationId);
+        return l;
     }
 
     @Override

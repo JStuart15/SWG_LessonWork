@@ -74,7 +74,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     //@todo - a service validation should make sure that we have a superPower
     // before calling the addSuperPerson method.
-    public void addSuperPerson(SuperPerson superPerson) {
+    public SuperPerson addSuperPerson(SuperPerson superPerson) {
         jdbcTemplate.update(SQL_INSERT_SUPER_PERSON,
                 superPerson.getSuperPower().getSuperPowerId(),
                 superPerson.getName(),
@@ -85,6 +85,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
 
         //now update the super_people_organizations table
         insertSuperPeopleOrganizations(superPerson);
+        return superPerson;
     }
 
     @Override

@@ -53,7 +53,7 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
     //METHODS
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    public void addOrganization(Organization org) {
+    public Organization addOrganization(Organization org) {
         jdbcTemplate.update(SQL_INSERT_ORGANIZATION,
                 org.getName(), org.getDescription(), org.getStreet(), 
                 org.getCity(), org.getState(), org.getZip(), org.getPhone());
@@ -62,6 +62,7 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
                 .queryForObject("select LAST_INSERT_ID()", Integer.class);
 
         org.setOrganizationId(orgId);
+        return org;
     }
 
     @Override

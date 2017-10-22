@@ -76,6 +76,12 @@ public class RESTController {
         return superPowerDao.addSuperPower(superPower);
     }
 
+    @RequestMapping(value = "/superpower/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteSuperPower(@PathVariable("id") int id) {
+        superPowerDao.deleteSuperPower(id);
+    }
+
     //SUPER PERSON(S) PATHS
     @RequestMapping(value = "/superpeople", method = RequestMethod.GET)
     @ResponseBody
@@ -88,6 +94,19 @@ public class RESTController {
     @ResponseBody
     public SuperPerson getSuperPerson(@PathVariable("id") int id) {
         return superPersonDao.getSuperPersonById(id);
+    }
+
+    @RequestMapping(value = "/superperson", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public SuperPerson createSuperPerson(@Valid @RequestBody SuperPerson superPerson) {
+        return superPersonDao.addSuperPerson(superPerson);
+    }
+
+    @RequestMapping(value = "/superperson/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteSuperPerson(@PathVariable("id") int id) {
+        superPersonDao.deleteSuperPerson(id);
     }
 
     //LOCATION PATHS
@@ -103,6 +122,19 @@ public class RESTController {
         return locationDao.getLocationById(id);
     }
 
+    @RequestMapping(value = "/location", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public Location createLocation(@Valid @RequestBody Location location) {
+        return locationDao.addLocation(location);
+    }
+
+    @RequestMapping(value = "/location/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteLocation(@PathVariable("id") int id) {
+        locationDao.deleteLocation(id);
+    }
+
     //ORGANIZATION PATHS
     @RequestMapping(value = "/organizations", method = RequestMethod.GET)
     @ResponseBody
@@ -116,6 +148,19 @@ public class RESTController {
         return orgDao.getOrganizationById(id);
     }
 
+    @RequestMapping(value = "/organization", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public Organization createOrganization(@Valid @RequestBody Organization organization) {
+        return orgDao.addOrganization(organization);
+    }
+
+    @RequestMapping(value = "/organization/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOrganization(@PathVariable("id") int id) {
+        orgDao.deleteOrganization(id);
+    }
+
     //SIGHTING PATHS
     @RequestMapping(value = "/sightings", method = RequestMethod.GET)
     @ResponseBody
@@ -127,6 +172,19 @@ public class RESTController {
     @ResponseBody
     public Sighting getSighting(@PathVariable("id") int id) {
         return sightingDao.getSightingById(id);
+    }
+
+    @RequestMapping(value = "/sighting", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public Sighting createSighting(@Valid @RequestBody Sighting sighting) {
+        return sightingDao.addSighting(sighting);
+    }
+
+    @RequestMapping(value = "/sighting/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteSighting(@PathVariable("id") int id) {
+        sightingDao.deleteSighting(id);
     }
 
     //PREDEFINED QUERIES
