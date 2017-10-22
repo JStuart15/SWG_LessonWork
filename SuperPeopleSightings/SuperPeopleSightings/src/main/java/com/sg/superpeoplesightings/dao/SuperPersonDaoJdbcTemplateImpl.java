@@ -64,7 +64,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
             + "inner join super_people_organizations spo on "
             + "spo.organization_id = orgs.organization_id "
             + "where spo.super_person_id = ?";
-    
+
     private static final String SQL_UPDATE_SUPER_PERSON
             = "update super_people set super_power_id = ?, name = ?, "
             + "description = ? where super_person_id = ?";
@@ -104,11 +104,11 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
                 superPerson.getName(),
                 superPerson.getDescription(),
                 superPerson.getSuperPersonId());
-        
+
         //delete org relationships and reset them
-        jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS, 
+        jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS,
                 superPerson.getSuperPersonId());
-        
+
         //now update the super_people_organizations table
         insertSuperPeopleOrganizations(superPerson);
     }
@@ -137,7 +137,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     }
 
     //HELPERS
-    private void insertSuperPeopleOrganizations(SuperPerson superPerson){
+    private void insertSuperPeopleOrganizations(SuperPerson superPerson) {
         final int superPersonId = superPerson.getSuperPersonId();
         final List<Organization> orgs = superPerson.getOrgs();
         try {

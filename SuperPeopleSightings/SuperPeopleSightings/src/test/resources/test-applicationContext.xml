@@ -60,7 +60,12 @@
     </bean>   
     
     <bean id="superPersonDao" 
-               class="com.sg.superpeoplesightings.dao.SuperPersonDaoJdbcTemplateImpl">
+          class="com.sg.superpeoplesightings.dao.SuperPersonDaoJdbcTemplateImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    
+    <bean id="predefinedQueryDao" 
+              class="com.sg.superpeoplesightings.dao.PredefinedQueryDao">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 </beans>

@@ -5,7 +5,6 @@
  */
 package com.sg.superpeoplesightings.dao;
 
-import com.sg.superpeoplesightings.model.Location;
 import com.sg.superpeoplesightings.model.SuperPerson;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,19 +16,26 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * @author jstuart15
  */
 public class PredefinedQueryDao {
+
     SuperPersonDao superPersonDao;
+    private SightingDao sightingDao;
+    private SuperPowerDao superPowerDao;
+    private OrganizationDao orgDao;
+    private LocationDao locationDao;
 
     @Inject
-    public PredefinedQueryDao(SuperPersonDao superPersonDao) {
+    public PredefinedQueryDao(SuperPersonDao superPersonDao, SightingDao sightingDao) {
         this.superPersonDao = superPersonDao;
+        this.sightingDao = sightingDao;
+        
     }
 
     private JdbcTemplate jdbcTemplate;
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-    }    
-    
+    }
+
     //PREPARED STATEMENTS
     private static final String SQL_ALL_SUPER_PEOPLE_BY_LOCATION_ID
             = "select distinct s.super_person_id "
@@ -38,17 +44,24 @@ public class PredefinedQueryDao {
             + "inner join sightings on sightings.sighting_id = sps.sighting_id "
             + "inner join locations l on l.location_id = sightings.location_id "
             + "where l.location_id = ?";
-    
-    public List<SuperPerson> getAllSuperPeopleByLocationId(Location id){
+
+    public List<SuperPerson> getAllSuperPeopleByLocationId(int id) {
         List<SuperPerson> superPeople = new ArrayList<>();
         List<Integer> superPeopleIds = new ArrayList<>();
         
+//        superPeople = jdbcTemplate.query(SQL_ALL_SUPER_PEOPLE_BY_LOCATION_ID, 
+//                new SuperPersonMapper(), location.getLocationId());
+//        
+//        jdbcTemplate.queryForMap(SQL_ALL_SUPER_PEOPLE_BY_LOCATION_ID, 3);
+        
         superPeopleIds = jdbcTemplate
-                .queryForList(SQL_ALL_SUPER_PEOPLE_BY_LOCATION_ID, Integer.class, id);
+                .queryForList(SQL_ALL_SUPER_PEOPLE_BY_LOCATION_ID, 
+                        Integer.class, id);
         
         for (Integer superPersonId : superPeopleIds) {
             superPeople.add(superPersonDao.getSuperPersonById(superPersonId));
         }
         return superPeople;
+
     }
 }

@@ -62,5 +62,5 @@
     <bean id="superPersonDao" 
           class="com.sg.superpeoplesightings.dao.SuperPersonDaoJdbcTemplateImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
+    </bean> 
 </beans>
