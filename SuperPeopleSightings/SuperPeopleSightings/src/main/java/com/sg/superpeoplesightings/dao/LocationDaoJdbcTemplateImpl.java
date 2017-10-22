@@ -76,6 +76,7 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
         l.setLocationId(locationId);
     }
 
+    @Override
     public void deleteLocation(int locationId) {
         jdbcTemplate.update(SQL_DELETE_LOCATION, locationId);
     }
