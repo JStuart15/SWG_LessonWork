@@ -22,7 +22,7 @@
           class="org.apache.commons.dbcp2.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url"
-                  value="jdbc:mysql://localhost:3306/SuperPeopleSightings"/>
+                  value="jdbc:mysql://localhost:3306/SuperPeopleSightings_Test"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
         <property name="initialSize" value="5"/>
@@ -65,7 +65,7 @@
     </bean>
     
     <bean id="predefinedQueryDao" 
-              class="com.sg.superpeoplesightings.dao.PredefinedQueryDao">
+              class="com.sg.superpeoplesightings.dao.PredefinedQueryDaoJdbcTemplateImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 </beans>

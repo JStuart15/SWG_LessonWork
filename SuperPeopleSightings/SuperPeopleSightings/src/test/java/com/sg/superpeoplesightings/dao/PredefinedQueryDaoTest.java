@@ -30,7 +30,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class PredefinedQueryDaoTest {
 
-    private PredefinedQueryDao queryDao;
+    private PredefinedQueryDaoJdbcTemplateImpl queryDao;
     private SuperPersonDao superPersonDao;
     private SightingDao sightingDao;
     private SuperPowerDao superPowerDao;
@@ -59,7 +59,7 @@ public class PredefinedQueryDaoTest {
         superPersonDao = ctx.getBean("superPersonDao", SuperPersonDao.class);
         superPowerDao = ctx.getBean("superPowerDao", SuperPowerDao.class);
         locationDao = ctx.getBean("locationDao", LocationDao.class);
-        queryDao = ctx.getBean("predefinedQueryDao", PredefinedQueryDao.class);
+        queryDao = ctx.getBean("predefinedQueryDao", PredefinedQueryDaoJdbcTemplateImpl.class);
 
         //delete sightings, which deletes all super_people_sightings
         List<Sighting> sightings = sightingDao.getAllSightings();
