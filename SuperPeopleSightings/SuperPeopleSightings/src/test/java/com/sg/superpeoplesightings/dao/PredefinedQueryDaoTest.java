@@ -212,13 +212,13 @@ public class PredefinedQueryDaoTest {
 
         //TEST GET ALL LOCATIONS FOR A SUPER PERSON
         //test superman seen at two locations
-        List<Location> locationsFromDao = queryDao.getAllLocationsForASuperPerson(superMan);
+        List<Location> locationsFromDao = queryDao.getAllLocationsForASuperPerson(superMan.getSuperPersonId());
         assertEquals(2, locationsFromDao.size());
         assertTrue(locationsFromDao.contains(l2));
         assertTrue(locationsFromDao.contains(l));
 
         //test hulk, only seen at location l
-        List<Location> locationsFromDao2 = queryDao.getAllLocationsForASuperPerson(hulk);
+        List<Location> locationsFromDao2 = queryDao.getAllLocationsForASuperPerson(hulk.getSuperPersonId());
         assertEquals(1, locationsFromDao2.size());
         assertFalse(locationsFromDao2.contains(l2));
         assertTrue(locationsFromDao2.contains(l));
@@ -234,14 +234,14 @@ public class PredefinedQueryDaoTest {
         
         //TEST GET ALL SUPER PEOPLE FOR AN ORGANIZATION
         List<SuperPerson> avengersFromDao = 
-                queryDao.getAllSuperPeopleForAnOrg(avengers);
+                queryDao.getAllSuperPeopleForAnOrg(avengers.getOrganizationId());
         assertEquals(2, avengersFromDao.size());
         assertTrue(avengersFromDao.contains(ironMan));
         assertFalse(avengersFromDao.contains(batMan));
         
         //TEST GET ALL ORGANIZATIONS FOR A SUPER PERSON
         List<Organization> orgsFromDao = 
-                queryDao.getAllOrgsForASuperPerson(ironMan);
+                queryDao.getAllOrgsForASuperPerson(ironMan.getSuperPersonId());
         assertEquals(1, orgsFromDao.size());
         assertTrue(orgsFromDao.contains(avengers));
         assertFalse(orgsFromDao.contains(justiceLeague));

@@ -16,9 +16,11 @@ import com.sg.superpeoplesightings.model.Organization;
 import com.sg.superpeoplesightings.model.Sighting;
 import com.sg.superpeoplesightings.model.SuperPerson;
 import com.sg.superpeoplesightings.model.SuperPower;
+import java.time.LocalDate;
 import java.util.List;
 import javax.inject.Inject;
 import javax.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -194,5 +196,28 @@ public class RESTController {
         return queryDao.getAllSuperPeopleForALocation(id);
     }
 
-    
+    @RequestMapping(value = "/locationsforsuperperson/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Location> getAllLocationsForASuperPerson(@PathVariable("id") int id) {
+        return queryDao.getAllLocationsForASuperPerson(id);
+    }
+
+    @RequestMapping(value = "/sightingsfordate/{date}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Sighting> getAllSightingsForADate(@PathVariable
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        return queryDao.getAllSightingsForADate(date);
+    }
+
+    @RequestMapping(value = "/superpeoplefororg/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<SuperPerson> getAllSuperPeopleForAnOrg(@PathVariable("id") int id) {
+        return queryDao.getAllSuperPeopleForAnOrg(id);
+    }
+
+    @RequestMapping(value = "/orgsforsuperperson/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Organization> getAllOrgsForASuperPerson(@PathVariable("id") int id) {
+        return queryDao.getAllOrgsForASuperPerson(id);
+    }
 }

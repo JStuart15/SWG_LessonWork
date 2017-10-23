@@ -54,6 +54,8 @@ public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao{
             + "order by s.super_person_id";
 
     private static final String SQL_ALL_LOCATIONS_FOR_A_SUPER_PERSON
+            //@todo - should this be distinct because date is not included in query
+            //and duplicates show up.  Wait for additional requirements.
             = "select l.location_id "
             + "from locations l "
             + "inner join sightings s on s.location_id = l.location_id "
@@ -95,13 +97,13 @@ public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao{
     }
 
     @Override
-    public List<Location> getAllLocationsForASuperPerson(SuperPerson sp) {
+    public List<Location> getAllLocationsForASuperPerson(int spId) {
         List<Location> locationsSeen = new ArrayList<>();
         List<Integer> locationSeenIds = new ArrayList<>();
 
         locationSeenIds = jdbcTemplate
                 .queryForList(SQL_ALL_LOCATIONS_FOR_A_SUPER_PERSON,
-                        Integer.class, sp.getSuperPersonId());
+                        Integer.class, spId);
 
         for (Integer locationSeenId : locationSeenIds) {
             locationsSeen.add(locationDao.getLocationById(locationSeenId));
@@ -124,13 +126,13 @@ public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao{
     }
 
     @Override
-    public List<SuperPerson> getAllSuperPeopleForAnOrg(Organization org) {
+    public List<SuperPerson> getAllSuperPeopleForAnOrg(int orgId) {
         List<SuperPerson> superPeople = new ArrayList<>();
         List<Integer> superPeopleIds = new ArrayList<>();
 
         superPeopleIds = jdbcTemplate
                 .queryForList(SQL_ALL_SUPER_PEOPLE_FOR_A_ORG,
-                        Integer.class, org.getOrganizationId());
+                        Integer.class, orgId);
 
         for (Integer superPersonId : superPeopleIds) {
             superPeople.add(superPersonDao.getSuperPersonById(superPersonId));
@@ -139,12 +141,12 @@ public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao{
     }
 
     @Override
-    public List<Organization> getAllOrgsForASuperPerson(SuperPerson sp) {
+    public List<Organization> getAllOrgsForASuperPerson(int spId) {
         List<Organization> orgs = new ArrayList<>();
         List<Integer> orgIds = new ArrayList<>();
 
         orgIds = jdbcTemplate.queryForList(SQL_ALL_ORGS_FOR_A_SUPER_PERSON,
-                Integer.class, sp.getSuperPersonId());
+                Integer.class, spId);
 
         for (Integer orgId : orgIds) {
             orgs.add(orgDao.getOrganizationById(orgId));

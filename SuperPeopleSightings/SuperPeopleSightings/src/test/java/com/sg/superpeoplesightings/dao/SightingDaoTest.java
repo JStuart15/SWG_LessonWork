@@ -62,7 +62,7 @@ public class SightingDaoTest {
             sightingDao.deleteSighting((s.getSightingId()));
         }
 
-        //delete all organizations
+        //delete all organizations which deletes super_people_organizations
         List<Organization> orgs = orgDao.getAllOrganizations();
         for (Organization org : orgs) {
             orgDao.deleteOrganization(org.getOrganizationId());

@@ -20,11 +20,11 @@ public interface PredefinedQueryDao {
 
     public List<SuperPerson> getAllSuperPeopleForALocation(int locationId);
 
-    public List<Location> getAllLocationsForASuperPerson(SuperPerson sp);
+    public List<Location> getAllLocationsForASuperPerson(int spId);
 
     public List<Sighting> getAllSightingsForADate(LocalDate now);
 
-    public List<SuperPerson> getAllSuperPeopleForAnOrg(Organization org);
+    public List<SuperPerson> getAllSuperPeopleForAnOrg(int orgId);
 
-    public List<Organization> getAllOrgsForASuperPerson(SuperPerson sp);
+    public List<Organization> getAllOrgsForASuperPerson(int spId);
 }
