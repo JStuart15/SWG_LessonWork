@@ -147,7 +147,8 @@ public class SightingDaoTest {
         locationDao.addLocation(l);
         Location locationFromDao = locationDao.getLocationById(l.getLocationId());
         assertEquals(locationFromDao, l);
-
+        //@todo - don't need assertions here
+        
         //add a sighting
         Sighting moaSighting = new Sighting();
         List<SuperPerson> sightingSuperPeople = new ArrayList<>();

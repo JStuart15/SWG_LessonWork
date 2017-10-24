@@ -106,6 +106,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
                 sighting.getLocation().getLocationId(),
                 sighting.getDate().toString(),
                 sighting.getSightingId());
+            //java.sql.Date.valueOf(LocalDate);
         //delete super_people_sightings relationships and then reset them
         jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_SIGHTINGS,
                 sighting.getSightingId());
@@ -160,6 +161,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
                 .query(SQL_SELECT_SUPER_PEOPLE_BY_SIGHTING_ID,
                         new SuperPersonMapper(), sighting.getSightingId());
 
+        //@todo - refactor this
         List<Integer> superPeopleIds = new ArrayList<>();
         superPeople.forEach((superPerson) -> {
             superPeopleIds.add(superPerson.getSuperPersonId());
