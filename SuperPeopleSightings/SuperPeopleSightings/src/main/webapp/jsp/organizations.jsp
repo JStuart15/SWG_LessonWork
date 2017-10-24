@@ -16,7 +16,7 @@
             <div class="navbar">
                 <ul class="nav nav-tabs">
                     <li role="presentation"><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super People</a></li>
+                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
@@ -103,17 +103,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="latitude" class="col-md-4 control-label">Latitude:</label>
+                            <label for="phone" class="col-md-4 control-label">Phone:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="latitude" placeholder="Latitude"/>
+                                <input type="phone" class="form-control" name="phone" placeholder="Phone Number"/>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="longitude" class="col-md-4 control-label">Longitude</label>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" name="longitude" placeholder="Longitude"/>
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             <div class="col-md-offset-4 col-md-8">
                                 <input type="submit" class="btn btn-primary" value="Create Organization"/>
