@@ -57,6 +57,7 @@ public class LocationController {
         location.setCity(request.getParameter("city"));
         location.setState(request.getParameter("state"));
         location.setZip(request.getParameter("zip"));
+        location.setIsActive(1);
 
         try {
             location.setLatitude(Double.parseDouble(request.getParameter("latitude")));
@@ -86,7 +87,7 @@ public class LocationController {
         if (result.hasErrors()) {
             return "editLocationForm";
         }
-
+        location.setIsActive(1);
         locationDao.updateLocation(location);
         return "redirect:displayLocationsPage";
     }

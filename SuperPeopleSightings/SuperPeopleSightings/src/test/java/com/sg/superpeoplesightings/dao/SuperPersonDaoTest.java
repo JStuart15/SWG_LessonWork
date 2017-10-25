@@ -13,7 +13,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -115,6 +114,7 @@ public class SuperPersonDaoTest {
 
     @Test
     public void testAddSuperPersonNoSuperPower() {
+        //we want this to be allowed
         assertEquals(0, superPersonDao.getAllSuperPeople().size());
         //add 2 organizations
         Organization org = new Organization();
@@ -133,12 +133,8 @@ public class SuperPersonDaoTest {
         orgs.add(org);
         orgs.add(org2);
         sp.setOrgs(orgs);
-        try {
-            superPersonDao.addSuperPerson(sp);
-            fail();
-        } catch (Exception e) {
-            assertEquals(0, superPersonDao.getAllSuperPeople().size());
-        }
+        superPersonDao.addSuperPerson(sp);
+        assertEquals(1, superPersonDao.getAllSuperPeople().size());
     }
 
     @Test
@@ -189,7 +185,7 @@ public class SuperPersonDaoTest {
                 .getOrgs().get(0).getName());
         assertEquals("Supersonic Flight", superPersonFromDao
                 .getSuperPower().getDescription());
-        
+
         //Change name, org and superpower
         sp.setName("Batman 2017");
         sp.setSuperPower(superPower); //high tech gadgets
@@ -201,11 +197,11 @@ public class SuperPersonDaoTest {
                 .getSuperPersonById(sp.getSuperPersonId());
         assertEquals("Batman 2017", Batman2017.getName());
         assertEquals("Justice League", Batman2017.getOrgs().get(0).getName());
-        assertEquals("High Tech Gadgets", Batman2017.getSuperPower().getDescription());    
+        assertEquals("High Tech Gadgets", Batman2017.getSuperPower().getDescription());
         assertEquals(Batman2017, sp);
-        
+
     }
-    
+
     @Test
     public void testAddSuperPersonNoOrgs() {
         //adding super person without orgs should be allowed

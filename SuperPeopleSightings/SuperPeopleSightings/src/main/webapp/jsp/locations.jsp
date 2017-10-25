@@ -54,7 +54,7 @@
                                 </td>
                                 <td>
                                     <a href="deleteLocation?locationId=${currentLocation.locationId}">
-                                        Delete
+                                        Inactivate
                                     </a>
                                 </td>
                             </tr>
@@ -69,7 +69,9 @@
                         <div class="form-group">
                             <label for="name" class="col-md-4 control-label">Location Name:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="name" placeholder="Location Name"/>
+                                <input type="text" class="form-control" 
+                                       name="name" placeholder="Location Name"
+                                       required/>
                             </div>
                         </div>
                         <div class="form-group">

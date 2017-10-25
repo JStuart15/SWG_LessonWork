@@ -34,7 +34,12 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
 
     private static final String SQL_DELETE_LOCATION
             = "delete from locations where location_id = ?";
-
+    
+    private static final String SQL_INACTIVATE_LOCATION
+            = "update locations "
+            + "set isActive = false "
+            + "where location_id = ?";
+    
     private static final String SQL_UPDATE_LOCATION
             = "update locations "
             + "set name = ?, "
@@ -53,6 +58,10 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
 
     private static final String SQL_SELECT_ALL_LOCATIONS
             = "select * from locations";
+    
+    private static final String SQL_SELECT_ACTIVE_LOCATIONS
+            = "select * from locations "
+            + "where isActive = true";
 
     //METHODS
     @Override
@@ -79,7 +88,7 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
 
     @Override
     public void deleteLocation(int locationId) {
-        jdbcTemplate.update(SQL_DELETE_LOCATION, locationId);
+        jdbcTemplate.update(SQL_INACTIVATE_LOCATION, locationId);
     }
 
     @Override
@@ -111,7 +120,7 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
 
     @Override
     public List<Location> getAllLocations() {
-        return jdbcTemplate.query(SQL_SELECT_ALL_LOCATIONS,
+        return jdbcTemplate.query(SQL_SELECT_ACTIVE_LOCATIONS,
                 new LocationMapper());
     }
 

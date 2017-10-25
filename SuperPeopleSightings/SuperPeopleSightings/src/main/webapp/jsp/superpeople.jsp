@@ -71,7 +71,9 @@
                         <div class="form-group">
                             <label for="name" class="col-md-4 control-label">Name:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="name" placeholder="Super Human Name"/>
+                                <input type="text" class="form-control" 
+                                       name="name" required
+                                       placeholder="Super Human Name"/>
                             </div>
                         </div>
 

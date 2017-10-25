@@ -11,7 +11,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -82,7 +81,7 @@ public class LocationDaoTest {
         assertEquals(fromDao, l);
 
         locationDao.deleteLocation(l.getLocationId());
-        assertNull(locationDao.getLocationById(l.getLocationId()));
+        assertEquals(0, locationDao.getLocationById(l.getLocationId()).getIsActive());
     }
 
     @Test

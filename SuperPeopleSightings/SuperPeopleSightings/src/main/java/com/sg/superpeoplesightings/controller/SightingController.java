@@ -60,28 +60,28 @@ public class SightingController {
 
     @RequestMapping(value = "/createSighting", method = RequestMethod.POST)
     public String createSuperPerson(HttpServletRequest request) {
-        SuperPerson superPerson = new SuperPerson();
+        //SuperPerson superPerson = new SuperPerson();
         Sighting sighting = new Sighting();
         List<SuperPerson> superPeople = new ArrayList<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String[] superPeopleIds = request.getParameterValues("spSelect");
-        
+        Location location = new Location();
+
+        //set the date of the sighting
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         sighting.setDate(LocalDate.parse(request.getParameter("date"), formatter));
-        superPerson.setName(request.getParameter("name"));
-        superPerson.setDescription(request.getParameter("description"));
-        //get and set superpower from select
-        superPower = superPowerDao
-                .getSuperPowerById(Integer.parseInt(request.getParameter("power")));
-        superPerson.setSuperPower(superPower);
-
-        //get and set organizations from multi-select
-        for (String orgId : orgIds) {
-            orgs.add(orgDao.getOrganizationById(Integer.parseInt(orgId)));
+        //set the location of the sighting
+        location = locationDao.getLocationById(
+                Integer.parseInt(request.getParameter("location")));
+        sighting.setLocation(location);
+        //get and set super humans sighting from the multi-select
+        for (String superPeopleId : superPeopleIds) {
+            superPeople.add(superPersonDao
+                    .getSuperPersonById(Integer.parseInt(superPeopleId)));
         }
-        superPerson.setOrgs(orgs);
+        sighting.setSuperPeople(superPeople);
 
-        superPersonDao.addSuperPerson(superPerson);
-        return "redirect:displaySuperPeoplePage";
+        sightingDao.addSighting(sighting);
+        return "redirect:displaySightingsPage";
     }
 //    
 //    @RequestMapping(value = "/displaySuperPersonDetails", method = RequestMethod.GET)

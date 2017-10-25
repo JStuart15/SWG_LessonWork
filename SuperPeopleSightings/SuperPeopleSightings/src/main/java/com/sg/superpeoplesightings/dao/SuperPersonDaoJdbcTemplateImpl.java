@@ -76,10 +76,15 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     //@todo - a service validation should make sure that we have a superPower
     // before calling the addSuperPerson method.
     public SuperPerson addSuperPerson(SuperPerson superPerson) {
-        jdbcTemplate.update(SQL_INSERT_SUPER_PERSON,
+        try {
+            jdbcTemplate.update(SQL_INSERT_SUPER_PERSON,
                 superPerson.getSuperPower().getSuperPowerId(),
                 superPerson.getName(),
                 superPerson.getDescription());
+        } catch (Exception e) {
+            //we don't require superpower to be set
+        }
+
 
         superPerson.setSuperPersonId(jdbcTemplate.queryForObject(
                 "select LAST_INSERT_ID()", Integer.class));

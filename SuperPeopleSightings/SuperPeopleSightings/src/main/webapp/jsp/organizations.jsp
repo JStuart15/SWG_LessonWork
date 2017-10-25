@@ -70,7 +70,10 @@
                             <div class="form-group">
                                 <label for="name" class="col-md-4 control-label">Organization Name:</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="orgname" class="form-control" placeholder="Organization Name"/>
+                                    <input type="text" name="orgname" 
+                                           class="form-control" 
+                                           placeholder="Organization Name" 
+                                           required="true"/>
                                 </div>
                             </div>
                             <div class="form-group">
