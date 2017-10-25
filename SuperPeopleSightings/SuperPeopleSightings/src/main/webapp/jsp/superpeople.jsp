@@ -96,7 +96,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="organizations" class="col-md-4 control-label">Organizations</label>
+                            <label for="organizations" class="col-md-4 control-label">Organizations:</label>
                             <div class="col-md-8">
                                 <select multiple class="form-control" id="orgMultiSelect" name="orgSelect">
                                     <c:forEach var="org" items="${orgList}">

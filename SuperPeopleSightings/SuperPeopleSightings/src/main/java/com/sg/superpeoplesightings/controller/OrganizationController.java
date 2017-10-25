@@ -40,7 +40,7 @@ public class OrganizationController {
     }
 
     @RequestMapping(value = "/displayOrganizationDetails", method = RequestMethod.GET)
-    public String displayOrganizationDetails(HttpServletRequest request, Model model, BindingResult result) {
+    public String displayOrganizationDetails(HttpServletRequest request, Model model) {
         String organizationIdParameter = request.getParameter("organizationId");
         int organizationId = Integer.parseInt(organizationIdParameter);
         Organization organization = organizationDao.getOrganizationById(organizationId);
@@ -60,7 +60,7 @@ public class OrganizationController {
     @RequestMapping(value = "/createOrganization", method = RequestMethod.POST)
     public String createOrganization(HttpServletRequest request) {
         Organization organization = new Organization();
-        organization.setName(request.getParameter("name"));
+        organization.setName(request.getParameter("orgname"));
         organization.setDescription(request.getParameter("description"));
         organization.setStreet(request.getParameter("street"));
         organization.setCity(request.getParameter("city"));
@@ -74,16 +74,16 @@ public class OrganizationController {
         return "redirect:displayOrganizationsPage";
     }
     
-    @RequestMapping(value = "/createOrganizationErrors", method = RequestMethod.POST)
-    public String createOrganizationErrors(@Valid @ModelAttribute("organization") Organization organization, BindingResult result) {
-        if(result.hasErrors()){
-            return "displayOrganizationsPage";
-        }
-        organizationDao.addOrganization(organization);
-
-        //redirect to the displayOrganizations page to reload it
-        return "redirect:displayOrganizationsPage";
-    }
+//    @RequestMapping(value = "/createOrganizationWithErrors", method = RequestMethod.POST)
+//    public String createOrganizationWithErrors(@Valid @ModelAttribute("organization") Organization organization, BindingResult result) {
+//        if(result.hasErrors()){
+//            return "displayOrganizationsPage";
+//        }
+//        organizationDao.addOrganization(organization);
+//
+//        //redirect to the displayOrganizations page to reload it
+//        return "redirect:displayOrganizationsPage";
+//    }
 
     @RequestMapping(value = "/deleteOrganization", method = RequestMethod.GET)
     public String deleteOrganization(HttpServletRequest request) {

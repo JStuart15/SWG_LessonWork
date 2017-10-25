@@ -49,12 +49,12 @@
                                     <c:out value="${currentOrganization.state}"/>
                                 </td>
                                 <td>
-                                    <a href="displayEditOrganizationForm?organizationId=${currentOrganization.organizationId}">
+                                    <a href="displayEditLocationForm?locationId=${currentOrganization.organizationId}">
                                         Edit
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="deleteOrganization?organizationId=${currentOrganization.organizationId}">
+                                    <a href="deleteLocation?locationId=${currentOrganization.organizationId}">
                                         Delete
                                     </a>
                                 </td>
@@ -70,7 +70,8 @@
                             <div class="form-group">
                                 <label for="name" class="col-md-4 control-label">Organization Name:</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="orgname" class="form-control" placeholder="Organization Name"/>
+                                    <input type="text" class="form-control" id="add-name"
+                                           path="name" placeholder="Organization Name"/>
                                 </div>
                             </div>
                             <div class="form-group">
