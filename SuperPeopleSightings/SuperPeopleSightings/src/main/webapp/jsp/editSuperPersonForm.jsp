@@ -57,23 +57,19 @@
                                                 <c:out value="${power.description}"/>
                                             </option>
                                     </c:when>
-
                                     <c:otherwise>
                                         <option value="${power.superPowerId}">
                                             <c:out value="${power.description}"/>
                                         </option>
                                     </c:otherwise>
                                 </c:choose>
-                                <option value="${power.superPowerId}">
-                                    <c:out value="${power.description}"/>
-                                </option>
                             </c:forEach>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-4 col-md-8">
-                        <input type="submit" class="btn btn-primary" value="Add New Super Power"/>
+                        <input type="submit" class="btn btn-default" value="Add New Super Power"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -106,10 +102,9 @@
                 </div>
             </div>
            
-            
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
-                    <input type="submit" class="btn btn-primary" value="Add New Organization"/>
+                    <input type="submit" class="btn btn-default" value="Add New Organization"/>
                 </div>
             </div>
             <div class="form-group">
