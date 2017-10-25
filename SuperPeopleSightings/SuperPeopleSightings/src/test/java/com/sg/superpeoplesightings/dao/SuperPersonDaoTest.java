@@ -133,7 +133,7 @@ public class SuperPersonDaoTest {
         orgs.add(org2);
         sp.setOrgs(orgs);
         superPersonDao.addSuperPerson(sp);
-        assertEquals(0, superPersonDao.getAllSuperPeople().size());
+        assertEquals(1, superPersonDao.getAllSuperPeople().size());
     }
 
     @Test

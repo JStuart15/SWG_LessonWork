@@ -65,18 +65,19 @@ public class SuperPersonController {
         SuperPower superPower = new SuperPower();
         List<Organization> orgs = new ArrayList<>();
         String[] orgIds = request.getParameterValues("orgSelect");
-        
+
         superPerson.setName(request.getParameter("name"));
         superPerson.setDescription(request.getParameter("description"));
         //get and set superpower from select
+
         try {
             superPower = superPowerDao
                     .getSuperPowerById(Integer.parseInt(request.getParameter("power")));
             superPerson.setSuperPower(superPower);
         } catch (Exception e) {
-            //we don't require a superpower to be entered
+            //we don't require superpowers
         }
-        
+
         //get and set organizations from multi-select
         try {
             for (String orgId : orgIds) {
@@ -86,7 +87,7 @@ public class SuperPersonController {
         } catch (Exception e) {
             //we don't require orgs to be set
         }
-        
+
         superPersonDao.addSuperPerson(superPerson);
         return "redirect:displaySuperPeoplePage";
     }

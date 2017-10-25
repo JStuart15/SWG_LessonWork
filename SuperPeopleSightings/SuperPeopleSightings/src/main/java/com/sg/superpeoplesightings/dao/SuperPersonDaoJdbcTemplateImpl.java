@@ -83,6 +83,10 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
                 superPerson.getDescription());
         } catch (Exception e) {
             //we don't require superpower to be set
+            jdbcTemplate.update(SQL_INSERT_SUPER_PERSON,
+                null,
+                superPerson.getName(),
+                superPerson.getDescription());
         }
 
 

@@ -87,7 +87,7 @@
                         <div class="form-group">
                             <label for="power" class="col-md-4 control-label">Power:</label>
                             <div class="col-md-8">
-                                <select class="form-control" name="power" required>
+                                <select class="form-control" name="power">
                                     <option value="" selected disabled>Choose a power</option>
                                     <c:forEach var="power" items="${superPowerList}">
                                         <option value="${power.superPowerId}">
@@ -95,6 +95,11 @@
                                         </option>
                                     </c:forEach>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-8">
+                                <a href="${pageContext.request.contextPath}/displaySuperPowersPage" class="btn btn-default">Add Super Power</a>
                             </div>
                         </div>
                         <div class="form-group">
