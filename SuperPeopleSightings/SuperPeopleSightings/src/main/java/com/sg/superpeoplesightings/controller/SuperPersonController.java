@@ -5,18 +5,18 @@
  */
 package com.sg.superpeoplesightings.controller;
 
+import com.sg.superpeoplesightings.dao.OrganizationDao;
 import com.sg.superpeoplesightings.dao.SuperPersonDao;
 import com.sg.superpeoplesightings.dao.SuperPowerDao;
+import com.sg.superpeoplesightings.model.Organization;
 import com.sg.superpeoplesightings.model.SuperPerson;
 import com.sg.superpeoplesightings.model.SuperPower;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,18 +29,25 @@ public class SuperPersonController {
 
     SuperPersonDao superPersonDao;
     SuperPowerDao superPowerDao;
+    OrganizationDao orgDao;
 
     @Inject
-    public SuperPersonController(SuperPersonDao orgDao, SuperPowerDao superPowerDao) {
-        this.superPersonDao = orgDao;
+    public SuperPersonController(SuperPersonDao superPersonDao, SuperPowerDao superPowerDao,
+            OrganizationDao orgDao) {
+        this.superPersonDao = superPersonDao;
         this.superPowerDao = superPowerDao;
+        this.orgDao = orgDao;
     }
 
-    @RequestMapping(value = "/displaySuperPersonsPage", method = RequestMethod.GET)
+    @RequestMapping(value = "/displaySuperPeoplePage", method = RequestMethod.GET)
     public String displaySuperPersonsPage(Model model) {
         List<SuperPerson> superPersonList = superPersonDao.getAllSuperPeople();
+        List<SuperPower> superPowerList = superPowerDao.getAllSuperPowers();//@todo - high - sort the list by name
+        List<Organization> orgList = orgDao.getAllOrganizations(); //@todo - high - sort by orgName
         model.addAttribute("superPersonList", superPersonList);
-        return "superPersons";
+        model.addAttribute("superPowerList", superPowerList);
+        model.addAttribute("orgList", orgList);
+        return "superpeople";
     }
 
     @RequestMapping(value = "/displaySuperPersonDetails", method = RequestMethod.GET)
@@ -56,43 +63,58 @@ public class SuperPersonController {
     public String createSuperPerson(HttpServletRequest request) {
         SuperPerson superPerson = new SuperPerson();
         SuperPower superPower = new SuperPower();
+        List<Organization> orgs = new ArrayList<>();
+        String[] orgIds = request.getParameterValues("orgSelect");
+        
         superPerson.setName(request.getParameter("name"));
         superPerson.setDescription(request.getParameter("description"));
-        superPerson.setSuperPower(request.getParameter("street"));
-
-
+        //get and set superpower from select
+        superPower = superPowerDao
+                .getSuperPowerById(Integer.parseInt(request.getParameter("power")));
+        superPerson.setSuperPower(superPower);
+        
+        //get and set organizations from multi-select
+        for (String orgId : orgIds) {
+            orgs.add(orgDao.getOrganizationById(Integer.parseInt(orgId)));
+        }
+        superPerson.setOrgs(orgs);
+        
         superPersonDao.addSuperPerson(superPerson);
-
-        //redirect to the displaySuperPersons page to reload it
-        return "redirect:displaySuperPersonsPage";
+        return "redirect:displaySuperPeoplePage";
     }
+//
 
     @RequestMapping(value = "/deleteSuperPerson", method = RequestMethod.GET)
     public String deleteSuperPerson(HttpServletRequest request) {
         String superPersonIdParameter = request.getParameter("superPersonId");
         int superPersonId = Integer.parseInt(superPersonIdParameter);
         superPersonDao.deleteSuperPerson(superPersonId);
-        return "redirect:displaySuperPersonsPage";
+        return "redirect:displaySuperPeoplePage";
     }
-
-    @RequestMapping(value = "/editSuperPerson", method = RequestMethod.POST)
-    public String editSuperPerson(@Valid @ModelAttribute("superPerson") SuperPerson superPerson,
-            BindingResult result) {
-        //@todo - add validations to the superPerson object.
-        if (result.hasErrors()) {
-            return "editSuperPersonForm";
-        }
-
-        superPersonDao.updateSuperPerson(superPerson);
-        return "redirect:displaySuperPersonsPage";
-    }
+//
+//    @RequestMapping(value = "/editSuperPerson", method = RequestMethod.POST)
+//    public String editSuperPerson(@Valid @ModelAttribute("superPerson") SuperPerson superPerson,
+//            BindingResult result) {
+//        //@todo - add validations to the superPerson object.
+//        if (result.hasErrors()) {
+//            return "editSuperPersonForm";
+//        }
+//
+//        superPersonDao.updateSuperPerson(superPerson);
+//        return "redirect:displaySuperPersonsPage";
+//    }
+//
 
     @RequestMapping(value = "/displayEditSuperPersonForm", method = RequestMethod.GET)
     public String displayEditSuperPersonForm(HttpServletRequest request, Model model) {
+        List<SuperPower> superPowerList = superPowerDao.getAllSuperPowers();//@todo - high - sort the list by name
+        List<Organization> orgList = orgDao.getAllOrganizations(); //@todo - high - sort by orgName
         String superPersonIdParameter = request.getParameter("superPersonId");
         int superPersonId = Integer.parseInt(superPersonIdParameter);
         SuperPerson superPerson = superPersonDao.getSuperPersonById(superPersonId);
         model.addAttribute("superPerson", superPerson);
+        model.addAttribute("superPowerList", superPowerList);
+        model.addAttribute("orgList", orgList);
         return "editSuperPersonForm";
     }
 }
