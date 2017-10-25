@@ -78,74 +78,109 @@
                 <div class="form-group">
                     <label for="organizations" class="col-md-4 control-label">Organizations</label>
                     <div class="col-md-8">
-                        <select multiple class="form-control" id="orgMultiSelect">
 
+                        <select multiple class="form-control" id="orgMultiSelect">
                             <c:forEach var="org" items="${orgList}">
                                 <c:forEach var="personOrgs" items="${superPerson.orgs}">
-                                    <c:choose>
-                                        <c:when test="${personOrgs.organizationId == org.organizationId}">
-                                            <option 
-                                                value="${org.organizationId}" 
-                                                selected>
-                                                <c:out value="${org.name}"/>
-                                            </option>
-                                        </c:when>
-                                        <c:when test="${personOrgs.organizationId != org.organizationId}">
-                                            <option 
-                                                value="${org.organizationId}">
-                                                <c:out value="${org.name}"/>
-                                            </option>
-                                        </c:when>
-                                    </c:choose>
-                                </c:forEach>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="organizations" class="col-md-4 control-label">Organizations</label>
-                    <div class="col-md-8">
-                        <sf:select path="${orgs.organizationId}" multiple="true" class="form-control" id="orgMultiSelect">
-                            <sf:option value="No organizational affiliation"/>
-                            <c:forEach var="daoOrg" items="${orgList}">
-                                <c:forEach var="personOrg" items="${superPerson.orgs}">
-                                    <c:choose>
-                                        <c:when test="${personOrg.organizationId == daoOrg.organizationId}">
-                                            <sf:option 
-                                                value="${daoOrg.organizationId}" 
+                                    <c:if test="${personOrgs.organizationId == org.organizationId}">
+                                        <option value="${org.organizationId}" 
                                                 selected="true">
-                                                <c:out value="${daoOrg.name}"/>
-                                            </sf:option>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <sf:option 
-                                                value="${daoOrg.organizationId}">
-                                                <c:out value="${daoOrg.name}"/>
-                                            </sf:option>
-                                        </c:otherwise>
-                                    </c:choose>
+                                            <c:out value="${org.name}"/>
+                                        </option>
+                                    </c:if>
                                 </c:forEach>
                             </c:forEach>
-                        </sf:select>
-                    </div>
-
+                            <c:forEach var="org" items="${orgList}">
+                                <c:forEach var="personOrgs" items="${superPerson.orgs}">
+                                    <c:if test="${personOrgs.organizationId != org.organizationId}">
+                                        <option value="${org.organizationId}" 
+                                                <c:out value="${org.name}"/>
+                                    </option>
+                                </c:if>
+                            </c:forEach>
+                        </c:forEach>
+                    </select>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-offset-4 col-md-8">
-                        <input type="submit" class="btn btn-primary" value="Add New Organization"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-4 col-md-8">
-                        <input type="submit" class="btn btn-primary" value="Update Super Human"/>
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="organizations" class="col-md-4 control-label">Organizations</label>
+                <div class="col-md-8">
+                    <sf:select path="${orgs.organizationId}" multiple="true" class="form-control" id="orgMultiSelect">
+                        <sf:option value="No organizational affiliation"/>
+                        <c:forEach var="daoOrg" items="${orgList}">
+                            <c:set var="isSelected" value="false"/>
+                            <c:forEach var="personOrg" items="${superPerson.orgs}">
+                                <c:choose>
+                                    <c:when test="${personOrg.organizationId == daoOrg.organizationId}">
+                                        <sf:option 
+                                            value="${daoOrg.organizationId}" 
+                                            selected="true">
+                                            <c:out value="${daoOrg.name}"/>
+                                        </sf:option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <sf:option 
+                                            value="${daoOrg.organizationId}">
+                                            <c:out value="${daoOrg.name}"/>
+                                        </sf:option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </c:forEach>
+                    </sf:select>
                 </div>
 
+            </div>
+            <div class="form-group">
+                <label for="organizations" class="col-md-4 control-label">Organizations</label>
+                <div class="col-md-8">
+                    <sf:select path="${orgs.organizationId}" multiple="true" class="form-control" id="orgMultiSelect">
+                        <sf:option value="No organizational affiliation"/>
+                        <c:forEach var="daoOrg" items="${orgList}">
+                            <c:forEach var="personOrg" items="${superPerson.orgs}">
+                                <c:choose>
+                                    <c:when test="${personOrg.organizationId == daoOrg.organizationId}">
+                                        <sf:option 
+                                            value="${daoOrg.organizationId}" 
+                                            selected="true">
+                                            <c:out value="${daoOrg.name}"/>
+                                        </sf:option>
+                                    </c:when>
+                                </c:choose>
+                            </c:forEach>
+                        </c:forEach>
+                        <c:forEach var="daoOrg" items="${orgList}">
+                            <c:forEach var="personOrg" items="${superPerson.orgs}">
+                                <c:choose>
+                                    <c:when test="${personOrg.organizationId != daoOrg.organizationId}">
+                                        <sf:option 
+                                            value="${daoOrg.organizationId}" >
+                                            <c:out value="${daoOrg.name}"/>
+                                        </sf:option>
+                                    </c:when>
+                                </c:choose>
+                            </c:forEach>
+                        </c:forEach>
+                    </sf:select>
+                </div>
 
-            </sf:form>
-        </div>
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-    </body>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="submit" class="btn btn-primary" value="Add New Organization"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="submit" class="btn btn-primary" value="Update Super Human"/>
+                </div>
+            </div>
+
+
+        </sf:form>
+    </div>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+</body>
 </html>

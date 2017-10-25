@@ -57,8 +57,13 @@ public class LocationController {
         location.setCity(request.getParameter("city"));
         location.setState(request.getParameter("state"));
         location.setZip(request.getParameter("zip"));
-        location.setLatitude(Double.parseDouble(request.getParameter("latitude")));
-        location.setLongitude(Double.parseDouble(request.getParameter("longitude")));
+
+        try {
+            location.setLatitude(Double.parseDouble(request.getParameter("latitude")));
+            location.setLongitude(Double.parseDouble(request.getParameter("longitude")));
+        } catch (Exception e) {
+            //don't set anything if the values are left blank
+        }
 
         locationDao.addLocation(location);
 

@@ -40,12 +40,21 @@ public class OrganizationController {
     }
 
     @RequestMapping(value = "/displayOrganizationDetails", method = RequestMethod.GET)
-    public String displayOrganizationDetails(HttpServletRequest request, Model model) {
+    public String displayOrganizationDetails(HttpServletRequest request, Model model, BindingResult result) {
         String organizationIdParameter = request.getParameter("organizationId");
         int organizationId = Integer.parseInt(organizationIdParameter);
         Organization organization = organizationDao.getOrganizationById(organizationId);
         model.addAttribute("organization", organization);
         return "organizationDetails";
+    }
+
+    @RequestMapping(value = "/displayEditOrganizationForm", method = RequestMethod.GET)
+    public String displayEditOrganizationForm(HttpServletRequest request, Model model) {
+        String organizationIdParameter = request.getParameter("organizationId");
+        int organizationId = Integer.parseInt(organizationIdParameter);
+        Organization organization = organizationDao.getOrganizationById(organizationId);
+        model.addAttribute("organization", organization);
+        return "editOrganizationForm";
     }
 
     @RequestMapping(value = "/createOrganization", method = RequestMethod.POST)
@@ -59,6 +68,17 @@ public class OrganizationController {
         organization.setZip(request.getParameter("zip"));
         organization.setPhone(request.getParameter("phone"));
 
+        organizationDao.addOrganization(organization);
+
+        //redirect to the displayOrganizations page to reload it
+        return "redirect:displayOrganizationsPage";
+    }
+    
+    @RequestMapping(value = "/createOrganizationErrors", method = RequestMethod.POST)
+    public String createOrganizationErrors(@Valid @ModelAttribute("organization") Organization organization, BindingResult result) {
+        if(result.hasErrors()){
+            return "displayOrganizationsPage";
+        }
         organizationDao.addOrganization(organization);
 
         //redirect to the displayOrganizations page to reload it
@@ -83,14 +103,5 @@ public class OrganizationController {
 
         organizationDao.updateOrganization(organization);
         return "redirect:displayOrganizationsPage";
-    }
-
-    @RequestMapping(value = "/displayEditOrganizationForm", method = RequestMethod.GET)
-    public String displayEditOrganizationForm(HttpServletRequest request, Model model) {
-        String organizationIdParameter = request.getParameter("organizationId");
-        int organizationId = Integer.parseInt(organizationIdParameter);
-        Organization organization = organizationDao.getOrganizationById(organizationId);
-        model.addAttribute("organization", organization);
-        return "editOrganizationForm";
     }
 }
