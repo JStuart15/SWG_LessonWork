@@ -87,7 +87,7 @@
                         <div class="form-group">
                             <label for="power" class="col-md-4 control-label">Power:</label>
                             <div class="col-md-8">
-                                <select class="form-control" name="power">
+                                <select class="form-control" name="power" required>
                                     <option value="" selected disabled>Choose a power</option>
                                     <c:forEach var="power" items="${superPowerList}">
                                         <option value="${power.superPowerId}">

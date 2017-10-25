@@ -165,9 +165,14 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     }
 
     public SuperPower findSuperPowerForSuperPerson(SuperPerson sp) {
-        return jdbcTemplate.queryForObject(SQL_SELECT_SUPER_POWER_BY_SUPER_PERSON_ID,
-                new SuperPowerMapper(),
-                sp.getSuperPersonId());
+        try {
+            return jdbcTemplate.queryForObject(SQL_SELECT_SUPER_POWER_BY_SUPER_PERSON_ID,
+                    new SuperPowerMapper(),
+                    sp.getSuperPersonId());
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
     private List<Organization> findOrgsForSuperPerson(SuperPerson sp) {

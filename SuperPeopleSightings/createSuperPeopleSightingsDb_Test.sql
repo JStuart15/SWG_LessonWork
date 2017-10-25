@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS super_people;
 
 CREATE TABLE IF NOT EXISTS super_people (
   super_person_id INT NOT NULL AUTO_INCREMENT,
-  super_power_id INT NOT NULL,
+  super_power_id INT,
   name VARCHAR(45) NOT NULL,
   description VARCHAR(255) NULL,
   PRIMARY KEY (super_person_id),
