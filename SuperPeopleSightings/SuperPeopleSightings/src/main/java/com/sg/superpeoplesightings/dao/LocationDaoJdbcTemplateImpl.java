@@ -29,7 +29,8 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
 
     //PREPARED STATEMENTS
     private static final String SQL_INSERT_LOCATION
-            = "insert into locations (name, description, street, city, state, zip, latitude, longitude, isActive) "
+            = "insert into locations (name, description, street, city, "
+            + "state, zip, latitude, longitude, isActive) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String SQL_DELETE_LOCATION
@@ -61,7 +62,7 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
     
     private static final String SQL_SELECT_ACTIVE_LOCATIONS
             = "select * from locations "
-            + "where isActive = true";
+            + "where isActive = True";
 
     //METHODS
     @Override

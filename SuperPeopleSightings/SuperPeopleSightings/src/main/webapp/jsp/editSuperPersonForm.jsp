@@ -18,8 +18,8 @@
             <hr>
             <div class="navbar">
                 <ul class="nav nav-tabs">
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super People</a></li>
+                    <li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
+                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>

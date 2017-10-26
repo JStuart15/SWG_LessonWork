@@ -29,13 +29,21 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
 
     //PREPARED STATEMENTS
     private static final String SQL_INSERT_SUPER_POWER
-            = "insert into super_powers (description) values (?)";
+            = "insert into super_powers (description, isActive) values (?,?)";
 
     private static final String SQL_SELECT_ALL_SUPER_POWERS
             = "select * from super_powers";
 
+    private static final String SQL_SELECT_ACTIVE_SUPER_POWERS
+            = "select * from super_powers where isActive = True";
+    
     private static final String SQL_DELETE_SUPER_POWER
             = "delete from super_powers where super_power_id = ?";
+
+    private static final String SQL_INACTIVATE_SUPER_POWER
+            = "update super_powers "
+            + "set isActive = false "
+            + "where super_power_id = ?";
 
     private static final String SQL_SELECT_SUPER_POWER_BY_SUPER_POWER_ID
             = "select * from super_powers where super_power_id = ?";
@@ -48,7 +56,7 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public SuperPower addSuperPower(SuperPower superPower) {
         jdbcTemplate.update(SQL_INSERT_SUPER_POWER,
-                superPower.getDescription());
+                superPower.getDescription(), 1);
 
         int superPowerId = jdbcTemplate.queryForObject("select LAST_INSERT_ID()",
                 Integer.class);
@@ -59,7 +67,7 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
 
     @Override
     public void deleteSuperPower(int superPowerId) {
-        jdbcTemplate.update(SQL_DELETE_SUPER_POWER, superPowerId);
+        jdbcTemplate.update(SQL_INACTIVATE_SUPER_POWER, superPowerId);
     }
 
     @Override
@@ -72,7 +80,8 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
     @Override
     public SuperPower getSuperPowerById(int id) {
         try {
-            return jdbcTemplate.queryForObject(SQL_SELECT_SUPER_POWER_BY_SUPER_POWER_ID,
+            return jdbcTemplate.queryForObject(
+                    SQL_SELECT_SUPER_POWER_BY_SUPER_POWER_ID,
                     new SuperPowerMapper(), id);
         } catch (DataAccessException e) {
             return null;
@@ -81,10 +90,10 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
 
     @Override
     public List<SuperPower> getAllSuperPowers() {
-        return jdbcTemplate.query(SQL_SELECT_ALL_SUPER_POWERS,
+        return jdbcTemplate.query(SQL_SELECT_ACTIVE_SUPER_POWERS,
                 new SuperPowerMapper());
     }
-    
+
     //MAPPER
     protected static final class SuperPowerMapper implements RowMapper<SuperPower> {
 

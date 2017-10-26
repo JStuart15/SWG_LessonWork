@@ -83,16 +83,16 @@ public class SightingController {
         sightingDao.addSighting(sighting);
         return "redirect:displaySightingsPage";
     }
-//    
-//    @RequestMapping(value = "/displaySuperPersonDetails", method = RequestMethod.GET)
-//    public String displaySuperPersonDetails(HttpServletRequest request, Model model) {
-//        String superPersonIdParameter = request.getParameter("superPersonId");
-//        int superPersonId = Integer.parseInt(superPersonIdParameter);
-//        SuperPerson superPerson = superPersonDao.getSuperPersonById(superPersonId);
-//        model.addAttribute("superPerson", superPerson);
-//        return "superPersonDetails";
-//    }
-//
+    
+    @RequestMapping(value = "/displaySightingDetails", method = RequestMethod.GET)
+    public String displaySuperPersonDetails(HttpServletRequest request, Model model) {
+        String sightingIdParameter = request.getParameter("superPersonId");
+        int superPersonId = Integer.parseInt(sightingIdParameter);
+        SuperPerson superPerson = superPersonDao.getSuperPersonById(superPersonId);
+        model.addAttribute("superPerson", superPerson);
+        return "superPersonDetails";
+    }
+
 
 ////
 //
