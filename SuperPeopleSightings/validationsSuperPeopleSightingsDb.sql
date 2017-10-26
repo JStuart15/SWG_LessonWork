@@ -31,7 +31,7 @@ from super_people s
 inner join super_people_sightings sps on sps.super_person_id = s.super_person_id
 inner join sightings on sightings.sighting_id = sps.sighting_id
 inner join locations l on l.location_id = sightings.location_id
-where l.location_id = 6;
+where l.location_id = 1;
 
 -- The system must be able to report all of the locations where a particular superhero has been seen.
 select l.location_id
@@ -59,3 +59,5 @@ from organizations o
 inner join super_people_organizations spo on spo.organization_id = o.organization_id
 inner join super_people sp on sp.super_person_id = spo.super_person_id
 where sp.super_person_id = 124;
+
+select * from sightings;

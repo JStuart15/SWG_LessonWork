@@ -15,8 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -91,7 +94,7 @@ public class SuperPersonController {
         superPersonDao.addSuperPerson(superPerson);
         return "redirect:displaySuperPeoplePage";
     }
-//
+
 
     @RequestMapping(value = "/deleteSuperPerson", method = RequestMethod.GET)
     public String deleteSuperPerson(HttpServletRequest request) {
@@ -100,19 +103,19 @@ public class SuperPersonController {
         superPersonDao.deleteSuperPerson(superPersonId);
         return "redirect:displaySuperPeoplePage";
     }
-//
-//    @RequestMapping(value = "/editSuperPerson", method = RequestMethod.POST)
-//    public String editSuperPerson(@Valid @ModelAttribute("superPerson") SuperPerson superPerson,
-//            BindingResult result) {
-//        //@todo - add validations to the superPerson object.
-//        if (result.hasErrors()) {
-//            return "editSuperPersonForm";
-//        }
-//
-//        superPersonDao.updateSuperPerson(superPerson);
-//        return "redirect:displaySuperPersonsPage";
-//    }
-//
+
+    @RequestMapping(value = "/editSuperPerson", method = RequestMethod.POST)
+    public String editSuperPerson(@Valid @ModelAttribute("superPerson") SuperPerson superPerson,
+            BindingResult result) {
+        //@todo - add validations to the superPerson object.
+        if (result.hasErrors()) {
+            return "editSuperPersonForm";
+        }
+
+        superPersonDao.updateSuperPerson(superPerson);
+        return "redirect:displaySuperPersonsPage";
+    }
+
 
     @RequestMapping(value = "/displayEditSuperPersonForm", method = RequestMethod.GET)
     public String displayEditSuperPersonForm(HttpServletRequest request, Model model) {

@@ -17,6 +17,7 @@ DROP TABLE IF EXISTS super_powers;
 CREATE TABLE IF NOT EXISTS super_powers (
   super_power_id INT NOT NULL AUTO_INCREMENT,
   description VARCHAR(45) NOT NULL,
+  isActive TINYINT(1) NULL DEFAULT 1,
   PRIMARY KEY (super_power_id)
   );
 
