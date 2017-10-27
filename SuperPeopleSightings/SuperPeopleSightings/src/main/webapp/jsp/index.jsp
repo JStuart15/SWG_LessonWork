@@ -54,10 +54,10 @@
                             <c:out value="${currentSighting.location.name}"/> on
                             <c:out value="${currentSighting.date}"/>
                         </a>
-                        <p hidden value="${currentSighting.location.latitude}"
-                           id="sighting-${theCount.count}-latitude"></p>
-                        <p hidden value="${currentSighting.location.longitude}"
-                           id="sighting-${theCount.count}-latitude"></p>
+                        <input type="number" hidden value="${currentSighting.location.latitude}"
+                               id="sighting-${theCount.count}-latitude"/>
+                        <input type="number" hidden value="${currentSighting.location.longitude}"
+                               id="sighting-${theCount.count}-longitude"/>
                     </c:forEach>
                 </div>
                 <div id="map" class="col-md-6">
@@ -80,13 +80,55 @@
              }*/
         </script>
         <script>
-            var map;
             function initMap() {
-                map = new google.maps.Map(document.getElementById('map'), {
-                    center: {lat: -34.397, lng: 150.644},
-                    zoom: 8
+                //var uluru = {lat: -25.363, lng: 131.044};
+                var latitude = parseFloat(document.getElementById('sighting-8-latitude').value);
+                var longitude = parseFloat(document.getElementById('sighting-8-longitude').value);
+                console.log(latitude, longitude);
+                var uluru = {lat: latitude, lng: longitude};
+
+//                var latitude = parseFloat(document.getElementById('sighting-1-latitude').value);
+//                var longitude = parseFloat(document.getElementById('sighting-1-longitude').value);
+//                console.log(latitude, longitude);
+//                var uluru2 = {lat: latitude, lng: longitude};
+
+//                var uluru = {
+//                    lat: parseFloat(document.getElementById('sighting-9-longitude'))),
+//                    lng: parseFloat(document.getElementById('sighting-9-longitude'))
+//                };
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 6,
+                    center: uluru,
+                    mapTypeId: 'terrain'
                 });
-            }
+//                var marker = new google.maps.Marker({
+//                    position: uluru,
+//                    map: map
+//                });
+//                var marker = new google.maps.Marker({
+//                    position: uluru2,
+//                    map: map
+//                });
+
+                for (var i = 1; i < 11; i++) {
+                    var latitude = parseFloat(document.getElementById('sighting-' + i + '-latitude').value);
+                    var longitude = parseFloat(document.getElementById('sighting-' + i + '-longitude').value);
+                    var uluru = {lat: latitude, lng: longitude};
+                    var marker = new google.maps.Marker({
+                        position: uluru,
+                        map: map
+                    });
+                }
+
+            }</script>
+        <script>
+            /*var map;
+             function initMap() {
+             map = new google.maps.Map(document.getElementById('map'), {
+             center: {lat: - 34.397, lng: 150.644},
+             zoom: 8
+             });
+             }*/
         </script>
 
         <script async defer

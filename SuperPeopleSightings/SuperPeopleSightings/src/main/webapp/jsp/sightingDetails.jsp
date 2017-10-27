@@ -42,7 +42,7 @@
             </h3>
 
             <a href="${pageContext.request.contextPath}/displaySightingsPage"
-               class="btn btn-primary">Back</a>
+               class="btn btn-primary">Sightings Page</a>
 
         </div>
         <!-- Placed at the end of the document so the pages load faster -->
