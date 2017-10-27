@@ -48,7 +48,7 @@ public class SightingController {
     }
 
     @RequestMapping(value = "/displaySightingsPage", method = RequestMethod.GET)
-    public String displaySuperPersonsPage(Model model) {
+    public String displaySightingsPage(Model model) {
         List<SuperPerson> superPersonList = superPersonDao.getAllSuperPeople();
         List<Sighting> sightingList = sightingDao.getAllSightings();//@todo - sort by name
         List<Location> locationList = locationDao.getAllLocations();
@@ -59,7 +59,7 @@ public class SightingController {
     }
 
     @RequestMapping(value = "/createSighting", method = RequestMethod.POST)
-    public String createSuperPerson(HttpServletRequest request) {
+    public String createSighting(HttpServletRequest request) {
         //SuperPerson superPerson = new SuperPerson();
         Sighting sighting = new Sighting();
         List<SuperPerson> superPeople = new ArrayList<>();
@@ -85,25 +85,22 @@ public class SightingController {
     }
     
     @RequestMapping(value = "/displaySightingDetails", method = RequestMethod.GET)
-    public String displaySuperPersonDetails(HttpServletRequest request, Model model) {
-        String sightingIdParameter = request.getParameter("superPersonId");
-        int superPersonId = Integer.parseInt(sightingIdParameter);
-        SuperPerson superPerson = superPersonDao.getSuperPersonById(superPersonId);
-        model.addAttribute("superPerson", superPerson);
-        return "superPersonDetails";
+    public String displaySightingDetails(HttpServletRequest request, Model model) {
+        String sightingIdParameter = request.getParameter("sightingId");
+        int sightingId = Integer.parseInt(sightingIdParameter);
+        Sighting sighting = sightingDao.getSightingById(sightingId);
+        model.addAttribute("sighting", sighting);
+        return "sightingDetails";
     }
 
-
-////
+    @RequestMapping(value = "/deleteSighting", method = RequestMethod.GET)
+    public String deleteSighting(HttpServletRequest request) {
+        String sightingIdParameter = request.getParameter("sightingId");
+        int sightingId = Integer.parseInt(sightingIdParameter);
+        sightingDao.deleteSighting(sightingId);
+        return "redirect:displaySightingsPage";
+    }
 //
-//    @RequestMapping(value = "/deleteSuperPerson", method = RequestMethod.GET)
-//    public String deleteSuperPerson(HttpServletRequest request) {
-//        String superPersonIdParameter = request.getParameter("superPersonId");
-//        int superPersonId = Integer.parseInt(superPersonIdParameter);
-//        superPersonDao.deleteSuperPerson(superPersonId);
-//        return "redirect:displaySuperPeoplePage";
-//    }
-////
 ////    @RequestMapping(value = "/editSuperPerson", method = RequestMethod.POST)
 ////    public String editSuperPerson(@Valid @ModelAttribute("superPerson") SuperPerson superPerson,
 ////            BindingResult result) {
@@ -115,18 +112,19 @@ public class SightingController {
 ////        superPersonDao.updateSuperPerson(superPerson);
 ////        return "redirect:displaySuperPersonsPage";
 ////    }
-////
 //
-//    @RequestMapping(value = "/displayEditSuperPersonForm", method = RequestMethod.GET)
-//    public String displayEditSuperPersonForm(HttpServletRequest request, Model model) {
-//        List<SuperPower> superPowerList = superPowerDao.getAllSuperPowers();//@todo - high - sort the list by name
-//        List<Organization> orgList = orgDao.getAllOrganizations(); //@todo - high - sort by orgName
-//        String superPersonIdParameter = request.getParameter("superPersonId");
-//        int superPersonId = Integer.parseInt(superPersonIdParameter);
-//        SuperPerson superPerson = superPersonDao.getSuperPersonById(superPersonId);
-//        model.addAttribute("superPerson", superPerson);
-//        model.addAttribute("superPowerList", superPowerList);
-//        model.addAttribute("orgList", orgList);
-//        return "editSuperPersonForm";
-//    }
+
+    @RequestMapping(value = "/displayEditSightingForm", method = RequestMethod.GET)
+    public String displayEditSightingForm(HttpServletRequest request, Model model) {
+        List<SuperPerson> superPersonList = superPersonDao.getAllSuperPeople();//@todo - high - sort the list by name
+        List<Location> locationList = locationDao.getAllLocations();
+        
+        String sightingIdParameter = request.getParameter("sightingId");
+        int sightingId = Integer.parseInt(sightingIdParameter);
+        Sighting sighting = sightingDao.getSightingById(sightingId);
+        model.addAttribute("sighting", sighting);
+        model.addAttribute("locationList", locationList);
+        model.addAttribute("superPersonList", superPersonList);
+        return "editSightingForm";
+    }
 }

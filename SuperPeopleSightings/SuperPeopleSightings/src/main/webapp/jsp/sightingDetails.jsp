@@ -22,23 +22,28 @@
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                 </ul>    
             </div>
+
             <h3>
-                Name: <c:out value="${sighting}"/>
+                Date: <c:out value="${sighting.date}"/>
             </h3>
             <h3>
-                Description: <c:out value="${superPerson.description}"/>
+                Location: <c:out value="${sighting.location.name}"/>,
+                <c:out value="${sighting.location.city}"/>, 
+                <c:out value="${sighting.location.state}"/>
             </h3>
+
             <h3>
-                Power: <c:out value="${superPerson.superPower.description}"/>
-            </h3>
-            <h3>
-                Organization(s):<br>
+                Super Human(s):<br>
                 <ul>
-                    <c:forEach var="org" items="${superPerson.orgs}">
-                        <li><c:out value="${org.name}"/></li>
-                    </c:forEach>
+                    <c:forEach var="superPerson" items="${sighting.superPeople}">
+                        <li><c:out value="${superPerson.name}"/></li>
+                        </c:forEach>
                 </ul>
             </h3>
+
+            <a href="${pageContext.request.contextPath}/displaySightingsPage"
+               class="btn btn-primary">Back</a>
+
         </div>
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>

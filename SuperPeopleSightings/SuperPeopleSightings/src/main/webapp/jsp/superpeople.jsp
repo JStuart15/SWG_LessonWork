@@ -99,7 +99,8 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-4 col-md-8">
-                                <a href="${pageContext.request.contextPath}/displaySuperPowersPage" class="btn btn-default">Add Super Power</a>
+                                <a href="${pageContext.request.contextPath}/displaySuperPowersPage" 
+                                   class="btn btn-default">Add Super Power</a>
                             </div>
                         </div>
                         <div class="form-group">

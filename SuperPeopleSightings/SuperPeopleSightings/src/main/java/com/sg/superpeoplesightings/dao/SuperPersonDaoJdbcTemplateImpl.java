@@ -78,17 +78,16 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     public SuperPerson addSuperPerson(SuperPerson superPerson) {
         try {
             jdbcTemplate.update(SQL_INSERT_SUPER_PERSON,
-                superPerson.getSuperPower().getSuperPowerId(),
-                superPerson.getName(),
-                superPerson.getDescription());
+                    superPerson.getSuperPower().getSuperPowerId(),
+                    superPerson.getName(),
+                    superPerson.getDescription());
         } catch (Exception e) {
             //we don't require superpower to be set
             jdbcTemplate.update(SQL_INSERT_SUPER_PERSON,
-                null,
-                superPerson.getName(),
-                superPerson.getDescription());
+                    null,
+                    superPerson.getName(),
+                    superPerson.getDescription());
         }
-
 
         superPerson.setSuperPersonId(jdbcTemplate.queryForObject(
                 "select LAST_INSERT_ID()", Integer.class));
@@ -110,11 +109,20 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void updateSuperPerson(SuperPerson superPerson) {
         //update super_person table
-        jdbcTemplate.update(SQL_UPDATE_SUPER_PERSON,
-                superPerson.getSuperPower().getSuperPowerId(),
-                superPerson.getName(),
-                superPerson.getDescription(),
-                superPerson.getSuperPersonId());
+        try {
+            jdbcTemplate.update(SQL_UPDATE_SUPER_PERSON,
+                    superPerson.getSuperPower().getSuperPowerId(),
+                    superPerson.getName(),
+                    superPerson.getDescription(),
+                    superPerson.getSuperPersonId());
+        } catch (Exception e) {
+            //we don't require superpower to update
+            jdbcTemplate.update(SQL_UPDATE_SUPER_PERSON,
+                    null,
+                    superPerson.getName(),
+                    superPerson.getDescription(),
+                    superPerson.getSuperPersonId());
+        }
 
         //delete org relationships and reset them
         jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS,
@@ -146,7 +154,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
         List<SuperPerson> speople = new ArrayList<>();
         speople = jdbcTemplate.query(SQL_GET_ALL_SUPER_PEOPLE,
                 new SuperPersonMapper());
-        
+
         for (SuperPerson superPerson : speople) {
             superPerson.setOrgs(findOrgsForSuperPerson(superPerson));
             superPerson.setSuperPower(findSuperPowerForSuperPerson(superPerson));

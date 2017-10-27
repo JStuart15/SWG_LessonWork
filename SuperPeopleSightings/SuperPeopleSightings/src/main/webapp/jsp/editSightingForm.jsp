@@ -3,18 +3,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!-- Directive for Spring Form tag libraries -->
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <title>Super Human Sightings</title>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">  
-
     </head>
     <body>
         <div class="container">
-            <h1>Edit Super Human</h1>
+            <h1>Edit Sighting</h1>
             <hr>
             <div class="navbar">
                 <ul class="nav nav-tabs">
@@ -25,78 +24,71 @@
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                 </ul>    
             </div>
-            <sf:form class="form-horizontal" role="form" modelAttribute="superPerson"
+            <sf:form class="form-horizontal" role="form" modelAttribute="sighting"
                      action="editSuperPerson" method="POST">
-                <input type="hidden" name="superPersonId" value="${superPerson.superPersonId}"/>
+                <input type="hidden" name="sightingId" value="${sighting.sightingId}"/>
                 <div class="form-group">
-                    <label for="name" class="col-md-4 control-label">Name: </label>
+                    <label for="name" class="col-md-4 control-label">Date of Sighting:</label>
                     <div class="col-md-8">
-                        <sf:input type="text" class="form-control" id="add-name"
-                                  path="name" placeholder="Super Human Name"/>
-                        <sf:errors path="name" cssclass="error"></sf:errors>
+                        <input type="date" class="form-control" id="add-date"
+                               value="${sighting.date}"/>
+                        <sf:errors path="date" cssclass="error"></sf:errors>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="description" class="col-md-4 control-label">Description:</label>
+                        <label for="description" class="col-md-4 control-label">Location of Sighting:</label>
                         <div class="col-md-8">
-                        <sf:input type="text" class="form-control" id="add-description"
-                                  path="description" placeholder="Description"/>
-                        <sf:errors path="description" cssclass="error"></sf:errors>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="power" class="col-md-4 control-label">Power:</label>
-                        <div class="col-md-8">
-                            <select class="form-control" name="power">
-                                <option>None</option>
-                            <c:forEach var="power" items="${superPowerList}">
+                        <sf:select class="form-control" name="location" path="location">
+                            <c:forEach var="location" items="${locationList}">
                                 <c:choose>
-                                    <c:when test="${superPerson
-                                                    .superPower
-                                                    .superPowerId 
-                                                    == power.superPowerId}">
-                                            <option value="${power.superPowerId}" selected>
-                                                <c:out value="${power.description}"/>
+                                    <c:when test="${sighting.location.locationId 
+                                                    == location.locationId}">
+                                            <option value="${location.locationId}"
+                                                    selected>
+                                                <c:out value="${location.name}"/>
                                             </option>
                                     </c:when>
                                     <c:otherwise>
-                                        <option value="${power.superPowerId}">
-                                            <c:out value="${power.description}"/>
+                                        <option value="${location.locationId}">
+                                            <c:out value="${location.name}"/>
                                         </option>
                                     </c:otherwise>
                                 </c:choose>
                             </c:forEach>
-                        </select>
+                        </sf:select>
+                        <sf:errors path="location" cssclass="error"></sf:errors>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <a href="${pageContext.request.contextPath}/displayLocationsPage"
+                           class="btn btn-default">Add New Location</a>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-4 col-md-8">
-                        <input type="submit" class="btn btn-default" value="Add New Super Power"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="organizations" class="col-md-4 control-label">Organizations</label>
+                    <label for="superPeople" class="col-md-4 control-label">Super Humans Sighted:</label>
                     <div class="col-md-8">
 
-                        <select multiple class="form-control" id="orgMultiSelect" name="orgList">
+                        <select multiple class="form-control" id="superPersonMultiSelect" name="superPersonList">
                             <option>None</option>
-                            <c:forEach var="org" items="${orgList}">
+                            <c:forEach var="sp" items="${superPersonList}">
                                 <c:set var="isSelected" value="false"/>
-                                <c:forEach var="personOrgs" items="${superPerson.orgs}">
-                                    <c:if test="${personOrgs.organizationId == org.organizationId}">
+                                <c:forEach var="ssp" items="${sighting.superPeople}">
+                                    <c:if test="${ssp.superPersonId == sp.superPersonId}">
                                         <c:set var="isSelected" value="true"/>
                                     </c:if>
                                 </c:forEach>
                                 <c:choose>
                                     <c:when  test="${isSelected}">
-                                        <option value="${org.organizationId}" 
+                                        <option value="${sp.superPersonId}" 
                                                 selected="true">
-                                            <c:out value="${org.name}"/>
+                                            <c:out value="${sp.name}"/>
                                         </option>
                                     </c:when>
                                     <c:otherwise>
-                                        <option value="${org.organizationId}"> 
-                                            <c:out value="${org.name}"/>
+                                        <option value="${sp.superPersonId}"> 
+                                            <c:out value="${sp.name}"/>
                                         </option>
                                     </c:otherwise>
                                 </c:choose>
@@ -107,13 +99,14 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-4 col-md-8">
-                        <input type="submit" class="btn btn-default" value="Add New Organization"/>
+                        <a href="${pageContext.request.contextPath}/displaySuperPeoplePage"
+                           class="btn btn-default">Add New Super Human</a>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-4 col-md-8">
-                        <input type="submit" class="btn btn-primary" value="Update Super Human"/>
-                        <a href="${pageContext.request.contextPath}/displaySuperPeoplePage"
+                        <input type="submit" class="btn btn-primary" value="Update Sighting"/>
+                        <a href="${pageContext.request.contextPath}/displaySightingsPage"
                            class="btn btn-default">Cancel</a>
                     </div>
 
@@ -125,5 +118,6 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+
     </body>
 </html>

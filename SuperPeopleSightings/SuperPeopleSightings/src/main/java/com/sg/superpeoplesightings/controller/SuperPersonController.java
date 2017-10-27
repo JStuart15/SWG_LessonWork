@@ -95,7 +95,6 @@ public class SuperPersonController {
         return "redirect:displaySuperPeoplePage";
     }
 
-
     @RequestMapping(value = "/deleteSuperPerson", method = RequestMethod.GET)
     public String deleteSuperPerson(HttpServletRequest request) {
         String superPersonIdParameter = request.getParameter("superPersonId");
@@ -106,16 +105,36 @@ public class SuperPersonController {
 
     @RequestMapping(value = "/editSuperPerson", method = RequestMethod.POST)
     public String editSuperPerson(@Valid @ModelAttribute("superPerson") SuperPerson superPerson,
-            BindingResult result) {
+            BindingResult result, HttpServletRequest request) {
+
         //@todo - add validations to the superPerson object.
         if (result.hasErrors()) {
             return "editSuperPersonForm";
         }
 
-        superPersonDao.updateSuperPerson(superPerson);
-        return "redirect:displaySuperPersonsPage";
-    }
+        //SET THE SUPERPOWER
+        try {
+            int superPowerId = Integer.parseInt(request.getParameter("power"));
+            superPerson.setSuperPower(superPowerDao.getSuperPowerById(superPowerId));
+        } catch (NumberFormatException e) {
+            //no action, we allow no powers
+        }
 
+        //SET THE ORGANIZATIONS
+        List<Organization> orgs = new ArrayList<>();
+        try {
+            String[] orgIds = request.getParameterValues("orgList");
+            for (String currentOrgId : orgIds) {
+                orgs.add(orgDao.getOrganizationById(Integer.parseInt(currentOrgId)));
+                superPerson.setOrgs(orgs);
+            }
+        } catch (NumberFormatException e) {
+            //no action - we allow a superperson with no orgs
+        }
+
+        superPersonDao.updateSuperPerson(superPerson);
+        return "redirect:displaySuperPeoplePage";
+    }
 
     @RequestMapping(value = "/displayEditSuperPersonForm", method = RequestMethod.GET)
     public String displayEditSuperPersonForm(HttpServletRequest request, Model model) {
