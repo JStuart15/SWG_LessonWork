@@ -72,14 +72,15 @@
                     <div class="form-group">
                         <label for="date" class="col-md-4 control-label">Date of Sighting:</label>
                         <div class="col-md-8">
-                            <input type="date" class="form-control" name="date" placeholder="Date of Sighting"/>
+                            <input type="date" class="form-control" name="date"
+                                   required/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="description" class="col-md-4 control-label">Location of Sighting:</label>
                         <div class="col-md-8">
-                            <select class="form-control" name="location">
+                            <select class="form-control" name="location" required="true">
                                 <option value="" selected disabled>Choose a location</option>
                                 <c:forEach var="location" items="${locationList}">
                                     <option value="${location.locationId}">
@@ -93,7 +94,9 @@
                     <div class="form-group">
                         <label for="organizations" class="col-md-4 control-label">Super Humans Sighted:</label>
                         <div class="col-md-8">
-                            <select multiple class="form-control" id="superPersonMultiSelect" name="spSelect">
+                            <select multiple class="form-control" 
+                                    id="superPersonMultiSelect" 
+                                    name="spSelect" required="true">
                                 <c:forEach var="superPerson" items="${superPersonList}">
                                     <option value="${superPerson.superPersonId}">
                                         <c:out value="${superPerson.name}"/>

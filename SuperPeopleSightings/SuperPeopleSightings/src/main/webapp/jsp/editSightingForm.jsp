@@ -25,37 +25,37 @@
                 </ul>    
             </div>
             <sf:form class="form-horizontal" role="form" modelAttribute="sighting"
-                     action="editSuperPerson" method="POST">
+                     action="editSighting" method="POST">
                 <input type="hidden" name="sightingId" value="${sighting.sightingId}"/>
                 <div class="form-group">
-                    <label for="name" class="col-md-4 control-label">Date of Sighting:</label>
+                    <label for="date" class="col-md-4 control-label">Date of Sighting:</label>
                     <div class="col-md-8">
-                        <input type="date" class="form-control" id="add-date"
-                               value="${sighting.date}"/>
+                        <sf:input type="date" class="form-control" id="add-date"
+                                  value="${sighting.date}" name="date" path="date"/>
                         <sf:errors path="date" cssclass="error"></sf:errors>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="description" class="col-md-4 control-label">Location of Sighting:</label>
+                        <label for="location" class="col-md-4 control-label">Location of Sighting:</label>
                         <div class="col-md-8">
-                        <sf:select class="form-control" name="location" path="location">
-                            <c:forEach var="location" items="${locationList}">
+                            <select class="form-control" name="location">
+                            <c:forEach var="loc" items="${locationList}">
                                 <c:choose>
                                     <c:when test="${sighting.location.locationId 
-                                                    == location.locationId}">
-                                            <option value="${location.locationId}"
+                                                    == loc.locationId}">
+                                            <option value="${loc.locationId}"
                                                     selected>
-                                                <c:out value="${location.name}"/>
+                                                <c:out value="${loc.name}"/>
                                             </option>
                                     </c:when>
                                     <c:otherwise>
-                                        <option value="${location.locationId}">
-                                            <c:out value="${location.name}"/>
+                                        <option value="${loc.locationId}">
+                                            <c:out value="${loc.name}"/>
                                         </option>
                                     </c:otherwise>
                                 </c:choose>
                             </c:forEach>
-                        </sf:select>
+                        </select>
                         <sf:errors path="location" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -71,7 +71,6 @@
                     <div class="col-md-8">
 
                         <select multiple class="form-control" id="superPersonMultiSelect" name="superPersonList">
-                            <option>None</option>
                             <c:forEach var="sp" items="${superPersonList}">
                                 <c:set var="isSelected" value="false"/>
                                 <c:forEach var="ssp" items="${sighting.superPeople}">

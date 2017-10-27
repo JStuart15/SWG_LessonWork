@@ -19,8 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -83,7 +86,7 @@ public class SightingController {
         sightingDao.addSighting(sighting);
         return "redirect:displaySightingsPage";
     }
-    
+
     @RequestMapping(value = "/displaySightingDetails", method = RequestMethod.GET)
     public String displaySightingDetails(HttpServletRequest request, Model model) {
         String sightingIdParameter = request.getParameter("sightingId");
@@ -100,25 +103,48 @@ public class SightingController {
         sightingDao.deleteSighting(sightingId);
         return "redirect:displaySightingsPage";
     }
-//
-////    @RequestMapping(value = "/editSuperPerson", method = RequestMethod.POST)
-////    public String editSuperPerson(@Valid @ModelAttribute("superPerson") SuperPerson superPerson,
-////            BindingResult result) {
-////        //@todo - add validations to the superPerson object.
-////        if (result.hasErrors()) {
-////            return "editSuperPersonForm";
-////        }
-////
-////        superPersonDao.updateSuperPerson(superPerson);
-////        return "redirect:displaySuperPersonsPage";
-////    }
-//
+
+    @RequestMapping(value = "/editSighting", method = RequestMethod.POST)
+    public String editSighting(@Valid @ModelAttribute("sighting") Sighting sighting,
+            BindingResult result, HttpServletRequest request) {
+
+        //@todo - add validations to the superPerson object.
+//        if (result.hasErrors()) {
+//            return "editSightingForm";
+//        }
+
+        //SET THE DATE
+        LocalDate dateSelected = (LocalDate.parse(
+                request.getParameter("date"), 
+                DateTimeFormatter.ISO_LOCAL_DATE));
+        sighting.setDate(dateSelected);
+
+        //SET THE LOCATION
+        String locSelected = request.getParameter("location");
+        int locationId = Integer.parseInt(locSelected);
+        sighting.setLocation(locationDao.getLocationById(locationId));
+
+        //SET THE SUPERPEOPLE
+        List<SuperPerson> superPeople = new ArrayList<>();
+
+        String[] spIds = request.getParameterValues("superPersonList");
+        for (String currentSpId : spIds) {
+            superPeople.add(superPersonDao
+                    .getSuperPersonById(Integer.parseInt(currentSpId)));
+        }
+        sighting.setSuperPeople(superPeople);
+        
+        //UPDATE THE SIGHTING
+        sightingDao.updateSighting(sighting);
+        return "redirect:displaySightingsPage";
+    }
 
     @RequestMapping(value = "/displayEditSightingForm", method = RequestMethod.GET)
-    public String displayEditSightingForm(HttpServletRequest request, Model model) {
+    public String displayEditSightingForm(HttpServletRequest request, Model model
+    ) {
         List<SuperPerson> superPersonList = superPersonDao.getAllSuperPeople();//@todo - high - sort the list by name
         List<Location> locationList = locationDao.getAllLocations();
-        
+
         String sightingIdParameter = request.getParameter("sightingId");
         int sightingId = Integer.parseInt(sightingIdParameter);
         Sighting sighting = sightingDao.getSightingById(sightingId);
