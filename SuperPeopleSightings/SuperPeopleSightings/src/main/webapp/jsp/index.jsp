@@ -41,16 +41,23 @@
             </div>
             <div class="row">
                 <div class="list-group col-md-6">
-                    <c:forEach var="currentSighting" items="${sightingList}">
-                        <a href="/displaySightingDetails?sightingId=${currentSighting.sightingId}" 
-                           class="list-group-item list-group-item-action">
+                    <c:forEach var="currentSighting" items="${sightingList}" 
+                               varStatus="theCount">
+                        <a href="/SuperPeopleSightings/displaySightingDetails?sightingId=${currentSighting.sightingId}" 
+                           class="list-group-item list-group-item-action"
+                           id="sighting-${currentSighting.sightingId}">
+
                             <c:forEach var="currentHero" items="${currentSighting.superPeople}">
                                 <c:out value="${currentHero.name}"/>,
                             </c:forEach>
-                                sighted at
+                            sighted at
                             <c:out value="${currentSighting.location.name}"/> on
                             <c:out value="${currentSighting.date}"/>
                         </a>
+                        <p hidden value="${currentSighting.location.latitude}"
+                           id="sighting-${theCount.count}-latitude"></p>
+                        <p hidden value="${currentSighting.location.longitude}"
+                           id="sighting-${theCount.count}-latitude"></p>
                     </c:forEach>
                 </div>
                 <div id="map" class="col-md-6">
@@ -62,24 +69,25 @@
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 
-        <c:forEach var="currentSighting" items="${sightingList}">
-            <script>
+        <script>
+            /*for (var i = 0; i < 11; i++) {
+             var latLng = new google.maps.LatLng(
+             document.getElementById("sighting-" + i + "-latitude").valueOf(),
+             document.getElementById("sighting-" + i + "-longitude").valueOf());
+             var marker = new google.maps.Marker({
+             position: latLng, map: map
+             });
+             }*/
+        </script>
+        <script>
+            var map;
             function initMap() {
-                var ${currentSighting.location.locationId} = 
-                        {lat: ${currentSighting.location.latitude}, 
-                         lng: ${currentSighting.location.longitude};
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 4,
-                    center: ${currentSighting.location.locationId}
-                });
-                var marker = new google.maps.Marker({
-                    position: ${currentSighting.location.locationId},
-                    map: map
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: -34.397, lng: 150.644},
+                    zoom: 8
                 });
             }
-            </script>
-        </c:forEach>
-        
+        </script>
 
         <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAU601CAmYmF97gSGTDNCEU6tBgeppKVX8&callback=initMap">

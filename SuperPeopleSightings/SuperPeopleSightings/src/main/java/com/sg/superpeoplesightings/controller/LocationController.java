@@ -50,6 +50,8 @@ public class LocationController {
 
     @RequestMapping(value = "/createLocation", method = RequestMethod.POST)
     public String createLocation(HttpServletRequest request) {
+        
+        //do validations using HTML
         Location location = new Location();
         location.setName(request.getParameter("name"));
         location.setDescription(request.getParameter("description"));

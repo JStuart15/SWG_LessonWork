@@ -73,43 +73,55 @@
                                     <input type="text" name="orgname" 
                                            class="form-control" 
                                            placeholder="Organization Name" 
-                                           required="true"/>
+                                           required="true" maxlength="45"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="description" class="col-md-4 control-label">Description:</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="description" placeholder="Description"/>
+                                    <input type="text" class="form-control" 
+                                           name="description" maxlength="45"
+                                           placeholder="Description"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="street" class="col-md-4 control-label">Street:</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="street" placeholder="Street Address"/>
+                                    <input type="text" class="form-control" 
+                                           name="street" maxlength="45"
+                                           placeholder="Street Address"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="city" class="col-md-4 control-label">City:</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="city" placeholder="City"/>
+                                    <input type="text" class="form-control" 
+                                           name="city" maxlength="45"
+                                           placeholder="City"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="state" class="col-md-4 control-label">State:</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="state" placeholder="State"/>
+                                    <input type="text" class="form-control" 
+                                           name="state" placeholder="State"
+                                           maxlength="2" pattern="[A-Za-z]{2}"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="zip" class="col-md-4 control-label">Zip:</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="zip" placeholder="Zip Code"/>
+                                    <input type="text" class="form-control" 
+                                           name="zip" placeholder="Zip Code"
+                                           maxlength="10"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="phone" class="col-md-4 control-label">Phone:</label>
+                                <label for="phone" class="col-md-4 control-label">Phone (no dashes):</label>
                                 <div class="col-md-8">
-                                    <input type="phone" class="form-control" name="phone" placeholder="Phone Number"/>
+                                    <input type="phone" class="form-control" 
+                                           name="phone" placeholder="Phone Number"
+                                           maxlength="10"/>
                                 </div>
                             </div>
 

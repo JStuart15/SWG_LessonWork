@@ -76,6 +76,9 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
             + "inner join sightings s on l.location_id = s.location_id "
             + "where s.sighting_id = ?";
 
+    private static final String SQL_SELECT_LAST10_SIGHTINGS
+            = "select * from sightings s order by s.date desc limit 10";
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public Sighting addSighting(Sighting sighting) {
@@ -106,7 +109,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
                 sighting.getLocation().getLocationId(),
                 sighting.getDate().toString(),
                 sighting.getSightingId());
-            //java.sql.Date.valueOf(LocalDate);
+        //java.sql.Date.valueOf(LocalDate);
         //delete super_people_sightings relationships and then reset them
         jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_SIGHTINGS,
                 sighting.getSightingId());
@@ -137,6 +140,18 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
         List<Sighting> sightings = new ArrayList<>();
         sightings = jdbcTemplate
                 .query(SQL_SELECT_ALL_SIGHTINGS, new SightingMapper());
+        for (Sighting sighting : sightings) {
+            sighting.setSuperPeople(findSuperPeopleForSighting(sighting));
+            sighting.setLocation(findLocationForSighting(sighting));
+        }
+        return sightings;
+    }
+
+    @Override
+    public List<Sighting> getLast10Sightings() {
+        List<Sighting> sightings = new ArrayList<>();
+        sightings = jdbcTemplate
+                .query(SQL_SELECT_LAST10_SIGHTINGS, new SightingMapper());
         for (Sighting sighting : sightings) {
             sighting.setSuperPeople(findSuperPeopleForSighting(sighting));
             sighting.setLocation(findLocationForSighting(sighting));

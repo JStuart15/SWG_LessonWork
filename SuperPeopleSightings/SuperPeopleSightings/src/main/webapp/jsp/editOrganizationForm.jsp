@@ -29,7 +29,8 @@
                     <label for="name" class="col-md-4 control-label">Organization Name: </label>
                     <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-name"
-                                  path="name" placeholder="Organization Name"/>
+                                  path="name" placeholder="Organization Name"
+                                  maxlength="45"/>
                         <sf:errors path="name" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -37,7 +38,8 @@
                         <label for="description" class="col-md-4 control-label">Description:</label>
                         <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-description"
-                                  path="description" placeholder="Description"/>
+                                  path="description" placeholder="Description"
+                                  maxlength="45"/>
                         <sf:errors path="description" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -45,7 +47,8 @@
                         <label for="add-street" class="col-md-4 control-label">Street:</label>                          
                         <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-street"
-                                  path="street" placeholder="Street Address"/>
+                                  path="street" placeholder="Street Address"
+                                  maxlength="45"/>
                         <sf:errors path="street" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -53,7 +56,8 @@
                         <label for="add-city" class="col-md-4 control-label">City:</label>                          
                         <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-city"
-                                  path="city" placeholder="City"/>
+                                  path="city" placeholder="City"
+                                  maxlength="45"/>
                         <sf:errors path="city" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -61,7 +65,8 @@
                         <label for="add-state" class="col-md-4 control-label">State:</label>                          
                         <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-street"
-                                  path="state" placeholder="State"/>
+                                  path="state" placeholder="State"
+                                  maxlength="2" pattern="[A-Za-z]{2}"/>
                         <sf:errors path="state" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -69,15 +74,17 @@
                         <label for="add-zip" class="col-md-4 control-label">Zip:</label>                          
                         <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-street"
-                                  path="zip" placeholder="Zip"/>
+                                  path="zip" placeholder="Zip" maxlength="10"
+                                  pattern="(\d{5}([\-]\d{4})?)"/>
                         <sf:errors path="zip" cssclass="error"></sf:errors>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="add-phone" class="col-md-4 control-label">Phone:</label>
+                        <label for="add-phone" class="col-md-4 control-label">Phone (no dashes):</label>
                         <div class="col-md-8">
                         <sf:input type="phone" class="form-control" id="add-phone"
-                                  path="phone" placeholder="Phone Number"/>
+                                  path="phone" placeholder="Phone Number"
+                                  maxlength="10"/>
                         <sf:errors path="phone" cssclass="error"></sf:errors>
                         <sf:hidden path="organizationId"/>
                     </div>

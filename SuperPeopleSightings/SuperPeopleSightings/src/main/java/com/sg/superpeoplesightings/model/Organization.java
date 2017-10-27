@@ -6,6 +6,8 @@
 package com.sg.superpeoplesightings.model;
 
 import java.util.Objects;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -14,12 +16,27 @@ import java.util.Objects;
 public class Organization {
 
     private int organizationId;
+
+    @NotEmpty(message = "You must enter a value for organization name.")
+    @Length(max = 45, message = "Organization name cannot be longer than 45 characters in length.")
     private String name;
+
+    @Length(max = 45, message = "Description cannot be longer than 45 characters in length.")
     private String description;
+    
+    @Length(max = 45, message = "Street cannot be longer than 45 characters in length.")
     private String street;
+    
+    @Length(max = 45, message = "City cannot be longer than 45 characters in length.")
     private String city;
+    
+    @Length(max = 2, message = "State cannot be longer than 2 characters in length.")
     private String state;
+    
+    @Length(max = 10, message = "Zip code cannot be longer than 10 characters in length.")
     private String zip;
+    
+    @Length(max = 10, message = "Phone cannot be longer than 10 characters in length.")
     private String phone;
 
     public int getOrganizationId() {
@@ -143,5 +160,5 @@ public class Organization {
     public String toString() {
         return "Organization{" + "organizationId=" + organizationId + ", name=" + name + ", description=" + description + ", street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip + ", phone=" + phone + '}';
     }
-    
+
 }

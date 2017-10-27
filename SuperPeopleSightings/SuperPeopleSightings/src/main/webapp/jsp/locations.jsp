@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -63,7 +65,7 @@
                 </div>
                 <div class="col-md-6">
                     <h2>Add New Location</h2>
-                    <form class="form-horizontal"
+                    <sf:form class="form-horizontal"
                           role="form" method="POST"
                           action="createLocation">
                         <div class="form-group">
@@ -71,49 +73,66 @@
                             <div class="col-md-8">
                                 <input type="text" class="form-control" 
                                        name="name" placeholder="Location Name"
-                                       required/>
+                                       required maxlength="45"/>
+                                <sf:errors path="name" cssclass="error"></sf:errors>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="description" class="col-md-4 control-label">Description:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="description" placeholder="Description"/>
+                                <input type="text" class="form-control" 
+                                       name="description" maxlength="45"
+                                       placeholder="Description"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="street" class="col-md-4 control-label">Street:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="street" placeholder="Street Address"/>
+                                <input type="text" class="form-control" 
+                                       name="street" maxlength="45"
+                                       placeholder="Street Address"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="city" class="col-md-4 control-label">City:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="city" placeholder="City"/>
+                                <input type="text" class="form-control" 
+                                       name="city" maxlength="45"
+                                       placeholder="City"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="state" class="col-md-4 control-label">State:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="state" placeholder="State"/>
+                                <input type="text" class="form-control" 
+                                       name="state" maxlength="2"
+                                       placeholder="State" pattern="[A-Za-z]{2}"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="zip" class="col-md-4 control-label">Zip:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="zip" placeholder="Zip Code"/>
+                                <input type="text" class="form-control" 
+                                       name="zip" maxlength="10"
+                                       placeholder="Zip Code"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="latitude" class="col-md-4 control-label">Latitude:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="latitude" placeholder="Latitude"/>
+                                <input type="number" step="any" 
+                                       class="form-control" name="latitude" 
+                                       placeholder="Latitude" 
+                                       min="-90" max="90"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="longitude" class="col-md-4 control-label">Longitude</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="longitude" placeholder="Longitude"/>
+                                <input type="number" step="any" 
+                                       class="form-control" 
+                                       name="longitude" placeholder="Longitude"
+                                       min="-180" max="180"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -121,7 +140,7 @@
                                 <input type="submit" class="btn btn-primary" value="Create Location"/>
                             </div>
                         </div>
-                    </form>
+                    </sf:form>
                 </div>
             </div>
         </div>

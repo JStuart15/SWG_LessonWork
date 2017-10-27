@@ -70,7 +70,8 @@
                         <label for="add-zip" class="col-md-4 control-label">Zip:</label>                          
                         <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-street"
-                                  path="zip" placeholder="Zip"/>
+                                  path="zip" placeholder="Zip"
+                                  pattern="(\d{5}([\-]\d{4})?)"/>
                         <sf:errors path="zip" cssclass="error"></sf:errors>
                         </div>
                     </div>

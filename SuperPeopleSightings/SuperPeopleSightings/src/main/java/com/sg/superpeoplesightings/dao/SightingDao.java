@@ -21,6 +21,9 @@ public interface SightingDao {
     public void updateSighting(Sighting siting);
 
     public Sighting getSightingById(int id);
-    
+
     public List<Sighting> getAllSightings();
-}
+
+    public List<Sighting> getLast10Sightings();
+
+    }

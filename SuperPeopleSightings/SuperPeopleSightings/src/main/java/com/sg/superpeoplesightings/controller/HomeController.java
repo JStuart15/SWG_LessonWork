@@ -30,7 +30,7 @@ public class HomeController {
     
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String displayHomePage(Model model){
-        List<Sighting> sightingList = sightingDao.getAllSightings();
+        List<Sighting> sightingList = sightingDao.getLast10Sightings();
         model.addAttribute("sightingList", sightingList);
         return "index";
     }
