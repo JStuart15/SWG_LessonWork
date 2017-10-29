@@ -28,23 +28,23 @@
                     <h2>Super Humans</h2>
                     <table id="superPeopleTable" class="table table-hover">
                         <tr>
-                            <th>Name</th>
-                            <th>Power</th>
-                            <th>Organizations</th>
-                            <th></th>
-                            <th></th>
+                            <th width="25%">Name</th>
+                            <th width="25%">Power</th>
+                            <th width="25%">Organizations</th>
+                            <th width="12.5%"></th>
+                            <th width="12.5%"></th>
                         </tr>
                         <c:forEach var="currentSuperPerson" items="${superPersonList}">
                             <tr>
-                                <td>
+                                <td style="word-break:break-all;">
                                     <a href ="displaySuperPersonDetails?superPersonId=${currentSuperPerson.superPersonId}">
                                         <c:out value="${currentSuperPerson.name}"/>
                                     </a>
                                 </td>
-                                <td>
+                                <td style="word-break:break-all;">
                                     <c:out value="${currentSuperPerson.superPower.description}"/>
                                 </td>
-                                <td>
+                                <td style="word-break:break-all;">
                                     <c:forEach var="org" items="${currentSuperPerson.orgs}">
                                         <c:out value="${org.name}"/><br>
                                     </c:forEach>
@@ -72,7 +72,8 @@
                             <label for="name" class="col-md-4 control-label">Name:</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" 
-                                       name="name" required
+                                       name="name" required 
+                                       maxlength="45"
                                        placeholder="Super Human Name"/>
                             </div>
                         </div>
@@ -80,7 +81,10 @@
                         <div class="form-group">
                             <label for="description" class="col-md-4 control-label">Description:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="description" placeholder="Description"/>
+                                <input type="text" class="form-control" 
+                                       name="description" 
+                                       maxlength="45"
+                                       placeholder="Description"/>
                             </div>
                         </div>
 

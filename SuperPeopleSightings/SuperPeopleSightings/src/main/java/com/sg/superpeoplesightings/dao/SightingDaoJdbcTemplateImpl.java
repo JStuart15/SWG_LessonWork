@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class SightingDaoJdbcTemplateImpl implements SightingDao {
 
-    SuperPersonDao superPersonDao;
+    private SuperPersonDao superPersonDao;
 
     @Inject
     public SightingDaoJdbcTemplateImpl(SuperPersonDao superPersonDao) {

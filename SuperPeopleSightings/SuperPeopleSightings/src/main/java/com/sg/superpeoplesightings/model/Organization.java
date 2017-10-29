@@ -36,8 +36,10 @@ public class Organization {
     @Length(max = 10, message = "Zip code cannot be longer than 10 characters in length.")
     private String zip;
     
-    @Length(max = 10, message = "Phone cannot be longer than 10 characters in length.")
+    @Length(max = 12, message = "Phone cannot be longer than 12 characters in length.")
     private String phone;
+    
+    private Boolean isActive;
 
     public int getOrganizationId() {
         return organizationId;
@@ -103,17 +105,26 @@ public class Organization {
         this.phone = phone;
     }
 
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 59 * hash + this.organizationId;
-        hash = 59 * hash + Objects.hashCode(this.name);
-        hash = 59 * hash + Objects.hashCode(this.description);
-        hash = 59 * hash + Objects.hashCode(this.street);
-        hash = 59 * hash + Objects.hashCode(this.city);
-        hash = 59 * hash + Objects.hashCode(this.state);
-        hash = 59 * hash + Objects.hashCode(this.zip);
-        hash = 59 * hash + Objects.hashCode(this.phone);
+        hash = 61 * hash + this.organizationId;
+        hash = 61 * hash + Objects.hashCode(this.name);
+        hash = 61 * hash + Objects.hashCode(this.description);
+        hash = 61 * hash + Objects.hashCode(this.street);
+        hash = 61 * hash + Objects.hashCode(this.city);
+        hash = 61 * hash + Objects.hashCode(this.state);
+        hash = 61 * hash + Objects.hashCode(this.zip);
+        hash = 61 * hash + Objects.hashCode(this.phone);
+        hash = 61 * hash + Objects.hashCode(this.isActive);
         return hash;
     }
 
@@ -153,12 +164,10 @@ public class Organization {
         if (!Objects.equals(this.phone, other.phone)) {
             return false;
         }
+        if (!Objects.equals(this.isActive, other.isActive)) {
+            return false;
+        }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "Organization{" + "organizationId=" + organizationId + ", name=" + name + ", description=" + description + ", street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip + ", phone=" + phone + '}';
-    }
-
+    
 }

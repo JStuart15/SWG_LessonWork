@@ -161,7 +161,7 @@ public class PredefinedQueryDaoTest {
         l.setZip("55300");
         l.setLatitude(55.023046);
         l.setLongitude(-83.4202007);
-        l.setIsActive(1);
+        l.setIsActive(Boolean.TRUE);
         locationDao.addLocation(l);
 
         Location l2 = new Location();
@@ -173,7 +173,7 @@ public class PredefinedQueryDaoTest {
         l2.setZip("12345");
         l2.setLatitude(15.023046);
         l2.setLongitude(-13.4202007);
-        l2.setIsActive(1);
+        l2.setIsActive(Boolean.TRUE);
         locationDao.addLocation(l2);
 
         //add sightings

@@ -30,20 +30,20 @@
                     <h2>Locations</h2>
                     <table id="locationTable" class="table table-hover">
                         <tr>
-                            <th>Location Name</th>
-                            <th>City</th>
-                            <th>State</th>
-                            <th></th>
-                            <th></th>
+                            <th width="40%">Location Name</th>
+                            <th width="30%">City</th>
+                            <th width="10%">State</th>
+                            <th width="10%"></th>
+                            <th width="10%"></th>
                         </tr>
                         <c:forEach var="currentLocation" items="${locationList}">
                             <tr>
-                                <td>
+                                <td style="word-break:break-all;">
                                     <a href ="displayLocationDetails?locationId=${currentLocation.locationId}">
                                         <c:out value="${currentLocation.name}"/>
                                     </a>
                                 </td>
-                                <td>
+                                <td style="word-break:break-all;">
                                     <c:out value="${currentLocation.city}"/>
                                 </td>
                                 <td>
@@ -114,6 +114,7 @@
                             <div class="col-md-8">
                                 <input type="text" class="form-control" 
                                        name="zip" maxlength="10"
+                                       pattern="(\d{5}([\-]\d{4})?)"
                                        placeholder="Zip Code"/>
                             </div>
                         </div>

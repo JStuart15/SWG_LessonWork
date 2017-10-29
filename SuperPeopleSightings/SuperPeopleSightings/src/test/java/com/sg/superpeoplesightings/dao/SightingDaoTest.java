@@ -143,7 +143,7 @@ public class SightingDaoTest {
         l.setZip("55300");
         l.setLatitude(55.023046);
         l.setLongitude(-83.4202007);
-        l.setIsActive(1);
+        l.setIsActive(Boolean.TRUE);
         locationDao.addLocation(l);
         Location locationFromDao = locationDao.getLocationById(l.getLocationId());
         assertEquals(locationFromDao, l);

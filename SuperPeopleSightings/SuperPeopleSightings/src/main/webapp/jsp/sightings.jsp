@@ -27,11 +27,11 @@
                 <h2>Super Human Sightings</h2>
                 <table id="sightingsTable" class="table table-hover">
                     <tr>
-                        <th>Date</th>
-                        <th>Location</th>
-                        <th>Super Humans</th>
-                        <th></th>
-                        <th></th>
+                        <th width="20%">Date</th>
+                        <th width="30%">Location</th>
+                        <th width="30%">Super Humans</th>
+                        <th width="10"></th>
+                        <th width="10"></th>
                     </tr>
                     <tbody id="content-rows">
                         <c:forEach var="currentSighting" items="${sightingList}">
@@ -41,10 +41,10 @@
                                         <c:out value="${currentSighting.date}"/>
                                     </a>
                                 </td>
-                                <td>
+                                <td style="word-break:break-all;">
                                     <c:out value="${currentSighting.location.name}"/>
                                 </td>
-                                <td>
+                                <td style="word-break:break-all;">
                                     <c:forEach var="superPerson" items="${currentSighting.superPeople}">
                                         <c:out value="${superPerson.name}"/><br>
                                     </c:forEach>
@@ -106,12 +106,14 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        
+                    </div>
+                    <div class="form-group">
                         <div class="col-md-offset-4 col-md-8">
                             <input type="submit" class="btn btn-primary" value="Create Sighting"/>
                         </div>
                     </div>
                 </form>
-            </div>
         </div>
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>

@@ -35,12 +35,12 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
 
     private static final String SQL_DELETE_LOCATION
             = "delete from locations where location_id = ?";
-    
+
     private static final String SQL_INACTIVATE_LOCATION
             = "update locations "
             + "set isActive = false "
             + "where location_id = ?";
-    
+
     private static final String SQL_UPDATE_LOCATION
             = "update locations "
             + "set name = ?, "
@@ -57,9 +57,13 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
     private static final String SQL_SELECT_LOCATION
             = "select * from locations where location_id = ?";
 
+    private static final String SQL_SELECT_ACTIVE_LOCATION
+            = "select * from locations "
+            + "where location_id = ? and isActive = True";
+    
     private static final String SQL_SELECT_ALL_LOCATIONS
             = "select * from locations";
-    
+
     private static final String SQL_SELECT_ACTIVE_LOCATIONS
             = "select * from locations "
             + "where isActive = True";
@@ -105,13 +109,13 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
                 l.getLongitude(),
                 l.getIsActive(),
                 l.getLocationId()
-                );
+        );
     }
 
     @Override
     public Location getLocationById(int id) {
         try {
-            return jdbcTemplate.queryForObject(SQL_SELECT_LOCATION,
+            return jdbcTemplate.queryForObject(SQL_SELECT_ACTIVE_LOCATION,
                     new LocationMapper(),
                     id);
         } catch (DataAccessException e) {
@@ -139,7 +143,7 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
             l.setZip(rs.getString("zip"));
             l.setLatitude(rs.getDouble("latitude"));
             l.setLongitude(rs.getDouble("longitude"));
-            l.setIsActive(rs.getInt("isActive"));
+            l.setIsActive(rs.getBoolean("isActive"));
             l.setLocationId(rs.getInt("location_id"));
             return l;
         }

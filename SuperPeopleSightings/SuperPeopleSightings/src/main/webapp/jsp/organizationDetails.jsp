@@ -5,42 +5,44 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Super Human Sightings</title>
+        <title>Company Contacts</title>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">        
     </head>
     <body>
         <div class="container">
-            <h1>Super Human Details</h1>
+            <h1>Contact Details</h1>
             <hr/>
             <div class="navbar">
                 <ul class="nav nav-tabs">
                     <li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
+                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
+                    <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                 </ul>    
             </div>
             <h3>
-                Name: <c:out value="${superPerson.name}"/>
+                Organization Name: <c:out value="${organization.name}"/> 
             </h3>
             <h3>
-                Description: <c:out value="${superPerson.description}"/>
+                Description: <c:out value="${organization.description}"/>
             </h3>
             <h3>
-                Power: <c:out value="${superPerson.superPower.description}"/>
+                Street: <c:out value="${organization.street}"/>
             </h3>
             <h3>
-                Organization(s):<br>
-                <ul>
-                    <c:forEach var="org" items="${superPerson.orgs}">
-                        <li><c:out value="${org.name}"/></li>
-                    </c:forEach>
-                </ul>
+                City: <c:out value="${organization.city}"/>
             </h3>
-            <a href="${pageContext.request.contextPath}/displaySuperPeoplePage"
-                           class="btn btn-primary">Back</a>
+            <h3>
+                State: <c:out value="${organization.state}"/>
+            </h3>
+            <h3>
+                Zip: <c:out value="${organization.zip}"/>
+            </h3>
+            <h3>
+                Phone Number: <c:out value="${organization.phone}"/>
+            </h3>
         </div>
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>

@@ -43,7 +43,12 @@ public class Location {
     @Range(min=-180, max=180, message = "Longitude must be between -180 and 180")
     private double longitude;
     
-    private int isActive;
+    private Boolean isActive;
+
+    @Override
+    public String toString() {
+        return "Location{" + "locationId=" + locationId + ", name=" + name + ", description=" + description + ", street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip + ", latitude=" + latitude + ", longitude=" + longitude + ", isActive=" + isActive + '}';
+    }
 
     public int getLocationId() {
         return locationId;
@@ -117,27 +122,27 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public int getIsActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(int isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.locationId;
-        hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.description);
-        hash = 97 * hash + Objects.hashCode(this.street);
-        hash = 97 * hash + Objects.hashCode(this.city);
-        hash = 97 * hash + Objects.hashCode(this.state);
-        hash = 97 * hash + Objects.hashCode(this.zip);
-        hash = 97 * hash + (int) (Double.doubleToLongBits(this.latitude) ^ (Double.doubleToLongBits(this.latitude) >>> 32));
-        hash = 97 * hash + (int) (Double.doubleToLongBits(this.longitude) ^ (Double.doubleToLongBits(this.longitude) >>> 32));
-        hash = 97 * hash + this.isActive;
+        int hash = 3;
+        hash = 23 * hash + this.locationId;
+        hash = 23 * hash + Objects.hashCode(this.name);
+        hash = 23 * hash + Objects.hashCode(this.description);
+        hash = 23 * hash + Objects.hashCode(this.street);
+        hash = 23 * hash + Objects.hashCode(this.city);
+        hash = 23 * hash + Objects.hashCode(this.state);
+        hash = 23 * hash + Objects.hashCode(this.zip);
+        hash = 23 * hash + (int) (Double.doubleToLongBits(this.latitude) ^ (Double.doubleToLongBits(this.latitude) >>> 32));
+        hash = 23 * hash + (int) (Double.doubleToLongBits(this.longitude) ^ (Double.doubleToLongBits(this.longitude) >>> 32));
+        hash = 23 * hash + Objects.hashCode(this.isActive);
         return hash;
     }
 
@@ -162,9 +167,6 @@ public class Location {
         if (Double.doubleToLongBits(this.longitude) != Double.doubleToLongBits(other.longitude)) {
             return false;
         }
-        if (this.isActive != other.isActive) {
-            return false;
-        }
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
@@ -183,12 +185,10 @@ public class Location {
         if (!Objects.equals(this.zip, other.zip)) {
             return false;
         }
+        if (!Objects.equals(this.isActive, other.isActive)) {
+            return false;
+        }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Location{" + "locationId=" + locationId + ", name=" + name + ", description=" + description + ", street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip + ", latitude=" + latitude + ", longitude=" + longitude + ", isActive=" + isActive + '}';
     }
 
 }

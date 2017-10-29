@@ -63,8 +63,13 @@
           class="com.sg.superpeoplesightings.dao.SuperPersonDaoJdbcTemplateImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean> 
+    
     <bean id="predefinedQueryDao" 
-              class="com.sg.superpeoplesightings.dao.PredefinedQueryDaoJdbcTemplateImpl">
+          class="com.sg.superpeoplesightings.dao.PredefinedQueryDaoJdbcTemplateImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    
+    <bean id="albumDao" 
+          class="com.sg.superpeoplesightings.dao.AlbumDaoInMemImpl">
     </bean>
 </beans>

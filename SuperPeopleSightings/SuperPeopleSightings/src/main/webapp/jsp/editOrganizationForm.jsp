@@ -19,7 +19,7 @@
                     <li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super People</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
+                    <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                 </ul>    
             </div>
@@ -80,11 +80,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="add-phone" class="col-md-4 control-label">Phone (no dashes):</label>
+                        <label for="add-phone" class="col-md-4 control-label">Phone (with dashes):</label>
                         <div class="col-md-8">
                         <sf:input type="phone" class="form-control" id="add-phone"
                                   path="phone" placeholder="Phone Number"
-                                  maxlength="10"/>
+                                  maxlength="12" pattern="\d{3}[\-]\d{3}[\-]\d{4}"/>
                         <sf:errors path="phone" cssclass="error"></sf:errors>
                         <sf:hidden path="organizationId"/>
                     </div>

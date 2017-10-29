@@ -29,20 +29,20 @@
                     <h2>Super Human Organizations</h2>
                     <table id="organizationTable" class="table table-hover">
                         <tr>
-                            <th>Organization Name</th>
-                            <th>City</th>
-                            <th>State</th>
-                            <th></th>
-                            <th></th>
+                            <th width="40%">Organization Name</th>
+                            <th width="30%">City</th>
+                            <th width="10%">State</th>
+                            <th width="10%"></th>
+                            <th width="10%"></th>
                         </tr>
                         <c:forEach var="currentOrganization" items="${organizationList}">
                             <tr>
-                                <td>
-                                    <a href ="displayLocationDetails?locationId=${currentOrganization.organizationId}">
+                                <td style="word-break:break-all;">
+                                    <a href ="displayOrganizationDetails?organizationId=${currentOrganization.organizationId}">
                                         <c:out value="${currentOrganization.name}"/>
                                     </a>
                                 </td>
-                                <td>
+                                <td style="word-break:break-all;">
                                     <c:out value="${currentOrganization.city}"/>
                                 </td>
                                 <td>
@@ -113,15 +113,17 @@
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" 
                                            name="zip" placeholder="Zip Code"
+                                           pattern="(\d{5}([\-]\d{4})?)"
                                            maxlength="10"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="phone" class="col-md-4 control-label">Phone (no dashes):</label>
+                                <label for="phone" class="col-md-4 control-label">Phone (with dashes):</label>
                                 <div class="col-md-8">
                                     <input type="phone" class="form-control" 
                                            name="phone" placeholder="Phone Number"
-                                           maxlength="10"/>
+                                           pattern="\d{3}[\-]\d{3}[\-]\d{4}"
+                                           maxlength="12"/>
                                 </div>
                             </div>
 

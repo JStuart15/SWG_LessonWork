@@ -68,48 +68,18 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-
-        <script>
-            /*for (var i = 0; i < 11; i++) {
-             var latLng = new google.maps.LatLng(
-             document.getElementById("sighting-" + i + "-latitude").valueOf(),
-             document.getElementById("sighting-" + i + "-longitude").valueOf());
-             var marker = new google.maps.Marker({
-             position: latLng, map: map
-             });
-             }*/
-        </script>
         <script>
             function initMap() {
                 //var uluru = {lat: -25.363, lng: 131.044};
-                var latitude = parseFloat(document.getElementById('sighting-8-latitude').value);
-                var longitude = parseFloat(document.getElementById('sighting-8-longitude').value);
-                console.log(latitude, longitude);
-                var uluru = {lat: latitude, lng: longitude};
-
-//                var latitude = parseFloat(document.getElementById('sighting-1-latitude').value);
-//                var longitude = parseFloat(document.getElementById('sighting-1-longitude').value);
-//                console.log(latitude, longitude);
-//                var uluru2 = {lat: latitude, lng: longitude};
-
-//                var uluru = {
-//                    lat: parseFloat(document.getElementById('sighting-9-longitude'))),
-//                    lng: parseFloat(document.getElementById('sighting-9-longitude'))
-//                };
+                //var latitude = parseFloat(document.getElementById('sighting-8-latitude').value);
+                //var longitude = parseFloat(document.getElementById('sighting-8-longitude').value);
+                //console.log(latitude, longitude);
+                var uluru = {lat: 39.8283, lng: -98.5795};
                 var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 6,
+                    zoom: 4,
                     center: uluru,
                     mapTypeId: 'terrain'
                 });
-//                var marker = new google.maps.Marker({
-//                    position: uluru,
-//                    map: map
-//                });
-//                var marker = new google.maps.Marker({
-//                    position: uluru2,
-//                    map: map
-//                });
-
                 for (var i = 1; i < 11; i++) {
                     var latitude = parseFloat(document.getElementById('sighting-' + i + '-latitude').value);
                     var longitude = parseFloat(document.getElementById('sighting-' + i + '-longitude').value);
@@ -119,18 +89,8 @@
                         map: map
                     });
                 }
-
-            }</script>
-        <script>
-            /*var map;
-             function initMap() {
-             map = new google.maps.Map(document.getElementById('map'), {
-             center: {lat: - 34.397, lng: 150.644},
-             zoom: 8
-             });
-             }*/
+            }
         </script>
-
         <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAU601CAmYmF97gSGTDNCEU6tBgeppKVX8&callback=initMap">
         </script>

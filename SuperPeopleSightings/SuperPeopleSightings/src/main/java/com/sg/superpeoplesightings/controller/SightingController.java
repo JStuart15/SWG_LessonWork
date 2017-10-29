@@ -5,12 +5,14 @@
  */
 package com.sg.superpeoplesightings.controller;
 
+import com.sg.superpeoplesightings.dao.AlbumDao;
 import com.sg.superpeoplesightings.dao.LocationDao;
 import com.sg.superpeoplesightings.dao.OrganizationDao;
 import com.sg.superpeoplesightings.dao.SightingDao;
 import com.sg.superpeoplesightings.dao.SuperPersonDao;
 import com.sg.superpeoplesightings.dao.SuperPowerDao;
 import com.sg.superpeoplesightings.model.Location;
+import com.sg.superpeoplesightings.model.Picture;
 import com.sg.superpeoplesightings.model.Sighting;
 import com.sg.superpeoplesightings.model.SuperPerson;
 import java.time.LocalDate;
@@ -34,27 +36,36 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class SightingController {
 
+    public static final String pictureFolder = "images/";
+    private AlbumDao dao;
+    
     SuperPersonDao superPersonDao;
     SuperPowerDao superPowerDao;
     OrganizationDao orgDao;
     SightingDao sightingDao;
     LocationDao locationDao;
+    AlbumDao albumDao;
 
     @Inject
     public SightingController(SuperPersonDao superPersonDao, SuperPowerDao superPowerDao,
-            OrganizationDao orgDao, SightingDao sightingDao, LocationDao locationDao) {
+            OrganizationDao orgDao, SightingDao sightingDao, LocationDao locationDao,
+            AlbumDao albumDao) {
         this.superPersonDao = superPersonDao;
         this.superPowerDao = superPowerDao;
         this.orgDao = orgDao;
         this.sightingDao = sightingDao;
         this.locationDao = locationDao;
+        this.albumDao = albumDao;
     }
 
     @RequestMapping(value = "/displaySightingsPage", method = RequestMethod.GET)
     public String displaySightingsPage(Model model) {
         List<SuperPerson> superPersonList = superPersonDao.getAllSuperPeople();
-        List<Sighting> sightingList = sightingDao.getAllSightings();//@todo - sort by name
+        List<Sighting> sightingList = sightingDao.getAllSightings();//@todo - sort by date desc
         List<Location> locationList = locationDao.getAllLocations();
+        List<Picture> pictures = albumDao.getAllPictures();
+
+        model.addAttribute("pictureList", pictures);
         model.addAttribute("superPersonList", superPersonList);
         model.addAttribute("sightingList", sightingList);
         model.addAttribute("locationList", locationList);
@@ -112,10 +123,9 @@ public class SightingController {
 //        if (result.hasErrors()) {
 //            return "editSightingForm";
 //        }
-
         //SET THE DATE
         LocalDate dateSelected = (LocalDate.parse(
-                request.getParameter("date"), 
+                request.getParameter("date"),
                 DateTimeFormatter.ISO_LOCAL_DATE));
         sighting.setDate(dateSelected);
 
@@ -133,7 +143,7 @@ public class SightingController {
                     .getSuperPersonById(Integer.parseInt(currentSpId)));
         }
         sighting.setSuperPeople(superPeople);
-        
+
         //UPDATE THE SIGHTING
         sightingDao.updateSighting(sighting);
         return "redirect:displaySightingsPage";

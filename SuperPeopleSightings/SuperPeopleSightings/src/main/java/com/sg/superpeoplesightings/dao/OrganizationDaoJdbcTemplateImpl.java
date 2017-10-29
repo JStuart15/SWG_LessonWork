@@ -30,7 +30,7 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
     //PREPARED STATEMENTS
     private static final String SQL_INSERT_ORGANIZATION
             = "insert into organizations (name, description, street, city, "
-            + "state, zip, phone) values (?,?,?,?,?,?,?)";
+            + "state, zip, phone, isActive) values (?,?,?,?,?,?,?,1)";
 
     private static final String SQL_DELETE_ORGANIZATION
             = "delete from organizations where organization_id = ?";
@@ -39,11 +39,23 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
             = "delete from super_people_organizations where "
             + "organization_id = ?";
 
+    private static final String SQL_INACTIVATE_ORGANIZATION
+            = "update organizations "
+            + "set isActive = false "
+            + "where organization_id = ?";
+
     private static final String SQL_SELECT_ORGANIZATION
             = "select * from organizations where organization_id = ?";
 
+    private static final String SQL_SELECT_ACTIVE_ORGANIZATION
+            = "select * from organizations "
+            + "where organization_id = ? and isActive = True";
+
     private static final String SQL_SELECT_ALL_ORGANIZATIONS
             = "select * from organizations";
+
+    private static final String SQL_SELECT_ACTIVE_ORGANIZATIONS
+            = "select * from organizations where isActive = True";
 
     private static final String SQL_UPDATE_ORGANIZATION
             = "update organizations set name = ?, description = ?, street = ?, "
@@ -55,7 +67,7 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public Organization addOrganization(Organization org) {
         jdbcTemplate.update(SQL_INSERT_ORGANIZATION,
-                org.getName(), org.getDescription(), org.getStreet(), 
+                org.getName(), org.getDescription(), org.getStreet(),
                 org.getCity(), org.getState(), org.getZip(), org.getPhone());
 
         int orgId = jdbcTemplate
@@ -68,16 +80,17 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteOrganization(int orgId) {
+        jdbcTemplate.update(SQL_INACTIVATE_ORGANIZATION, orgId);
         //delete from bridge table
-        jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS, orgId);
+        //jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS, orgId);
         //delete from org table
-        jdbcTemplate.update(SQL_DELETE_ORGANIZATION, orgId);
+        //jdbcTemplate.update(SQL_DELETE_ORGANIZATION, orgId);
     }
 
     @Override
     public void updateOrganization(Organization org) {
         jdbcTemplate.update(SQL_UPDATE_ORGANIZATION,
-                org.getName(), org.getDescription(), org.getStreet(), 
+                org.getName(), org.getDescription(), org.getStreet(),
                 org.getCity(), org.getState(), org.getZip(), org.getPhone(),
                 org.getOrganizationId());
     }
@@ -85,7 +98,7 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
     @Override
     public Organization getOrganizationById(int id) {
         try {
-            return jdbcTemplate.queryForObject(SQL_SELECT_ORGANIZATION,
+            return jdbcTemplate.queryForObject(SQL_SELECT_ACTIVE_ORGANIZATION,
                     new OrganizationMapper(),
                     id);
         } catch (DataAccessException e) {
@@ -96,7 +109,7 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
 
     @Override
     public List<Organization> getAllOrganizations() {
-        return jdbcTemplate.query(SQL_SELECT_ALL_ORGANIZATIONS,
+        return jdbcTemplate.query(SQL_SELECT_ACTIVE_ORGANIZATIONS,
                 new OrganizationMapper());
     }
 
@@ -113,6 +126,7 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
             o.setZip(rs.getString("zip"));
             o.setPhone(rs.getString("phone"));
             o.setOrganizationId(rs.getInt("organization_id"));
+            o.setIsActive(rs.getBoolean("isActive"));
             return o;
         }
     }

@@ -20,6 +20,8 @@
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
+                    <li role="presentation" class="active"><a href="#">Super Powers</a></li>
+
                 </ul>    
             </div>
             <h2>${message}</h2>
@@ -34,9 +36,7 @@
                         <c:forEach var="currentSuperPower" items="${superPowerList}">
                             <tr>
                                 <td>
-                                    <a href ="displaySuperPowerDetails?superPowerId=${currentSuperPower.superPowerId}">
-                                        <c:out value="${currentSuperPower.description}"/>
-                                    </a>
+                                    <c:out value="${currentSuperPower.description}"/>
                                 </td>
                                 <td>
                                     <a href="deleteSuperPower?superPowerId=${currentSuperPower.superPowerId}">
@@ -58,6 +58,7 @@
                             <div class="col-md-8">
                                 <input type="text" class="form-control" 
                                        name="description" required
+                                       maxlength="45"
                                        placeholder="Description"/>
                             </div>
                         </div>

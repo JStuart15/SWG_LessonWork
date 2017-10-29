@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.picturealbum.controller;
+package com.sg.superpeoplesightings.controller;
 
-import com.sg.picturealbum.dao.AlbumDao;
-import com.sg.picturealbum.model.Picture;
+import com.sg.superpeoplesightings.dao.AlbumDao;
+import com.sg.superpeoplesightings.model.Picture;
 import java.io.File;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,26 +19,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author ward
+ * @author jstuart15
  */
-@Controller
 public class AlbumController {
-
+    
     public static final String pictureFolder = "images/";
     private AlbumDao dao;
 
     @Inject
     public AlbumController(AlbumDao dao) {
         this.dao = dao;
-    }
-
-    @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
-    public String displayHome(Model model) {
-
-        List<Picture> pictures = dao.getAllPictures();
-        model.addAttribute("pictureList", pictures);
-
-        return "home";
     }
 
     @RequestMapping(value = "addPictureForm", method = RequestMethod.GET)
@@ -106,4 +95,5 @@ public class AlbumController {
         }
 
     }
+    
 }

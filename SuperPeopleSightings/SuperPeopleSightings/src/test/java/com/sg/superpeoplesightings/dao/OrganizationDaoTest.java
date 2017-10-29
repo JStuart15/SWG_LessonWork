@@ -83,7 +83,8 @@ public class OrganizationDaoTest {
         shield.setCity("New York");
         shield.setState("NY");
         shield.setZip("10010");
-        shield.setPhone("555555555");
+        shield.setPhone("555-55-5555");
+        shield.setIsActive(Boolean.TRUE);
 
         orgDao.addOrganization(shield);
         Organization shieldFromDao = orgDao
@@ -116,10 +117,8 @@ public class OrganizationDaoTest {
 
         assertEquals(superPersonFromDao, sp);
 
-        //delete the shield org
+        //soft-delete the shield org
         orgDao.deleteOrganization(shield.getOrganizationId());
-        //we don't delete the super person so the org_id is still 
-        //associated with the super person
         assertEquals(1, sp.getOrgs().size());
         assertNull(orgDao.getOrganizationById(shield.getOrganizationId()));
     }
@@ -134,7 +133,8 @@ public class OrganizationDaoTest {
         shield.setCity("New York");
         shield.setState("NY");
         shield.setZip("10010");
-        shield.setPhone("555555555");
+        shield.setPhone("555-55-5555");
+        shield.setIsActive(Boolean.TRUE);
 
         orgDao.addOrganization(shield);
         Organization shieldFromDao = orgDao

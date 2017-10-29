@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -73,7 +74,7 @@ public class LocationDaoTest {
         l.setZip("55300");
         l.setLatitude(55.023046);
         l.setLongitude(-83.4202007);
-        l.setIsActive(1);
+        l.setIsActive(Boolean.TRUE);
 
         locationDao.addLocation(l);
 
@@ -81,7 +82,7 @@ public class LocationDaoTest {
         assertEquals(fromDao, l);
 
         locationDao.deleteLocation(l.getLocationId());
-        assertEquals(0, locationDao.getLocationById(l.getLocationId()).getIsActive());
+        assertNull(locationDao.getLocationById(l.getLocationId()));
     }
 
     @Test
@@ -95,7 +96,7 @@ public class LocationDaoTest {
         l.setZip("55300");
         l.setLatitude(55.023046);
         l.setLongitude(-83.4202007);
-        l.setIsActive(1);
+        l.setIsActive(Boolean.TRUE);
 
         locationDao.addLocation(l);
 
@@ -108,11 +109,11 @@ public class LocationDaoTest {
         l.setCity("Minneapolis");
         l.setLatitude(44.023046);
         l.setLongitude(-92.4202007);
-        l.setIsActive(0);
+        l.setIsActive(Boolean.FALSE);
         locationDao.updateLocation(l);
 
         Location changedLoc = locationDao.getLocationById(l.getLocationId());
-        assertEquals(changedLoc, l);
+        assertNull(changedLoc);
     }
 
     @Test
@@ -126,7 +127,7 @@ public class LocationDaoTest {
         l.setZip("55300");
         l.setLatitude(55.023046);
         l.setLongitude(-83.4202007);
-        l.setIsActive(1);
+        l.setIsActive(Boolean.TRUE);
 
         locationDao.addLocation(l);
 
@@ -139,7 +140,7 @@ public class LocationDaoTest {
         l2.setZip("55111");
         l2.setLatitude(44.023046);
         l2.setLongitude(-94.4202007);
-        l2.setIsActive(1);
+        l2.setIsActive(Boolean.TRUE);
 
         locationDao.addLocation(l2);
         
