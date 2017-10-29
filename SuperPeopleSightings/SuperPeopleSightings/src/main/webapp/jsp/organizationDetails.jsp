@@ -43,6 +43,8 @@
             <h3>
                 Phone Number: <c:out value="${organization.phone}"/>
             </h3>
+            <a href="${pageContext.request.contextPath}/displayOrganizationsPage"
+                           class="btn btn-primary">Back</a>
         </div>
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>

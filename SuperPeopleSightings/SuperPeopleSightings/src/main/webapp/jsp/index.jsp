@@ -52,7 +52,7 @@
                             </c:forEach>
                             sighted at
                             <c:out value="${currentSighting.location.name}"/> on
-                            <c:out value="${currentSighting.date}"/>
+                            <fmt:formatDate pattern="MM/dd/yyyy" value="${currentSighting.displayDate}"/>
                         </a>
                         <input type="number" hidden value="${currentSighting.location.latitude}"
                                id="sighting-${theCount.count}-latitude"/>

@@ -11,7 +11,7 @@
     </head>
     <body>
         <div class="container">
-            <h1>Super Human Details</h1>
+            <h1>Super Human Sightings</h1>
             <hr/>
             <div class="navbar">
                 <ul class="nav nav-tabs">
@@ -24,7 +24,8 @@
             </div>
 
             <h3>
-                Date: <c:out value="${sighting.date}"/>
+                Date: <fmt:formatDate pattern="MM-dd-yyyy" value="${sighting.displayDate}"/>
+
             </h3>
             <h3>
                 Location: <c:out value="${sighting.location.name}"/>,
@@ -42,7 +43,7 @@
             </h3>
 
             <a href="${pageContext.request.contextPath}/displaySightingsPage"
-               class="btn btn-primary">Sightings Page</a>
+               class="btn btn-primary">Back</a>
 
         </div>
         <!-- Placed at the end of the document so the pages load faster -->

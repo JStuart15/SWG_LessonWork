@@ -32,7 +32,8 @@
                     <label for="name" class="col-md-4 control-label">Name: </label>
                     <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-name"
-                                  path="name" placeholder="Super Human Name"/>
+                                  path="name" placeholder="Super Human Name"
+                                  required="true"/>
                         <sf:errors path="name" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -48,7 +49,7 @@
                         <label for="power" class="col-md-4 control-label">Power:</label>
                         <div class="col-md-8">
                             <select class="form-control" name="power">
-                                <option>None</option>
+                                <option value="">None</option>
                             <c:forEach var="power" items="${superPowerList}">
                                 <c:choose>
                                     <c:when test="${superPerson

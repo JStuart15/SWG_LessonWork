@@ -64,7 +64,7 @@ public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao{
             + "where sp.super_person_id = ?";
 
     private static final String SQL_ALL_SIGHTINGS_FOR_A_DATE
-            = "select s.sighting_id from sightings s where s.date = ?";
+            = "select distinct s.sighting_id from sightings s where s.date = ?";
 
     private static final String SQL_ALL_SUPER_PEOPLE_FOR_A_ORG
             = "select sp.super_person_id "

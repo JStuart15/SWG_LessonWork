@@ -116,7 +116,7 @@ public class SuperPersonController {
         try {
             int superPowerId = Integer.parseInt(request.getParameter("power"));
             superPerson.setSuperPower(superPowerDao.getSuperPowerById(superPowerId));
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             //no action, we allow no powers
         }
 
@@ -124,11 +124,11 @@ public class SuperPersonController {
         List<Organization> orgs = new ArrayList<>();
         try {
             String[] orgIds = request.getParameterValues("orgList");
-            for (String currentOrgId : orgIds) {
-                orgs.add(orgDao.getOrganizationById(Integer.parseInt(currentOrgId)));
-                superPerson.setOrgs(orgs);
+            for (String orgId : orgIds) {
+                orgs.add(orgDao.getOrganizationById(Integer.parseInt(orgId)));
             }
-        } catch (NumberFormatException e) {
+            superPerson.setOrgs(orgs);
+        } catch (Exception e) {
             //no action - we allow a superperson with no orgs
         }
 

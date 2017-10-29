@@ -81,8 +81,8 @@ public class SightingController {
         Location location = new Location();
 
         //set the date of the sighting
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        sighting.setDate(LocalDate.parse(request.getParameter("date"), formatter));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        sighting.setDate(LocalDate.parse(request.getParameter("dateJQuery"), formatter));
         //set the location of the sighting
         location = locationDao.getLocationById(
                 Integer.parseInt(request.getParameter("location")));
@@ -124,10 +124,13 @@ public class SightingController {
 //            return "editSightingForm";
 //        }
         //SET THE DATE
-        LocalDate dateSelected = (LocalDate.parse(
-                request.getParameter("date"),
-                DateTimeFormatter.ISO_LOCAL_DATE));
-        sighting.setDate(dateSelected);
+        String parameter = request.getParameter("dateJQuery");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        sighting.setDate(LocalDate.parse(request.getParameter("dateJQuery"), formatter));
+//        LocalDate dateSelected = (LocalDate.parse(
+//                request.getParameter("date"),
+//                DateTimeFormatter.ISO_LOCAL_DATE));
+//        sighting.setDate(dateSelected);
 
         //SET THE LOCATION
         String locSelected = request.getParameter("location");
@@ -158,6 +161,8 @@ public class SightingController {
         String sightingIdParameter = request.getParameter("sightingId");
         int sightingId = Integer.parseInt(sightingIdParameter);
         Sighting sighting = sightingDao.getSightingById(sightingId);
+        //Date date = java.sql.Date.valueOf(sighting.getDate());
+        
         model.addAttribute("sighting", sighting);
         model.addAttribute("locationList", locationList);
         model.addAttribute("superPersonList", superPersonList);

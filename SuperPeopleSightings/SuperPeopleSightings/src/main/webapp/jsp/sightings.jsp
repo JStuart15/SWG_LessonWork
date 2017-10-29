@@ -24,7 +24,7 @@
             </div>
             <h2>${message}</h2>
             <div class="col-md-6">
-                <h2>Super Human Sightings</h2>
+                <h2>Sightings</h2>
                 <table id="sightingsTable" class="table table-hover">
                     <tr>
                         <th width="20%">Date</th>
@@ -38,7 +38,8 @@
                             <tr>
                                 <td>
                                     <a href ="displaySightingDetails?sightingId=${currentSighting.sightingId}">
-                                        <c:out value="${currentSighting.date}"/>
+                                        <fmt:formatDate pattern="MM/dd/yyyy" 
+                                                        value="${currentSighting.displayDate}"/>
                                     </a>
                                 </td>
                                 <td style="word-break:break-all;">
@@ -63,22 +64,27 @@
                     </tbody>
                 </table>
             </div>
-
+            <!-- test area for image upload -->
             <div class="col-md-6">
                 <h2>Add New Sighting</h2>
                 <form class="form-horizontal"
                       role="form" method="POST"
-                      action="createSighting">
+                      action="createSighting"
+                      enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="date" class="col-md-4 control-label">Date of Sighting:</label>
+                        <%@include file="addPictureForm.jsp" %>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dateJQuery" class="col-md-4 control-label">Date:</label>
                         <div class="col-md-8">
-                            <input type="date" class="form-control" name="date"
-                                   required/>
+                            <input type="text" id="datepicker" 
+                                   class="form-control" name="dateJQuery"/>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="col-md-4 control-label">Location of Sighting:</label>
+                        <label for="description" class="col-md-4 control-label">Location:</label>
                         <div class="col-md-8">
                             <select class="form-control" name="location" required="true">
                                 <option value="" selected disabled>Choose a location</option>
@@ -97,7 +103,71 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="organizations" class="col-md-4 control-label">Super Humans Sighted:</label>
+                        <label for="organizations" class="col-md-4 control-label">Super Humans:</label>
+                        <div class="col-md-8">
+                            <select multiple class="form-control" 
+                                    id="superPersonMultiSelect" 
+                                    name="spSelect" required="true">
+                                <c:forEach var="superPerson" items="${superPersonList}">
+                                    <option value="${superPerson.superPersonId}">
+                                        <c:out value="${superPerson.name}"/>
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <a href="${pageContext.request.contextPath}/displaySuperPeoplePage" 
+                               class="btn btn-default">Add Super Human</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <input type="submit" class="btn btn-primary" value="Create Sighting"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Add sighting no image -->
+            <div class="col-md-6">
+                <h2>Add New Sighting</h2>
+                <form class="form-horizontal"
+                      role="form" method="POST"
+                      action="createSighting">
+
+                    <div class="form-group">
+                        <label for="dateJQuery" class="col-md-4 control-label">Date:</label>
+                        <div class="col-md-8">
+                            <input type="text" id="datepicker" 
+                                   class="form-control" name="dateJQuery"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="col-md-4 control-label">Location:</label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="location" required="true">
+                                <option value="" selected disabled>Choose a location</option>
+                                <c:forEach var="location" items="${locationList}">
+                                    <option value="${location.locationId}">
+                                        <c:out value="${location.name}"/>
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <a href="${pageContext.request.contextPath}/displayLocationsPage" 
+                               class="btn btn-default">Add Location</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="organizations" class="col-md-4 control-label">Super Humans:</label>
                         <div class="col-md-8">
                             <select multiple class="form-control" 
                                     id="superPersonMultiSelect" 
@@ -129,7 +199,14 @@
             <!-- Placed at the end of the document so the pages load faster -->
             <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
             <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script>
+                $(function () {
+                    $("#datepicker").datepicker();
+                });
+            </script>
     </body>
 </html>
 

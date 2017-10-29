@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!-- Directive for Spring Form tag libraries -->
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -27,18 +26,21 @@
             <sf:form class="form-horizontal" role="form" modelAttribute="sighting"
                      action="editSighting" method="POST">
                 <input type="hidden" name="sightingId" value="${sighting.sightingId}"/>
+                <input type="hidden" id="dateSelected" 
+                       value="<fmt:formatDate pattern="yyyy/MM/dd" value="${sighting.displayDate}"/>"/>
                 <div class="form-group">
-                    <label for="date" class="col-md-4 control-label">Date of Sighting:</label>
+                    <label for="dateJQuery" class="col-md-4 control-label">Date:</label>
                     <div class="col-md-8">
-                        <sf:input type="date" class="form-control" id="add-date"
-                                  value="${sighting.date}" name="date" path="date"/>
-                        <sf:errors path="date" cssclass="error"></sf:errors>
-                        </div>
+                        <input type="text" id="datepicker" 
+                               class="form-control" name="dateJQuery"
+                               value="<fmt:formatDate pattern="MM/dd/yyyy" value="${sighting.displayDate}"/>"
+                               />
                     </div>
-                    <div class="form-group">
-                        <label for="location" class="col-md-4 control-label">Location of Sighting:</label>
-                        <div class="col-md-8">
-                            <select class="form-control" name="location">
+                </div>
+                <div class="form-group">
+                    <label for="location" class="col-md-4 control-label">Location of Sighting:</label>
+                    <div class="col-md-8">
+                        <select class="form-control" name="location">
                             <c:forEach var="loc" items="${locationList}">
                                 <c:choose>
                                     <c:when test="${sighting.location.locationId 
@@ -117,6 +119,15 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $(function () {
+                $("#datepicker").datepicker();
+                $("#datepicker").datepicker("setDate", new Date($("#dateSelected").val()));
+            });
+        </script>
 
     </body>
 </html>

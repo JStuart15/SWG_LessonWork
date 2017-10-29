@@ -63,7 +63,8 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
             + "inner join locations l on l.location_id = s.location_id "
             + "inner join super_people_sightings sps on sps.sighting_id = s.sighting_id "
             + "inner join super_people sp on sp.super_person_id = sps.super_person_id "
-            + "where l.isActive = True and sp.isActive = True";
+            + "where l.isActive = True and sp.isActive = True "
+            + "order by s.date desc";
 
     private static final String SQL_SELECT_SIGHTING
             = "select * from sightings where sighting_id = ?";
@@ -73,7 +74,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
             + "inner join locations l on l.location_id = s.location_id "
             + "inner join super_people_sightings sps on sps.sighting_id = s.sighting_id "
             + "inner join super_people sp on sp.super_person_id = sps.super_person_id "
-            + "where l.isActive = True and sp.isActive = True and s.sighting_id = ?;";
+            + "where l.isActive = True and sp.isActive = True and s.sighting_id = ?";
 
     private static final String SQL_UPDATE_SIGHTING
             = "update sightings set location_id = ?, date = ? "
@@ -205,12 +206,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
                 SQL_SELECT_SUPER_PEOPLE_IDS_BY_SIGHTING_ID,
                 Integer.class,
                 sighting.getSightingId());
-
-//        //@todo - refactor this; change the query to return a list of super_person_id's instead
-//        List<Integer> superPeopleIds = new ArrayList<>();
-//        superPeople.forEach((superPerson) -> {
-//            superPeopleIds.add(superPerson.getSuperPersonId());
-//        });
+        
         for (Integer superPersonId : superPeopleIds) {
             superPeople.add(superPersonDao.getSuperPersonById(superPersonId));
         }
@@ -231,6 +227,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
             Sighting s = new Sighting();
             s.setSightingId(rs.getInt("sighting_id"));
             s.setDate(rs.getTimestamp("date").toLocalDateTime().toLocalDate());
+            s.setDisplayDate(rs.getDate("date"));
             return s;
         }
     }
