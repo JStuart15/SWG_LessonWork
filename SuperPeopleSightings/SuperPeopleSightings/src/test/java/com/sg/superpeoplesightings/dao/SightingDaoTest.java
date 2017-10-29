@@ -98,9 +98,11 @@ public class SightingDaoTest {
         //add two super powers
         SuperPower flight = new SuperPower();
         flight.setDescription("Supersonic Flight");
+        flight.setIsActive(Boolean.TRUE);
         superPowerDao.addSuperPower(flight);
         SuperPower gadgets = new SuperPower();
         gadgets.setDescription("High Tech Gadgets");
+        gadgets.setIsActive(Boolean.TRUE);
         superPowerDao.addSuperPower(gadgets);
         assertEquals(2, superPowerDao.getAllSuperPowers().size());
         SuperPower superPowerFromDao = superPowerDao
@@ -109,13 +111,16 @@ public class SightingDaoTest {
         //add two orgs
         Organization justiceLeague = new Organization();
         justiceLeague.setName("Justice League");
+        justiceLeague.setIsActive(Boolean.TRUE);
         orgDao.addOrganization(justiceLeague);
         Organization avengers = new Organization();
         avengers.setName("Avengers");
+        avengers.setIsActive(Boolean.TRUE);
         orgDao.addOrganization(avengers);
         assertEquals(2, orgDao.getAllOrganizations().size());
         //add two super people
         SuperPerson superMan = new SuperPerson();
+        superMan.setIsActive(Boolean.TRUE);
         superMan.setName("Superman");
         superMan.setSuperPower(flight);
         List<Organization> orgs = new ArrayList<>();
@@ -124,6 +129,7 @@ public class SightingDaoTest {
         superMan.setOrgs(orgs);
         superPersonDao.addSuperPerson(superMan);
         SuperPerson batMan = new SuperPerson();
+        batMan.setIsActive(Boolean.TRUE);
         batMan.setName("Batman");
         batMan.setDescription("darkness, no parents");
         batMan.setSuperPower(gadgets);

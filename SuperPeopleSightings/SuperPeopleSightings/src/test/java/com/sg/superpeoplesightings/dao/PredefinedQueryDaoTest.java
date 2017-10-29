@@ -102,25 +102,31 @@ public class PredefinedQueryDaoTest {
         //add three super powers
         SuperPower flight = new SuperPower();
         flight.setDescription("Supersonic Flight");
+        flight.setIsActive(Boolean.TRUE);
         superPowerDao.addSuperPower(flight);
         SuperPower gadgets = new SuperPower();
         gadgets.setDescription("High Tech Gadgets");
+        gadgets.setIsActive(Boolean.TRUE);
         superPowerDao.addSuperPower(gadgets);
         SuperPower strength = new SuperPower();
         strength.setDescription("Super human strength");
+        strength.setIsActive(Boolean.TRUE);
         superPowerDao.addSuperPower(strength);
 
         //add two orgs
         Organization justiceLeague = new Organization();
         justiceLeague.setName("Justice League");
+        justiceLeague.setIsActive(Boolean.TRUE);
         orgDao.addOrganization(justiceLeague);
         Organization avengers = new Organization();
         avengers.setName("Avengers");
+        avengers.setIsActive(Boolean.TRUE);
         orgDao.addOrganization(avengers);
 
         //add four super people
         SuperPerson superMan = new SuperPerson();
         superMan.setName("Superman");
+        superMan.setIsActive(Boolean.TRUE);
         superMan.setDescription("alien in human form");
         superMan.setSuperPower(flight);
         List<Organization> superPersonOrg = new ArrayList<>();
@@ -129,6 +135,7 @@ public class PredefinedQueryDaoTest {
         superPersonDao.addSuperPerson(superMan);
 
         SuperPerson batMan = new SuperPerson();
+        batMan.setIsActive(Boolean.TRUE);
         batMan.setName("Batman");
         batMan.setDescription("darkness, no parents");
         batMan.setSuperPower(gadgets);
@@ -136,6 +143,7 @@ public class PredefinedQueryDaoTest {
         superPersonDao.addSuperPerson(batMan);
 
         SuperPerson hulk = new SuperPerson();
+        hulk.setIsActive(Boolean.TRUE);
         hulk.setName("Hulk");
         hulk.setDescription("angry green dude");
         hulk.setSuperPower(strength);
@@ -145,6 +153,7 @@ public class PredefinedQueryDaoTest {
         superPersonDao.addSuperPerson(hulk);
 
         SuperPerson ironMan = new SuperPerson();
+        ironMan.setIsActive(Boolean.TRUE);
         ironMan.setName("IronMan");
         ironMan.setDescription("no parents");
         ironMan.setSuperPower(gadgets);
@@ -229,14 +238,14 @@ public class PredefinedQueryDaoTest {
         assertEquals(2, sightingsFromDao.size());
         //test that sighting is fully formed
         //sightingsFromDao.forEach(sp -> System.out.println(sp.toString()));
-        assertTrue(sightingsFromDao.contains(movieSighting));
+        assertTrue(sightingsFromDao.contains(movieSighting)); 
         assertTrue(sightingsFromDao.contains(moaSighting));
         
         //TEST GET ALL SUPER PEOPLE FOR AN ORGANIZATION
         List<SuperPerson> avengersFromDao = 
                 queryDao.getAllSuperPeopleForAnOrg(avengers.getOrganizationId());
         assertEquals(2, avengersFromDao.size());
-        assertTrue(avengersFromDao.contains(ironMan));
+        assertTrue(avengersFromDao.contains(ironMan)); 
         assertFalse(avengersFromDao.contains(batMan));
         
         //TEST GET ALL ORGANIZATIONS FOR A SUPER PERSON

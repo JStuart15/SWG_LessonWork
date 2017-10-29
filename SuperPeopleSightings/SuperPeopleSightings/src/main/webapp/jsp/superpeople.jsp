@@ -121,6 +121,12 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-4 col-md-8">
+                                <a href="${pageContext.request.contextPath}/displayOrganizationsPage" 
+                                   class="btn btn-default">Add Organization</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-8">
                                 <input type="submit" class="btn btn-primary" value="Create Super Human"/>
                             </div>
                         </div>

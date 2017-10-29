@@ -80,10 +80,10 @@ public class OrganizationDaoJdbcTemplateImpl implements OrganizationDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteOrganization(int orgId) {
-        jdbcTemplate.update(SQL_INACTIVATE_ORGANIZATION, orgId);
         //delete from bridge table
-        //jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS, orgId);
+        jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS, orgId);
         //delete from org table
+        jdbcTemplate.update(SQL_INACTIVATE_ORGANIZATION, orgId);
         //jdbcTemplate.update(SQL_DELETE_ORGANIZATION, orgId);
     }
 

@@ -19,6 +19,12 @@ public class SuperPerson {
     private String name;
     private String description;
     private List<Organization> orgs;
+    private Boolean isActive;
+
+    @Override
+    public String toString() {
+        return "SuperPerson{" + "superPersonId=" + superPersonId + ", superPower=" + superPower + ", name=" + name + ", description=" + description + ", orgs=" + orgs + '}';
+    }
 
     public int getSuperPersonId() {
         return superPersonId;
@@ -60,14 +66,23 @@ public class SuperPerson {
         this.orgs = orgs;
     }
 
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 43 * hash + this.superPersonId;
-        hash = 43 * hash + Objects.hashCode(this.superPower);
-        hash = 43 * hash + Objects.hashCode(this.name);
-        hash = 43 * hash + Objects.hashCode(this.description);
-        hash = 43 * hash + Objects.hashCode(this.orgs);
+        int hash = 5;
+        hash = 97 * hash + this.superPersonId;
+        hash = 97 * hash + Objects.hashCode(this.superPower);
+        hash = 97 * hash + Objects.hashCode(this.name);
+        hash = 97 * hash + Objects.hashCode(this.description);
+        hash = 97 * hash + Objects.hashCode(this.orgs);
+        hash = 97 * hash + Objects.hashCode(this.isActive);
         return hash;
     }
 
@@ -98,12 +113,9 @@ public class SuperPerson {
         if (!Objects.equals(this.orgs, other.orgs)) {
             return false;
         }
+        if (!Objects.equals(this.isActive, other.isActive)) {
+            return false;
+        }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "SuperPerson{" + "superPersonId=" + superPersonId + ", superPower=" + superPower + ", name=" + name + ", description=" + description + ", orgs=" + orgs + '}';
-    }
-    
 }

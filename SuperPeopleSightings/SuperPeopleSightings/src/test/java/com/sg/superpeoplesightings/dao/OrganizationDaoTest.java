@@ -97,6 +97,7 @@ public class OrganizationDaoTest {
         //add a super power
         SuperPower flight = new SuperPower();
         flight.setDescription("Supersonic Flight");
+        flight.setIsActive(Boolean.TRUE);
         superPowerDao.addSuperPower(flight);
         assertEquals(1, superPowerDao.getAllSuperPowers().size());
         SuperPower fromDao = superPowerDao
@@ -105,6 +106,7 @@ public class OrganizationDaoTest {
 
         //add super person with the shield org
         SuperPerson sp = new SuperPerson();
+        sp.setIsActive(Boolean.TRUE);
         sp.setName("Superman");
         sp.setSuperPower(flight);
         List<Organization> orgs = new ArrayList<>();

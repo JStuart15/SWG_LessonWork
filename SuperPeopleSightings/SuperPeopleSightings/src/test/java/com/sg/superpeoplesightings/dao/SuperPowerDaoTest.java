@@ -45,14 +45,14 @@ public class SuperPowerDaoTest {
         superPowerDao = ctx.getBean("superPowerDao", SuperPowerDao.class);
         superPersonDao = ctx.getBean("superPersonDao", SuperPersonDao.class);
 
-        //delete all super people which deletes super_people_sightings
+        //INACTIVATE all super people which deletes super_people_sightings
         // and super_people_organizations
         List<SuperPerson> superPeople = superPersonDao.getAllSuperPeople();
         for (SuperPerson sp : superPeople) {
             superPersonDao.deleteSuperPerson(sp.getSuperPersonId());
         }
 
-        //delete all super powers
+        //INACTIVATE all super powers
         List<SuperPower> superPowers = superPowerDao.getAllSuperPowers();
         for (SuperPower sp : superPowers) {
             superPowerDao.deleteSuperPower(sp.getSuperPowerId());
@@ -67,17 +67,17 @@ public class SuperPowerDaoTest {
     public void testAdd_Get_GetAll_DeleteSuperPower() {
         assertEquals(0, superPowerDao.getAllSuperPowers().size());
 
+        //ADD A SUPER POWER
         SuperPower sp = new SuperPower();
         sp.setDescription("Flight");
-
+        sp.setIsActive(Boolean.TRUE);
         superPowerDao.addSuperPower(sp);
-        assertEquals(1, superPowerDao.getAllSuperPowers().size());
         
-        SuperPower fromDao = superPowerDao.getSuperPowerById(sp.getSuperPowerId());
-        assertEquals(fromDao, sp);
+        SuperPower spFromDao = superPowerDao
+                .getSuperPowerById(sp.getSuperPowerId());
+        assertEquals(sp, spFromDao);
 
         superPowerDao.deleteSuperPower(sp.getSuperPowerId());
-        //assertNull(superPowerDao.getSuperPowerById(sp.getSuperPowerId()));
         assertEquals(0, superPowerDao.getAllSuperPowers().size());
     }
 
@@ -87,6 +87,7 @@ public class SuperPowerDaoTest {
 
         SuperPower sp = new SuperPower();
         sp.setDescription("Flight");
+        sp.setIsActive(Boolean.TRUE);
         superPowerDao.addSuperPower(sp);
 
         SuperPower fromDao = superPowerDao.getSuperPowerById(sp.getSuperPowerId());

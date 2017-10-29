@@ -56,7 +56,7 @@
                                 </td>
                                 <td>
                                     <a href="deleteLocation?locationId=${currentLocation.locationId}">
-                                        Inactivate
+                                        Delete
                                     </a>
                                 </td>
                             </tr>

@@ -6,7 +6,6 @@
 package com.sg.superpeoplesightings.dao;
 
 import com.sg.superpeoplesightings.dao.LocationDaoJdbcTemplateImpl.LocationMapper;
-import com.sg.superpeoplesightings.dao.SuperPersonDaoJdbcTemplateImpl.SuperPersonMapper;
 import com.sg.superpeoplesightings.model.Location;
 import com.sg.superpeoplesightings.model.Sighting;
 import com.sg.superpeoplesightings.model.SuperPerson;
@@ -59,8 +58,22 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
     private static final String SQL_SELECT_ALL_SIGHTINGS
             = "select * from sightings";
 
+    private static final String SQL_SELECT_ACTIVE_SIGHTINGS
+            = "select distinct s.* from sightings s "
+            + "inner join locations l on l.location_id = s.location_id "
+            + "inner join super_people_sightings sps on sps.sighting_id = s.sighting_id "
+            + "inner join super_people sp on sp.super_person_id = sps.super_person_id "
+            + "where l.isActive = True and sp.isActive = True";
+
     private static final String SQL_SELECT_SIGHTING
             = "select * from sightings where sighting_id = ?";
+
+    private static final String SQL_SELECT_ACTIVE_SIGHTING
+            = "select distinct s.* from sightings s "
+            + "inner join locations l on l.location_id = s.location_id "
+            + "inner join super_people_sightings sps on sps.sighting_id = s.sighting_id "
+            + "inner join super_people sp on sp.super_person_id = sps.super_person_id "
+            + "where l.isActive = True and sp.isActive = True and s.sighting_id = ?;";
 
     private static final String SQL_UPDATE_SIGHTING
             = "update sightings set location_id = ?, date = ? "
@@ -69,15 +82,30 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
     private static final String SQL_SELECT_SUPER_PEOPLE_BY_SIGHTING_ID
             = "select sp.* from super_people sp "
             + "inner join super_people_sightings sps on sps.super_person_id = "
-            + "sp.super_person_id where sps.sighting_id = ?";
+            + "sp.super_person_id where sps.sighting_id = ? "
+            + "and sp.isActive = True";
+
+    private static final String SQL_SELECT_SUPER_PEOPLE_IDS_BY_SIGHTING_ID
+            = "select sp.super_person_id from super_people sp "
+            + "inner join super_people_sightings sps on sps.super_person_id = "
+            + "sp.super_person_id where sps.sighting_id = ? "
+            + "and sp.isActive = True";
 
     private static final String SQL_SELECT_LOCATION_BY_SIGHTING_ID
             = "select l.* from locations l "
             + "inner join sightings s on l.location_id = s.location_id "
-            + "where s.sighting_id = ?";
+            + "where s.sighting_id = ? and l.isActive = True";
 
     private static final String SQL_SELECT_LAST10_SIGHTINGS
             = "select * from sightings s order by s.date desc limit 10";
+
+    private static final String SQL_SELECT_LAST10_ACTIVE_SIGHTINGS
+            = "select distinct s.* from sightings s "
+            + "inner join locations l on l.location_id = s.location_id "
+            + "inner join super_people_sightings sps on sps.sighting_id = s.sighting_id "
+            + "inner join super_people sp on sp.super_person_id = sps.super_person_id "
+            + "where l.isActive = True and sp.isActive = True "
+            + "order by s.date desc;";
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
@@ -120,15 +148,13 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
     public Sighting getSightingById(int id) {
         try {
             //get details from the sightings table
-            Sighting sighting = jdbcTemplate.queryForObject(SQL_SELECT_SIGHTING,
+            Sighting sighting = jdbcTemplate.queryForObject(SQL_SELECT_ACTIVE_SIGHTING,
                     new SightingMapper(),
                     id);
             //get the superPeople for this sighting and set the list
             sighting.setSuperPeople(findSuperPeopleForSighting(sighting));
             //get the location object for the sighting
             sighting.setLocation(findLocationForSighting(sighting));
-            //super people should have powers and orgs
-
             return sighting;
         } catch (DataAccessException e) {
             return null;
@@ -139,19 +165,20 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
     public List<Sighting> getAllSightings() {
         List<Sighting> sightings = new ArrayList<>();
         sightings = jdbcTemplate
-                .query(SQL_SELECT_ALL_SIGHTINGS, new SightingMapper());
+                .query(SQL_SELECT_ACTIVE_SIGHTINGS, new SightingMapper());
         for (Sighting sighting : sightings) {
             sighting.setSuperPeople(findSuperPeopleForSighting(sighting));
             sighting.setLocation(findLocationForSighting(sighting));
         }
         return sightings;
+
     }
 
     @Override
     public List<Sighting> getLast10Sightings() {
         List<Sighting> sightings = new ArrayList<>();
         sightings = jdbcTemplate
-                .query(SQL_SELECT_LAST10_SIGHTINGS, new SightingMapper());
+                .query(SQL_SELECT_LAST10_ACTIVE_SIGHTINGS, new SightingMapper());
         for (Sighting sighting : sightings) {
             sighting.setSuperPeople(findSuperPeopleForSighting(sighting));
             sighting.setLocation(findLocationForSighting(sighting));
@@ -172,18 +199,18 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
     }
 
     private List<SuperPerson> findSuperPeopleForSighting(Sighting sighting) {
-        List<SuperPerson> superPeople = jdbcTemplate
-                .query(SQL_SELECT_SUPER_PEOPLE_BY_SIGHTING_ID,
-                        new SuperPersonMapper(), sighting.getSightingId());
+        List<SuperPerson> superPeople = new ArrayList<>();
 
-        //@todo - refactor this
-        List<Integer> superPeopleIds = new ArrayList<>();
-        superPeople.forEach((superPerson) -> {
-            superPeopleIds.add(superPerson.getSuperPersonId());
-        });
+        List<Integer> superPeopleIds = jdbcTemplate.queryForList(
+                SQL_SELECT_SUPER_PEOPLE_IDS_BY_SIGHTING_ID,
+                Integer.class,
+                sighting.getSightingId());
 
-        superPeople.clear();//empty the list, we will rebuild it
-
+//        //@todo - refactor this; change the query to return a list of super_person_id's instead
+//        List<Integer> superPeopleIds = new ArrayList<>();
+//        superPeople.forEach((superPerson) -> {
+//            superPeopleIds.add(superPerson.getSuperPersonId());
+//        });
         for (Integer superPersonId : superPeopleIds) {
             superPeople.add(superPersonDao.getSuperPersonById(superPersonId));
         }

@@ -80,6 +80,7 @@ public class SuperPersonDaoTest {
         //add a super power
         SuperPower superPower = new SuperPower();
         superPower.setDescription("Supersonic Flight");
+        superPower.setIsActive(Boolean.TRUE);
         superPowerDao.addSuperPower(superPower);
         assertEquals(1, superPowerDao.getAllSuperPowers().size());
         SuperPower fromDao = superPowerDao
@@ -89,16 +90,19 @@ public class SuperPersonDaoTest {
         //add 2 organizations
         Organization org = new Organization();
         org.setName("Justice League");
+        org.setIsActive(Boolean.TRUE);
         orgDao.addOrganization(org);
 
         Organization org2 = new Organization();
         org2.setName("Avengers");
+        org2.setIsActive(Boolean.TRUE);
         orgDao.addOrganization(org2);
         assertEquals(2, orgDao.getAllOrganizations().size());
 
         //add super person
         SuperPerson sp = new SuperPerson();
         sp.setName("Superman");
+        sp.setIsActive(Boolean.TRUE);
         sp.setSuperPower(superPower);
         List<Organization> orgs = new ArrayList<>();
         orgs.add(org);
@@ -119,10 +123,12 @@ public class SuperPersonDaoTest {
         //add 2 organizations
         Organization org = new Organization();
         org.setName("Justice League");
+        org.setIsActive(Boolean.TRUE);
         orgDao.addOrganization(org);
 
         Organization org2 = new Organization();
         org2.setName("Avengers");
+        org2.setIsActive(Boolean.TRUE);
         orgDao.addOrganization(org2);
 
         //add super person
@@ -132,8 +138,12 @@ public class SuperPersonDaoTest {
         orgs.add(org);
         orgs.add(org2);
         sp.setOrgs(orgs);
+        sp.setIsActive(Boolean.TRUE);
         superPersonDao.addSuperPerson(sp);
-        assertEquals(1, superPersonDao.getAllSuperPeople().size());
+
+        SuperPerson spFromDao = superPersonDao
+                .getSuperPersonById(sp.getSuperPersonId());
+        assertEquals(sp, spFromDao);
     }
 
     @Test
@@ -143,6 +153,7 @@ public class SuperPersonDaoTest {
         //add a super power
         SuperPower superPower = new SuperPower();
         superPower.setDescription("High Tech Gadgets");
+        superPower.setIsActive(Boolean.TRUE);
         superPowerDao.addSuperPower(superPower);
         assertEquals(1, superPowerDao.getAllSuperPowers().size());
         SuperPower fromDao = superPowerDao
@@ -152,6 +163,7 @@ public class SuperPersonDaoTest {
         //add another super power
         SuperPower superPower2 = new SuperPower();
         superPower2.setDescription("Supersonic Flight");
+        superPower2.setIsActive(Boolean.TRUE);
         superPowerDao.addSuperPower(superPower2);
         assertEquals(2, superPowerDao.getAllSuperPowers().size());
         SuperPower superPowerFromDao = superPowerDao
@@ -161,10 +173,12 @@ public class SuperPersonDaoTest {
         //add 2 organizations
         Organization org = new Organization();
         org.setName("Justice League");
+        org.setIsActive(Boolean.TRUE);
         orgDao.addOrganization(org);
 
         Organization org2 = new Organization();
         org2.setName("Avengers");
+        org2.setIsActive(Boolean.TRUE);
         orgDao.addOrganization(org2);
         assertEquals(2, orgDao.getAllOrganizations().size());
 
@@ -175,6 +189,7 @@ public class SuperPersonDaoTest {
         List<Organization> orgs = new ArrayList<>();
         orgs.add(org2); //wrong org for Batman
         sp.setOrgs(orgs);
+        sp.setIsActive(Boolean.TRUE);
         superPersonDao.addSuperPerson(sp);
         assertEquals(1, superPersonDao.getAllSuperPeople().size());
         SuperPerson superPersonFromDao = superPersonDao
@@ -209,6 +224,7 @@ public class SuperPersonDaoTest {
         //add a super power
         SuperPower superPower = new SuperPower();
         superPower.setDescription("Supersonic Flight");
+        superPower.setIsActive(Boolean.TRUE);
         superPowerDao.addSuperPower(superPower);
         assertEquals(1, superPowerDao.getAllSuperPowers().size());
         SuperPower fromDao = superPowerDao
@@ -219,6 +235,7 @@ public class SuperPersonDaoTest {
         SuperPerson sp = new SuperPerson();
         sp.setName("Superman");
         sp.setSuperPower(superPower);
+        sp.setIsActive(Boolean.TRUE);
         superPersonDao.addSuperPerson(sp);
         assertEquals(1, superPersonDao.getAllSuperPeople().size());
         int spId = sp.getSuperPersonId();

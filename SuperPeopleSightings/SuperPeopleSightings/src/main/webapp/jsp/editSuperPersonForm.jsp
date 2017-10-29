@@ -118,7 +118,6 @@
                         <a href="${pageContext.request.contextPath}/displaySuperPeoplePage"
                            class="btn btn-default">Cancel</a>
                     </div>
-
                 </div>
 
 

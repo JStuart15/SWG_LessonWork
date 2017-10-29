@@ -93,6 +93,8 @@
                     <div class="form-group">
                         <div class="col-md-offset-4 col-md-8">
                             <input type="submit" class="btn btn-primary" value="Update Organization"/>
+                            <a href="${pageContext.request.contextPath}/displayOrganizationsPage"
+                           class="btn btn-default">Cancel</a>
                         </div>
                     </div>
             </sf:form>

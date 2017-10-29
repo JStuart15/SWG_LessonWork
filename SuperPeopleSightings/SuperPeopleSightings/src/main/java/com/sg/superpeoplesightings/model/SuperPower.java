@@ -15,15 +15,7 @@ public class SuperPower {
 
     private int superPowerId;
     private String description;
-    private boolean isActive;
-
-    public boolean isIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
+    private Boolean isActive;
 
     public int getSuperPowerId() {
         return superPowerId;
@@ -41,12 +33,20 @@ public class SuperPower {
         this.description = description;
     }
 
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + this.superPowerId;
-        hash = 89 * hash + Objects.hashCode(this.description);
-        hash = 89 * hash + (this.isActive ? 1 : 0);
+        hash = 23 * hash + this.superPowerId;
+        hash = 23 * hash + Objects.hashCode(this.description);
+        hash = 23 * hash + Objects.hashCode(this.isActive);
         return hash;
     }
 
@@ -65,17 +65,14 @@ public class SuperPower {
         if (this.superPowerId != other.superPowerId) {
             return false;
         }
-        if (this.isActive != other.isActive) {
+        if (!Objects.equals(this.description, other.description)) {
             return false;
         }
-        if (!Objects.equals(this.description, other.description)) {
+        if (!Objects.equals(this.isActive, other.isActive)) {
             return false;
         }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "SuperPower{" + "superPowerId=" + superPowerId + ", description=" + description + ", isActive=" + isActive + '}';
-    }
+    
 }

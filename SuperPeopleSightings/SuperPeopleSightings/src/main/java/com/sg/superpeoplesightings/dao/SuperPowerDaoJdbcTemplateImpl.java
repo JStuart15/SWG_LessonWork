@@ -36,7 +36,7 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
 
     private static final String SQL_SELECT_ACTIVE_SUPER_POWERS
             = "select * from super_powers where isActive = True";
-    
+
     private static final String SQL_DELETE_SUPER_POWER
             = "delete from super_powers where super_power_id = ?";
 
@@ -46,6 +46,9 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
             + "where super_power_id = ?";
 
     private static final String SQL_SELECT_SUPER_POWER_BY_SUPER_POWER_ID
+            = "select * from super_powers where super_power_id = ?";
+
+    private static final String SQL_SELECT_ACTIVE_SUPER_POWER_BY_SUPER_POWER_ID
             = "select * from super_powers where super_power_id = ?";
 
     private static final String SQL_UPDATE_SUPER_POWER
@@ -81,7 +84,7 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
     public SuperPower getSuperPowerById(int id) {
         try {
             return jdbcTemplate.queryForObject(
-                    SQL_SELECT_SUPER_POWER_BY_SUPER_POWER_ID,
+                    SQL_SELECT_ACTIVE_SUPER_POWER_BY_SUPER_POWER_ID,
                     new SuperPowerMapper(), id);
         } catch (DataAccessException e) {
             return null;
@@ -102,6 +105,7 @@ public class SuperPowerDaoJdbcTemplateImpl implements SuperPowerDao {
             SuperPower sp = new SuperPower();
             sp.setSuperPowerId(rs.getInt("super_power_id"));
             sp.setDescription(rs.getString("description"));
+            sp.setIsActive(rs.getBoolean("isActive"));
             return sp;
         }
 

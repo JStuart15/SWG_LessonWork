@@ -90,7 +90,12 @@
                             </select>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <a href="${pageContext.request.contextPath}/displayLocationsPage" 
+                               class="btn btn-default">Add Location</a>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="organizations" class="col-md-4 control-label">Super Humans Sighted:</label>
                         <div class="col-md-8">
@@ -106,7 +111,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        
+                        <div class="col-md-offset-4 col-md-8">
+                            <a href="${pageContext.request.contextPath}/displaySuperPeoplePage" 
+                               class="btn btn-default">Add Super Human</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-4 col-md-8">
@@ -114,10 +125,10 @@
                         </div>
                     </div>
                 </form>
-        </div>
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+            </div>
+            <!-- Placed at the end of the document so the pages load faster -->
+            <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
+            <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 
     </body>
 </html>

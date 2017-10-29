@@ -35,14 +35,22 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     private static final String SQL_DELETE_SUPER_PERSON
             = "delete from super_people where super_person_id = ?";
 
+    private static final String SQL_INACTIVATE_SUPER_PERSON
+            = "update super_people "
+            + "set isActive = false "
+            + "where super_person_id = ?";
+
     private static final String SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS
             = "delete from super_people_organizations where super_person_id = ?";
 
     private static final String SQL_DELETE_SUPER_PEOPLE_SITINGS
             = "delete from super_people_sightings where super_person_id = ?";
 
-    private static final String SQL_GET_ALL_SUPER_PEOPLE
+    private static final String SQL_SELECT_ALL_SUPER_PEOPLE
             = "select * from super_people";
+
+    private static final String SQL_SELECT_ALL_ACTIVE_SUPER_PEOPLE
+            = "select * from super_people where isActive = True";
 
     private static final String SQL_INSERT_SUPER_PERSON
             = "insert into super_people (super_power_id, name, description) "
@@ -59,6 +67,10 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
 
     private static final String SQL_SELECT_SUPER_PERSON
             = "select * from super_people where super_person_id = ?";
+
+    private static final String SQL_SELECT_ACTIVE_SUPER_PERSON
+            = "select * from super_people "
+            + "where super_person_id = ? and isActive = True";
 
     protected static final String SQL_SELECT_ORGS_BY_SUPER_PERSON_ID
             = "select orgs.* from organizations orgs "
@@ -98,9 +110,12 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void deleteSuperPerson(int superPersonId) {
+        //delete from bridge tables
         jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_SITINGS, superPersonId);
         jdbcTemplate.update(SQL_DELETE_SUPER_PEOPLE_ORGANIZATIONS, superPersonId);
-        jdbcTemplate.update(SQL_DELETE_SUPER_PERSON, superPersonId);
+        //de-activate the super person
+        jdbcTemplate.update(SQL_INACTIVATE_SUPER_PERSON, superPersonId);
+        //jdbcTemplate.update(SQL_DELETE_SUPER_PERSON, superPersonId);
     }
 
     @Override
@@ -134,7 +149,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     public SuperPerson getSuperPersonById(int id) {
         try {
             //get info from super_people table
-            SuperPerson sp = jdbcTemplate.queryForObject(SQL_SELECT_SUPER_PERSON,
+            SuperPerson sp = jdbcTemplate.queryForObject(SQL_SELECT_ACTIVE_SUPER_PERSON,
                     new SuperPersonMapper(),
                     id);
             //get organizations for the super person
@@ -150,7 +165,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
     @Override
     public List<SuperPerson> getAllSuperPeople() {
         List<SuperPerson> speople = new ArrayList<>();
-        speople = jdbcTemplate.query(SQL_GET_ALL_SUPER_PEOPLE,
+        speople = jdbcTemplate.query(SQL_SELECT_ALL_ACTIVE_SUPER_PEOPLE,
                 new SuperPersonMapper());
 
         for (SuperPerson superPerson : speople) {
@@ -200,6 +215,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
             sp.setSuperPersonId(rs.getInt("super_person_id"));
             sp.setName(rs.getString("name"));
             sp.setDescription(rs.getString("description"));
+            sp.setIsActive(rs.getBoolean("isActive"));
             return sp;
         }
     }
