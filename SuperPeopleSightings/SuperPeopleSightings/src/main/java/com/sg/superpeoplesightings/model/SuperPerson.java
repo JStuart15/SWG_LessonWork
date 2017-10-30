@@ -19,12 +19,8 @@ public class SuperPerson {
     private String name;
     private String description;
     private List<Organization> orgs;
+    private String imageFileName;
     private Boolean isActive;
-
-    @Override
-    public String toString() {
-        return "SuperPerson{" + "superPersonId=" + superPersonId + ", superPower=" + superPower + ", name=" + name + ", description=" + description + ", orgs=" + orgs + '}';
-    }
 
     public int getSuperPersonId() {
         return superPersonId;
@@ -66,6 +62,14 @@ public class SuperPerson {
         this.orgs = orgs;
     }
 
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
+    }
+
     public Boolean getIsActive() {
         return isActive;
     }
@@ -76,13 +80,14 @@ public class SuperPerson {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.superPersonId;
-        hash = 97 * hash + Objects.hashCode(this.superPower);
-        hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.description);
-        hash = 97 * hash + Objects.hashCode(this.orgs);
-        hash = 97 * hash + Objects.hashCode(this.isActive);
+        int hash = 3;
+        hash = 59 * hash + this.superPersonId;
+        hash = 59 * hash + Objects.hashCode(this.superPower);
+        hash = 59 * hash + Objects.hashCode(this.name);
+        hash = 59 * hash + Objects.hashCode(this.description);
+        hash = 59 * hash + Objects.hashCode(this.orgs);
+        hash = 59 * hash + Objects.hashCode(this.imageFileName);
+        hash = 59 * hash + Objects.hashCode(this.isActive);
         return hash;
     }
 
@@ -107,6 +112,9 @@ public class SuperPerson {
         if (!Objects.equals(this.description, other.description)) {
             return false;
         }
+        if (!Objects.equals(this.imageFileName, other.imageFileName)) {
+            return false;
+        }
         if (!Objects.equals(this.superPower, other.superPower)) {
             return false;
         }
@@ -118,4 +126,6 @@ public class SuperPerson {
         }
         return true;
     }
+
+    
 }

@@ -63,11 +63,13 @@
                         </c:forEach>
                     </table>
                 </div>
+
                 <div class="col-md-6">
                     <h2>Add New Super Human</h2>
                     <form class="form-horizontal"
                           role="form" method="POST"
-                          action="createSuperPerson">
+                          action="createSuperPerson"
+                          enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="name" class="col-md-4 control-label">Name:</label>
                             <div class="col-md-8">
@@ -77,7 +79,9 @@
                                        placeholder="Super Human Name"/>
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <%@include file="addPictureForm.jsp" %>
+                        </div>
                         <div class="form-group">
                             <label for="description" class="col-md-4 control-label">Description:</label>
                             <div class="col-md-8">

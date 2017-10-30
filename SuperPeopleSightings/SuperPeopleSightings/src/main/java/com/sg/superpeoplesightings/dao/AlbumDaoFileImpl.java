@@ -6,42 +6,32 @@
 package com.sg.superpeoplesightings.dao;
 
 import com.sg.superpeoplesightings.model.Picture;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
  * @author jstuart15
  */
-public class AlbumDaoInMemImpl implements AlbumDao {
-
-    private Map<Integer, Picture> pictureMap = new HashMap<>();
-
-    private int pictureCounter = 0;
+public class AlbumDaoFileImpl implements AlbumDao{
 
     @Override
     public Picture addPicture(Picture picture) {
-        picture.setPictureId(pictureCounter);
-        pictureCounter++;
-        pictureMap.put(picture.getPictureId(), picture);
-        return picture;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void deletePicture(int pictureId) {
-        pictureMap.remove(pictureId);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Picture getPictureById(int pictureId) {
-        return pictureMap.get(pictureId);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Picture> getAllPictures() {
-        List<Picture> pictureList = new ArrayList<>(pictureMap.values());
-        return pictureList;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+ 
 }

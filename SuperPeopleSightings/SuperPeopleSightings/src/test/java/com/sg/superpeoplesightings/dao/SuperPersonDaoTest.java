@@ -108,6 +108,7 @@ public class SuperPersonDaoTest {
         orgs.add(org);
         orgs.add(org2);
         sp.setOrgs(orgs);
+        sp.setImageFileName("/images/download.jpg");
         superPersonDao.addSuperPerson(sp);
         assertEquals(1, superPersonDao.getAllSuperPeople().size());
         int spId = sp.getSuperPersonId();
@@ -139,6 +140,7 @@ public class SuperPersonDaoTest {
         orgs.add(org2);
         sp.setOrgs(orgs);
         sp.setIsActive(Boolean.TRUE);
+        sp.setImageFileName("/images/download.jpg");
         superPersonDao.addSuperPerson(sp);
 
         SuperPerson spFromDao = superPersonDao
@@ -190,6 +192,7 @@ public class SuperPersonDaoTest {
         orgs.add(org2); //wrong org for Batman
         sp.setOrgs(orgs);
         sp.setIsActive(Boolean.TRUE);
+        sp.setImageFileName("/images/download.jpg");
         superPersonDao.addSuperPerson(sp);
         assertEquals(1, superPersonDao.getAllSuperPeople().size());
         SuperPerson superPersonFromDao = superPersonDao
@@ -236,6 +239,7 @@ public class SuperPersonDaoTest {
         sp.setName("Superman");
         sp.setSuperPower(superPower);
         sp.setIsActive(Boolean.TRUE);
+        sp.setImageFileName("/images/download.jpg");
         superPersonDao.addSuperPerson(sp);
         assertEquals(1, superPersonDao.getAllSuperPeople().size());
         int spId = sp.getSuperPersonId();

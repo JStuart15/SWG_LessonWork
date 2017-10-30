@@ -72,4 +72,6 @@
     <bean id="albumDao" 
           class="com.sg.superpeoplesightings.dao.AlbumDaoInMemImpl">
     </bean>
+    
+   
 </beans>

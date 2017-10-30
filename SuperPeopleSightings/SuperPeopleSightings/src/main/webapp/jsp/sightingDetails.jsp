@@ -37,8 +37,11 @@
                 Super Human(s):<br>
                 <ul>
                     <c:forEach var="superPerson" items="${sighting.superPeople}">
-                        <li><c:out value="${superPerson.name}"/></li>
-                        </c:forEach>
+                        <li class="row"><c:out value="${superPerson.name}"/>
+                            <img src="${pageContext.request.contextPath}/${superPerson.imageFileName}" 
+                                 class="img-circle col-sm-1"/>
+                        </li>
+                    </c:forEach>
                 </ul>
             </h3>
 

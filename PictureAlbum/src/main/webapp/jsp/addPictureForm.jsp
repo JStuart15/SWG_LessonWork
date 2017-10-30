@@ -25,22 +25,21 @@
             <form role="form" method="POST" 
                   action="addPicture" 
                   enctype="multipart/form-data">
-
+                <div class="form-group">
+                    <label for="displayTitle">Display Title:</label>
+                    <input type="text" 
+                           id="displayTitle" 
+                           name="displayTitle"/>
+                </div>
                 <div class="form-group">
                     <label for="picture">Upload File:</label> 
-                    <input type="file" id="upload-photo"
-                           id="picture" name="picture"/>
+                    <input type="file" 
+                           id="picture" 
+                           name="picture"/>
                 </div>
                 <input type="submit" value="Upload Picture"/>
             </form>
-            <div class="row">
-                <c:forEach var="currentPicture" items="${pictureList}">
 
-                    <!--${currentPicture.title}<br>-->
-                    <img src="${pageContext.request.contextPath}/${currentPicture.filename}"
-                         class="img-circle col-md-1" alt="${currentPicture.title}"/> 
-                </c:forEach>
-            </div>
         </div>
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>

@@ -53,8 +53,8 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
             = "select * from super_people where isActive = True";
 
     private static final String SQL_INSERT_SUPER_PERSON
-            = "insert into super_people (super_power_id, name, description) "
-            + "values (?, ?, ?)";
+            = "insert into super_people (super_power_id, name, description, "
+            + "imgFileName) values (?, ?, ?, ?)";
 
     private static final String SQL_INSERT_SUPER_PEOPLE_ORGANIZATIONS
             = "insert into super_people_organizations "
@@ -80,7 +80,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
 
     private static final String SQL_UPDATE_SUPER_PERSON
             = "update super_people set super_power_id = ?, name = ?, "
-            + "description = ? where super_person_id = ?";
+            + "description = ?, imgFileName = ? where super_person_id = ?";
 
     //METHODS
     @Override
@@ -90,13 +90,15 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
             jdbcTemplate.update(SQL_INSERT_SUPER_PERSON,
                     superPerson.getSuperPower().getSuperPowerId(),
                     superPerson.getName(),
-                    superPerson.getDescription());
+                    superPerson.getDescription(),
+                    superPerson.getImageFileName());
         } catch (Exception e) {
             //we don't require superpower to be set
             jdbcTemplate.update(SQL_INSERT_SUPER_PERSON,
                     null,
                     superPerson.getName(),
-                    superPerson.getDescription());
+                    superPerson.getDescription(),
+                    superPerson.getImageFileName());
         }
 
         superPerson.setSuperPersonId(jdbcTemplate.queryForObject(
@@ -127,6 +129,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
                     superPerson.getSuperPower().getSuperPowerId(),
                     superPerson.getName(),
                     superPerson.getDescription(),
+                    superPerson.getImageFileName(),
                     superPerson.getSuperPersonId());
         } catch (Exception e) {
             //we don't require superpower to update
@@ -134,6 +137,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
                     null,
                     superPerson.getName(),
                     superPerson.getDescription(),
+                    superPerson.getImageFileName(),
                     superPerson.getSuperPersonId());
         }
 
@@ -216,6 +220,7 @@ public class SuperPersonDaoJdbcTemplateImpl implements SuperPersonDao {
             sp.setName(rs.getString("name"));
             sp.setDescription(rs.getString("description"));
             sp.setIsActive(rs.getBoolean("isActive"));
+            sp.setImageFileName(rs.getString("imgFileName"));
             return sp;
         }
     }

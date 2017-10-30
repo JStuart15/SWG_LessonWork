@@ -24,35 +24,35 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 public class AlbumController {
-
+    
     public static final String pictureFolder = "images/";
     private AlbumDao dao;
-
+    
     @Inject
     public AlbumController(AlbumDao dao) {
         this.dao = dao;
     }
-
-    @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
+    
+    @RequestMapping(value={"/", "/home"}, method=RequestMethod.GET)
     public String displayHome(Model model) {
-
+        
         List<Picture> pictures = dao.getAllPictures();
         model.addAttribute("pictureList", pictures);
-
+        
         return "home";
     }
-
-    @RequestMapping(value = "addPictureForm", method = RequestMethod.GET)
-    public String displayAddPictureForm(Model model) {
-        List<Picture> pictures = dao.getAllPictures();
-        model.addAttribute("pictureList", pictures);
+    
+    @RequestMapping(value="addPictureForm", method=RequestMethod.GET)
+    public String displayAddPictureForm() {
+        
         return "addPictureForm";
     }
-
-    @RequestMapping(value = "/addPicture", method = RequestMethod.POST)
+    
+    @RequestMapping(value="/addPicture", method=RequestMethod.POST)
     public String addPicture(HttpServletRequest request,
-            Model model,
-            @RequestParam("picture") MultipartFile pictureFile) {
+                    Model model,
+                    @RequestParam("displayTitle") String displayTitle,
+                    @RequestParam("picture") MultipartFile pictureFile) {
 
         // only save the pictureFile if the user actually uploaded something
         if (!pictureFile.isEmpty()) {
@@ -83,27 +83,28 @@ public class AlbumController {
                 // Picture to the DAO
                 Picture picture = new Picture();
                 picture.setFilename(pictureFolder + filename);
+                picture.setTitle(displayTitle);
                 dao.addPicture(picture);
 
                 // redirect to home page to redisplay the entire album
-//                return "redirect";
-                return "redirect:addPictureForm";
+                return "redirect:home";
             } catch (Exception e) {
                 // if we encounter an exception, add the error message 
                 // to the model and return back to the pictureFile upload 
                 // form page
-                model.addAttribute("errorMsg", "File upload failed: "
-                        + e.getMessage());
+                model.addAttribute("errorMsg", "File upload failed: " + 
+                        e.getMessage());
                 return "addPictureForm";
             }
         } else {
             // if the user didn't upload anything, add the error 
             // message to the model and return back to the pictureFile 
             // upload form page
-            model.addAttribute("errorMsg",
-                    "Please specify a non-empty file.");
+            model.addAttribute("errorMsg", 
+                               "Please specify a non-empty file.");
             return "addPictureForm";
         }
+
 
     }
 }
