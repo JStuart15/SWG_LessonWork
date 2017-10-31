@@ -5,15 +5,12 @@
  */
 package com.sg.superpeoplesightings.controller;
 
-import com.sg.superpeoplesightings.dao.AlbumDao;
 import com.sg.superpeoplesightings.dao.OrganizationDao;
 import com.sg.superpeoplesightings.dao.SuperPersonDao;
 import com.sg.superpeoplesightings.dao.SuperPowerDao;
 import com.sg.superpeoplesightings.model.Organization;
-import com.sg.superpeoplesightings.model.Picture;
 import com.sg.superpeoplesightings.model.SuperPerson;
 import com.sg.superpeoplesightings.model.SuperPower;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -40,22 +37,20 @@ public class SuperPersonController {
     SuperPersonDao superPersonDao;
     SuperPowerDao superPowerDao;
     OrganizationDao orgDao;
-    AlbumDao albumDao;
 
     @Inject
     public SuperPersonController(SuperPersonDao superPersonDao, SuperPowerDao superPowerDao,
-            OrganizationDao orgDao, AlbumDao albumDao) {
+            OrganizationDao orgDao) {
         this.superPersonDao = superPersonDao;
         this.superPowerDao = superPowerDao;
         this.orgDao = orgDao;
-        this.albumDao = albumDao;
     }
 
     @RequestMapping(value = "/displaySuperPeoplePage", method = RequestMethod.GET)
     public String displaySuperPersonsPage(Model model) {
         List<SuperPerson> superPersonList = superPersonDao.getAllSuperPeople();
-        List<SuperPower> superPowerList = superPowerDao.getAllSuperPowers();//@todo - high - sort the list by name
-        List<Organization> orgList = orgDao.getAllOrganizations(); //@todo - high - sort by orgName
+        List<SuperPower> superPowerList = superPowerDao.getAllSuperPowers();
+        List<Organization> orgList = orgDao.getAllOrganizations();
         model.addAttribute("superPersonList", superPersonList);
         model.addAttribute("superPowerList", superPowerList);
         model.addAttribute("orgList", orgList);
@@ -78,64 +73,11 @@ public class SuperPersonController {
         SuperPerson superPerson = new SuperPerson();
         SuperPower superPower = new SuperPower();
         List<Organization> orgs = new ArrayList<>();
-        
-        //PICTURE RELATED ACTIONS
-        // only save the pictureFile if the user actually uploaded something
-        if (!pictureFile.isEmpty()) {
-            try {
-                // we want to put the uploaded image into the 
-                // <pictureFolder> folder of our application. getRealPath
-                // returns the full path to the directory under Tomcat
-                // where we can save files.
-                String savePath = request
-                        .getSession()
-                        .getServletContext()
-                        .getRealPath("/") + pictureFolder;
-                File dir = new File(savePath);
-                // if <pictureFolder> directory is not there, 
-                // go ahead and create it
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
 
-                // get the filename of the uploaded file - we'll use the
-                // same name on the server.
-                String filename = pictureFile.getOriginalFilename();
-                // transfer the contents of the uploaded pictureFile to 
-                // the server
-                pictureFile.transferTo(new File(savePath + filename));
-
-                // we successfully saved the pictureFile, now save a 
-                // Picture to the DAO
-                Picture picture = new Picture();
-                picture.setFilename(pictureFolder + filename);
-                superPerson.setImageFileName(pictureFolder + filename);
-                albumDao.addPicture(picture);
-
-                // redirect to home page to redisplay the entire album
-                //return "redirect:home";
-            } catch (Exception e) {
-                // if we encounter an exception, add the error message 
-                // to the model and return back to the pictureFile upload 
-                // form page
-                model.addAttribute("errorMsg", "File upload failed: "
-                        + e.getMessage());
-                //return "addPictureForm";
-            }
-        } else {
-            // if the user didn't upload anything, add the error 
-            // message to the model and return back to the pictureFile 
-            // upload form page
-            model.addAttribute("errorMsg",
-                    "Please specify a non-empty file.");
-            //return "addPictureForm";
-        }
-
-        //NON-PICTURE ACTIONS
         String[] orgIds = request.getParameterValues("orgSelect");
-
         superPerson.setName(request.getParameter("name"));
         superPerson.setDescription(request.getParameter("description"));
+        superPerson.setImageFileName(request.getParameter("imageURL"));
         //get and set superpower from select
 
         try {
@@ -172,11 +114,12 @@ public class SuperPersonController {
     public String editSuperPerson(@Valid @ModelAttribute("superPerson") SuperPerson superPerson,
             BindingResult result, HttpServletRequest request) {
 
-        //@todo - add validations to the superPerson object.
         if (result.hasErrors()) {
             return "editSuperPersonForm";
         }
 
+        //SET THE IMAGE URL
+        superPerson.setImageFileName(request.getParameter("imageFileName"));
         //SET THE SUPERPOWER
         try {
             int superPowerId = Integer.parseInt(request.getParameter("power"));
@@ -203,8 +146,8 @@ public class SuperPersonController {
 
     @RequestMapping(value = "/displayEditSuperPersonForm", method = RequestMethod.GET)
     public String displayEditSuperPersonForm(HttpServletRequest request, Model model) {
-        List<SuperPower> superPowerList = superPowerDao.getAllSuperPowers();//@todo - high - sort the list by name
-        List<Organization> orgList = orgDao.getAllOrganizations(); //@todo - high - sort by orgName
+        List<SuperPower> superPowerList = superPowerDao.getAllSuperPowers();
+        List<Organization> orgList = orgDao.getAllOrganizations();
         String superPersonIdParameter = request.getParameter("superPersonId");
         int superPersonId = Integer.parseInt(superPersonIdParameter);
         SuperPerson superPerson = superPersonDao.getSuperPersonById(superPersonId);

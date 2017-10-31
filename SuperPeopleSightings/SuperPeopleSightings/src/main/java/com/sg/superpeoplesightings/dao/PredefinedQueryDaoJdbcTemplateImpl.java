@@ -19,7 +19,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  *
  * @author jstuart15
  */
-public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao{
+public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao {
 
     SuperPersonDao superPersonDao;
     private SightingDao sightingDao;
@@ -54,8 +54,6 @@ public class PredefinedQueryDaoJdbcTemplateImpl implements PredefinedQueryDao{
             + "order by s.super_person_id";
 
     private static final String SQL_ALL_LOCATIONS_FOR_A_SUPER_PERSON
-            //@todo - should this be distinct because date is not included in query
-            //and duplicates show up.  Wait for additional requirements.
             = "select l.location_id "
             + "from locations l "
             + "inner join sightings s on s.location_id = l.location_id "

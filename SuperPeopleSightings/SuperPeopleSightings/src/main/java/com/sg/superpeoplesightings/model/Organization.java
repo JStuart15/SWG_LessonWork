@@ -23,22 +23,22 @@ public class Organization {
 
     @Length(max = 45, message = "Description cannot be longer than 45 characters in length.")
     private String description;
-    
+
     @Length(max = 45, message = "Street cannot be longer than 45 characters in length.")
     private String street;
-    
+
     @Length(max = 45, message = "City cannot be longer than 45 characters in length.")
     private String city;
-    
+
     @Length(max = 2, message = "State cannot be longer than 2 characters in length.")
     private String state;
-    
+
     @Length(max = 10, message = "Zip code cannot be longer than 10 characters in length.")
     private String zip;
-    
+
     @Length(max = 12, message = "Phone cannot be longer than 12 characters in length.")
     private String phone;
-    
+
     private Boolean isActive;
 
     public int getOrganizationId() {
@@ -169,5 +169,5 @@ public class Organization {
         }
         return true;
     }
-    
+
 }

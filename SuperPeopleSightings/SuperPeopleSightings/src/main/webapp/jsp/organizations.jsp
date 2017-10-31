@@ -16,11 +16,11 @@
             <hr/>
             <div class="navbar">
                 <ul class="nav nav-tabs">
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/">Home</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                 </ul>    
             </div>
             <h2>${message}</h2>
@@ -38,7 +38,7 @@
                         <c:forEach var="currentOrganization" items="${organizationList}">
                             <tr>
                                 <td style="word-break:break-all;">
-                                    <a href ="displayOrganizationDetails?organizationId=${currentOrganization.organizationId}">
+                                    <a style="color: maroon;" href ="displayOrganizationDetails?organizationId=${currentOrganization.organizationId}">
                                         <c:out value="${currentOrganization.name}"/>
                                     </a>
                                 </td>
@@ -49,12 +49,12 @@
                                     <c:out value="${currentOrganization.state}"/>
                                 </td>
                                 <td>
-                                    <a href="displayEditOrganizationForm?organizationId=${currentOrganization.organizationId}">
+                                    <a style="color: maroon;" href="displayEditOrganizationForm?organizationId=${currentOrganization.organizationId}">
                                         Edit
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="deleteOrganization?organizationId=${currentOrganization.organizationId}">
+                                    <a style="color: maroon;" href="deleteOrganization?organizationId=${currentOrganization.organizationId}">
                                         Delete
                                     </a>
                                 </td>

@@ -23,7 +23,4 @@ public interface LocationDao {
     public Location getLocationById(int id);
 
     public List<Location> getAllLocations();
-
-    //public List<Location> getAllActiveLocations();
-    //public void inActivateLocation(int locationId);
 }

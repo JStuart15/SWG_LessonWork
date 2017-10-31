@@ -13,15 +13,15 @@ import java.util.List;
  * @author jstuart15
  */
 public interface OrganizationDao {
-    
+
     public Organization addOrganization(Organization org);
-    
-    public void deleteOrganization (int orgId);
-    
-    public void updateOrganization (Organization orgId);
-    
-    public Organization getOrganizationById (int id);
-    
+
+    public void deleteOrganization(int orgId);
+
+    public void updateOrganization(Organization orgId);
+
+    public Organization getOrganizationById(int id);
+
     public List<Organization> getAllOrganizations();
-    
+
 }

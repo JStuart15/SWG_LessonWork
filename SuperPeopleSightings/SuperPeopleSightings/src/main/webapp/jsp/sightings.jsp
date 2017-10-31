@@ -15,10 +15,10 @@
             <hr/>
             <div class="navbar">
                 <ul class="nav nav-tabs">
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/">Home</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                 </ul>    
             </div>
@@ -37,9 +37,10 @@
                         <c:forEach var="currentSighting" items="${sightingList}">
                             <tr>
                                 <td>
-                                    <a href ="displaySightingDetails?sightingId=${currentSighting.sightingId}">
+                                    <a style="color: maroon;" href ="displaySightingDetails?sightingId=${currentSighting.sightingId}">
                                         <fmt:formatDate pattern="MM/dd/yyyy" 
-                                                        value="${currentSighting.displayDate}"/>
+                                                        value="${currentSighting.displayDate}"
+                                                        />
                                     </a>
                                 </td>
                                 <td style="word-break:break-all;">
@@ -51,11 +52,11 @@
                                     </c:forEach>
                                 </td>
                                 <td>
-                                    <a href="displayEditSightingForm?sightingId=${currentSighting.sightingId}">
+                                    <a style="color: maroon;" href="displayEditSightingForm?sightingId=${currentSighting.sightingId}">
                                         Edit
                                     </a>
                                 </td>
-                                <td><a href="deleteSighting?sightingId=${currentSighting.sightingId}">
+                                <td><a style="color: maroon;" href="deleteSighting?sightingId=${currentSighting.sightingId}">
                                         Delete
                                     </a>
                                 </td>
@@ -74,7 +75,8 @@
                         <label for="dateJQuery" class="col-md-4 control-label">Date:</label>
                         <div class="col-md-8">
                             <input type="text" id="datepicker" 
-                                   class="form-control" name="dateJQuery"/>
+                                   class="form-control" name="dateJQuery"
+                                   required="true"/>
                         </div>
                     </div>
 
@@ -122,7 +124,9 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-4 col-md-8">
-                            <input type="submit" class="btn btn-primary" value="Create Sighting"/>
+                            <input type="submit" class="btn btn-danger"
+                                   style="background-color: maroon;"
+                                   value="Create Sighting"/>
                         </div>
                     </div>
                 </form>

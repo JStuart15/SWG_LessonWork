@@ -15,11 +15,11 @@
             <hr/>
             <div class="navbar">
                 <ul class="nav nav-tabs">
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/">Home</a></li>
                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                 </ul>    
             </div>
             <h2>${message}</h2>
@@ -37,7 +37,7 @@
                         <c:forEach var="currentSuperPerson" items="${superPersonList}">
                             <tr>
                                 <td style="word-break:break-all;">
-                                    <a href ="displaySuperPersonDetails?superPersonId=${currentSuperPerson.superPersonId}">
+                                    <a style="color:maroon;" href ="displaySuperPersonDetails?superPersonId=${currentSuperPerson.superPersonId}">
                                         <c:out value="${currentSuperPerson.name}"/>
                                     </a>
                                 </td>
@@ -50,12 +50,12 @@
                                     </c:forEach>
                                 </td>
                                 <td>
-                                    <a href="displayEditSuperPersonForm?superPersonId=${currentSuperPerson.superPersonId}">
+                                    <a style="color:maroon;" href="displayEditSuperPersonForm?superPersonId=${currentSuperPerson.superPersonId}">
                                         Edit
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="deleteSuperPerson?superPersonId=${currentSuperPerson.superPersonId}">
+                                    <a style="color:maroon;" href="deleteSuperPerson?superPersonId=${currentSuperPerson.superPersonId}">
                                         Delete
                                     </a>
                                 </td>
@@ -80,7 +80,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <%@include file="addPictureForm.jsp" %>
+                            <label for="imageURL" class="col-md-4 control-label">Image URL:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" 
+                                       name="imageURL" 
+                                       maxlength="255"
+                                       placeholder="URL of Image"/>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="description" class="col-md-4 control-label">Description:</label>
@@ -131,7 +137,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-4 col-md-8">
-                                <input type="submit" class="btn btn-primary" value="Create Super Human"/>
+                                <input type="submit" style="background-color: maroon;" class="btn btn-danger" value="Create Super Human"/>
                             </div>
                         </div>
 

@@ -16,11 +16,11 @@
             <hr>
             <div class="navbar">
                 <ul class="nav nav-tabs">
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super People</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/">Home</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super People</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                 </ul>    
             </div>
             <sf:form class="form-horizontal" role="form" modelAttribute="organization"
@@ -92,7 +92,9 @@
                 
                     <div class="form-group">
                         <div class="col-md-offset-4 col-md-8">
-                            <input type="submit" class="btn btn-primary" value="Update Organization"/>
+                            <input type="submit" class="btn btn-danger" 
+                                   style="background-color: maroon;" 
+                                   value="Update Organization"/>
                             <a href="${pageContext.request.contextPath}/displayOrganizationsPage"
                            class="btn btn-default">Cancel</a>
                         </div>

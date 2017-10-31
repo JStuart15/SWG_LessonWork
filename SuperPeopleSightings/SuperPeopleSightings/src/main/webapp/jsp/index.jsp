@@ -21,20 +21,21 @@
     </head>
     <body>
         <div class="container">
-            <div class="jumbotron jumbotron-fluid">
+            <div class="jumbotron jumbotron-fluid" style="background-image: 
+                 url(http://maquinnasuperheroes.pbworks.com/f/1347855554/banner-corporate.jpg); background-size: 100%;">
                 <div class="container">
-                    <h1 class="display-3">Have you seen a hero or villain?</h1>
-                    <p class="lead">If so, tell us about it and help us track their whereabouts...</p>
+                    <h1 class="display-3" style="color: white">Have you seen a hero or villain?</h1>
+                    <p class="lead" style="color:white">If so, tell us about it and help us track their whereabouts...</p>
                 </div>
             </div>
             <div class="container">
                 <div class="navbar">
                     <ul class="nav nav-tabs">
                         <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/">Home</a></li>
-                        <li role="presentation"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
-                        <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                        <li role="presentation"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
-                        <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
+                        <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
+                        <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
+                        <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
+                        <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                     </ul>    
                 </div>
 
@@ -50,9 +51,9 @@
                                class="list-group-item list-group-item-action"
                                id="sighting-${currentSighting.sightingId}">
                                 <c:forEach var="currentHero" items="${currentSighting.superPeople}">
-                                    
+
                                     <c:out value="${currentHero.name}"/>
-                                    <img src="${pageContext.request.contextPath}/${currentHero.imageFileName}" 
+                                    <img src="${currentHero.imageFileName}" 
                                          class="img-circle col-sm-1"/>
                                 </c:forEach>
                                 sighted at
@@ -68,7 +69,6 @@
                     <div id="map" class="col-md-6">
                     </div>
                 </div>
-
             </div>
         </div>
         <!-- Placed at the end of the document so the pages load faster -->
@@ -76,15 +76,191 @@
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
         <script>
             function initMap() {
-                //var uluru = {lat: -25.363, lng: 131.044};
-                //var latitude = parseFloat(document.getElementById('sighting-8-latitude').value);
-                //var longitude = parseFloat(document.getElementById('sighting-8-longitude').value);
-                //console.log(latitude, longitude);
                 var uluru = {lat: 39.8283, lng: -98.5795};
                 var map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 4,
                     center: uluru,
-                    mapTypeId: 'terrain'
+                    //mapTypeId: 'terrain'
+
+                    styles: [
+                        {
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#f5f5f5"
+                                }
+                            ]
+                        },
+                        {
+                            "elementType": "labels.icon",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#616161"
+                                }
+                            ]
+                        },
+                        {
+                            "elementType": "labels.text.stroke",
+                            "stylers": [
+                                {
+                                    "color": "#f5f5f5"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative.land_parcel",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#bdbdbd"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "landscape.natural.landcover",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "color": "#bdbdbd"
+                                    //"color": "#ffffff"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#eeeeee"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#757575"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi.park",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#e5e5e5"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi.park",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#9e9e9e"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#ffffff"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.arterial",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#757575"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#dadada"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#616161"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.local",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#9e9e9e"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.line",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#e5e5e5"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.station",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#eeeeee"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "geometry",
+                            "stylers": [
+                                {
+                                    "color": "#c9c9c9"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "color": "#a50000"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#9e9e9e"
+                                }
+                            ]
+                        }
+                    ]
                 });
                 for (var i = 1; i < 11; i++) {
                     var latitude = parseFloat(document.getElementById('sighting-' + i + '-latitude').value);
@@ -93,13 +269,15 @@
                     var marker = new google.maps.Marker({
                         position: uluru,
                         map: map
+
                     });
                 }
             }
         </script>
+
         <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAU601CAmYmF97gSGTDNCEU6tBgeppKVX8&callback=initMap">
-        </script>
+        </script> 
     </body>
 </html>
 

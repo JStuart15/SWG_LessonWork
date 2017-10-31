@@ -106,7 +106,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
             + "inner join super_people_sightings sps on sps.sighting_id = s.sighting_id "
             + "inner join super_people sp on sp.super_person_id = sps.super_person_id "
             + "where l.isActive = True and sp.isActive = True "
-            + "order by s.date desc;";
+            + "order by s.date desc limit 10";
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
@@ -206,7 +206,7 @@ public class SightingDaoJdbcTemplateImpl implements SightingDao {
                 SQL_SELECT_SUPER_PEOPLE_IDS_BY_SIGHTING_ID,
                 Integer.class,
                 sighting.getSightingId());
-        
+
         for (Integer superPersonId : superPeopleIds) {
             superPeople.add(superPersonDao.getSuperPersonById(superPersonId));
         }

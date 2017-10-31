@@ -5,7 +5,6 @@
  */
 package com.sg.superpeoplesightings.controller;
 
-import com.sg.superpeoplesightings.dao.AlbumDao;
 import com.sg.superpeoplesightings.dao.SightingDao;
 import com.sg.superpeoplesightings.dao.SuperPersonDao;
 import com.sg.superpeoplesightings.model.Sighting;
@@ -25,14 +24,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 
     SightingDao sightingDao;
-    AlbumDao albumDao;
     SuperPersonDao superPersonDao;
 
     @Inject
-    public HomeController(SightingDao sightingDao, AlbumDao albumDao,
+    public HomeController(SightingDao sightingDao,
             SuperPersonDao superPersonDao) {
         this.sightingDao = sightingDao;
-        this.albumDao = albumDao;
         this.superPersonDao = superPersonDao;
     }
 
@@ -41,11 +38,6 @@ public class HomeController {
         //ADD SIGHTINGS
         List<Sighting> sightingList = sightingDao.getLast10Sightings();
         model.addAttribute("sightingList", sightingList);
-
-        //ADD PICTURES
-//        List<Picture> pictures = albumDao.getAllPictures();
-//        model.addAttribute("pictureList", pictures);
-        
         //ADD SUPERPEOPLE
         List<SuperPerson> superPeople = superPersonDao.getAllSuperPeople();
         model.addAttribute("superPeopleList", superPeople);

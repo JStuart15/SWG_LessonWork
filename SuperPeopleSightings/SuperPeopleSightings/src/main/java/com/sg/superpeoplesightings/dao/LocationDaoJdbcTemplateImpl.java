@@ -60,7 +60,7 @@ public class LocationDaoJdbcTemplateImpl implements LocationDao {
     private static final String SQL_SELECT_ACTIVE_LOCATION
             = "select * from locations "
             + "where location_id = ? and isActive = True";
-    
+
     private static final String SQL_SELECT_ALL_LOCATIONS
             = "select * from locations";
 

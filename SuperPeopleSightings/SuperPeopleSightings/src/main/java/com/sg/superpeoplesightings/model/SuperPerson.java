@@ -127,5 +127,4 @@ public class SuperPerson {
         return true;
     }
 
-    
 }

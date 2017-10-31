@@ -15,11 +15,11 @@
             <hr/>
             <div class="navbar">
                 <ul class="nav nav-tabs">
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/">Home</a></li>
                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                 </ul>    
             </div>
             <h3>
@@ -40,7 +40,7 @@
                 </ul>
             </h3>
             <a href="${pageContext.request.contextPath}/displaySuperPeoplePage"
-                           class="btn btn-primary">Back</a>
+                           class="btn btn-danger" style="background-color: maroon;">Back</a>
         </div>
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>

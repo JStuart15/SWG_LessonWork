@@ -18,11 +18,11 @@
             <hr>
             <div class="navbar">
                 <ul class="nav nav-tabs">
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/">Home</a></li>
                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                 </ul>    
             </div>
             <sf:form class="form-horizontal" role="form" modelAttribute="superPerson"
@@ -33,15 +33,25 @@
                     <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-name"
                                   path="name" placeholder="Super Human Name"
-                                  required="true"/>
+                                  required="true" maxlength="45"/>
                         <sf:errors path="name" cssclass="error"></sf:errors>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageURL" class="col-md-4 control-label">Image URL:</label>
+                        <div class="col-md-8">
+                        <sf:input type="text" class="form-control" id="add-imageURL"
+                                  path="imageFileName" placeholder="URL of Image"
+                                  maxlength="255"/>
+                            
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="description" class="col-md-4 control-label">Description:</label>
                         <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-description"
-                                  path="description" placeholder="Description"/>
+                                  path="description" placeholder="Description"
+                                  maxlength="45"/>
                         <sf:errors path="description" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -73,7 +83,7 @@
                 <div class="form-group">
                     <div class="col-md-offset-4 col-md-8">
                         <a href="${pageContext.request.contextPath}/displaySuperPowersPage"
-                       class="btn btn-default">Add New Super Power</a>
+                           class="btn btn-default">Add New Super Power</a>
                     </div>
                 </div>
                 <div class="form-group">
@@ -110,14 +120,14 @@
                 <div class="form-group">
                     <div class="col-md-offset-4 col-md-8">
                         <a href="${pageContext.request.contextPath}/displayOrganizationsPage"
-                       class="btn btn-default">Add New Organization</a>
+                           class="btn btn-default">Add New Organization</a>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-4 col-md-8">
-                        <input type="submit" class="btn btn-primary" value="Update Super Human"/>
+                        <input type="submit" class="btn btn-danger" style="background-color: maroon;" value="Update Super Human"/>
                         <a href="${pageContext.request.contextPath}/displaySuperPeoplePage"
-                           class="btn btn-default">Cancel</a>
+                           class="btn btn-default" >Cancel</a>
                     </div>
                 </div>
 

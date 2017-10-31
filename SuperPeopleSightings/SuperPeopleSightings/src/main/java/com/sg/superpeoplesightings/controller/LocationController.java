@@ -50,7 +50,7 @@ public class LocationController {
 
     @RequestMapping(value = "/createLocation", method = RequestMethod.POST)
     public String createLocation(HttpServletRequest request) {
-        
+
         //do validations using HTML
         Location location = new Location();
         location.setName(request.getParameter("name"));
@@ -85,7 +85,6 @@ public class LocationController {
     @RequestMapping(value = "/editLocation", method = RequestMethod.POST)
     public String editLocation(@Valid @ModelAttribute("location") Location location,
             BindingResult result) {
-        //@todo - add validations to the location object.
         if (result.hasErrors()) {
             return "editLocationForm";
         }

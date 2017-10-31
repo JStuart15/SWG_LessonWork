@@ -73,17 +73,6 @@ public class OrganizationController {
         //redirect to the displayOrganizations page to reload it
         return "redirect:displayOrganizationsPage";
     }
-    
-//    @RequestMapping(value = "/createOrganizationWithErrors", method = RequestMethod.POST)
-//    public String createOrganizationWithErrors(@Valid @ModelAttribute("organization") Organization organization, BindingResult result) {
-//        if(result.hasErrors()){
-//            return "displayOrganizationsPage";
-//        }
-//        organizationDao.addOrganization(organization);
-//
-//        //redirect to the displayOrganizations page to reload it
-//        return "redirect:displayOrganizationsPage";
-//    }
 
     @RequestMapping(value = "/deleteOrganization", method = RequestMethod.GET)
     public String deleteOrganization(HttpServletRequest request) {

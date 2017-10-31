@@ -15,6 +15,7 @@ import java.util.Objects;
  * @author jstuart15
  */
 public class Sighting {
+
     private int sightingId;
     private Location location;
     private LocalDate date;

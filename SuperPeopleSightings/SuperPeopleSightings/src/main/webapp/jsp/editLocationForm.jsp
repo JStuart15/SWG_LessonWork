@@ -17,11 +17,11 @@
             <hr>
             <div class="navbar">
                 <ul class="nav nav-tabs">
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super People</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/">Home</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super People</a></li>
                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                 </ul>    
             </div>
             <sf:form class="form-horizontal" role="form" modelAttribute="location"
@@ -30,7 +30,8 @@
                     <label for="name" class="col-md-4 control-label">Location Name: </label>
                     <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-name"
-                                  path="name" placeholder="Location Name"/>
+                                  path="name" placeholder="Location Name"
+                                  maxlength="45"/>
                         <sf:errors path="name" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -38,7 +39,8 @@
                         <label for="description" class="col-md-4 control-label">Description:</label>
                         <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-description"
-                                  path="description" placeholder="Description"/>
+                                  path="description" placeholder="Description"
+                                  maxlength="45"/>
                         <sf:errors path="description" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -46,7 +48,8 @@
                         <label for="add-street" class="col-md-4 control-label">Street:</label>                          
                         <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-street"
-                                  path="street" placeholder="Street Address"/>
+                                  path="street" placeholder="Street Address"
+                                  maxlength="45"/>
                         <sf:errors path="street" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -54,7 +57,8 @@
                         <label for="add-city" class="col-md-4 control-label">City:</label>                          
                         <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-city"
-                                  path="city" placeholder="City"/>
+                                  path="city" placeholder="City"
+                                  maxlength="45"/>
                         <sf:errors path="city" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -62,7 +66,8 @@
                         <label for="add-state" class="col-md-4 control-label">State:</label>                          
                         <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-street"
-                                  path="state" placeholder="State"/>
+                                  path="state" placeholder="State"
+                                  maxlength="2"/>
                         <sf:errors path="state" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -71,7 +76,8 @@
                         <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-street"
                                   path="zip" placeholder="Zip"
-                                  pattern="(\d{5}([\-]\d{4})?)"/>
+                                  pattern="(\d{5}([\-]\d{4})?)"
+                                  maxlength="10"/>
                         <sf:errors path="zip" cssclass="error"></sf:errors>
                         </div>
                     </div>
@@ -79,7 +85,8 @@
                         <label for="add-latitude" class="col-md-4 control-label">Latitude:</label>
                         <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-latitude"
-                                  path="latitude" placeholder="Latitude"/>
+                                  path="latitude" placeholder="Latitude"
+                                  min="-90" max="90"/>
                         <sf:errors path="latitude" cssclass="error"></sf:errors>
                         <sf:hidden path="locationId"/>
                     </div>
@@ -88,13 +95,16 @@
                     <label for="add-longitude" class="col-md-4 control-label">Longitude:</label>                          
                     <div class="col-md-8">
                         <sf:input type="text" class="form-control" id="add-longitude"
-                                  path="longitude" placeholder="Longitude"/>
+                                  path="longitude" placeholder="Longitude"
+                                  min="-180" max="180"/>
                         <sf:errors path="longitude" cssclass="error"></sf:errors>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-4 col-md-8">
-                            <input type="submit" class="btn btn-primary" value="Update Location"/>
+                            <input type="submit" class="btn btn-danger"
+                                   style="background-color: maroon;"
+                                   value="Update Location"/>
                             <a href="${pageContext.request.contextPath}/displayLocationsPage"
                            class="btn btn-default">Cancel</a>
                         </div>

@@ -15,16 +15,15 @@
             <hr/>
             <div class="navbar">
                 <ul class="nav nav-tabs">
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/">Home</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                 </ul>    
             </div>
-
             <h3>
-                Date: <fmt:formatDate pattern="MM-dd-yyyy" value="${sighting.displayDate}"/>
+                Date: <fmt:formatDate pattern="MM/dd/yyyy" value="${sighting.displayDate}"/>
 
             </h3>
             <h3>
@@ -34,19 +33,23 @@
             </h3>
 
             <h3>
-                Super Human(s):<br>
-                <ul>
-                    <c:forEach var="superPerson" items="${sighting.superPeople}">
-                        <li class="row"><c:out value="${superPerson.name}"/>
-                            <img src="${pageContext.request.contextPath}/${superPerson.imageFileName}" 
-                                 class="img-circle col-sm-1"/>
-                        </li>
-                    </c:forEach>
-                </ul>
+                    Super Human(s):<br>
+                    <table class="table">
+                        <c:forEach var="superPerson" items="${sighting.superPeople}">
+                            <tr> 
+                                <td>
+                                    <c:out value="${superPerson.name}"/>
+                                    <img src="${superPerson.imageFileName}" 
+                                         class="img-thumbnail img-circle col-sm-1"/>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
             </h3>
 
-            <a href="${pageContext.request.contextPath}/displaySightingsPage"
-               class="btn btn-primary">Back</a>
+            <a style="background-color: maroon;" 
+               href="${pageContext.request.contextPath}/displaySightingsPage"
+               class="btn btn-danger">Back</a>
 
         </div>
         <!-- Placed at the end of the document so the pages load faster -->

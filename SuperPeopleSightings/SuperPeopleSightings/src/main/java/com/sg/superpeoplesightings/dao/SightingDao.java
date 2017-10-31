@@ -26,4 +26,4 @@ public interface SightingDao {
 
     public List<Sighting> getLast10Sightings();
 
-    }
+}

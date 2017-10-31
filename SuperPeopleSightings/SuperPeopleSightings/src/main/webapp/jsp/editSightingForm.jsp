@@ -16,10 +16,10 @@
             <hr>
             <div class="navbar">
                 <ul class="nav nav-tabs">
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                    <li role="presentation"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/">Home</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
+                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
                 </ul>    
             </div>
@@ -32,7 +32,7 @@
                     <label for="dateJQuery" class="col-md-4 control-label">Date:</label>
                     <div class="col-md-8">
                         <input type="text" id="datepicker" 
-                               class="form-control" name="dateJQuery"
+                               required="true" class="form-control" name="dateJQuery"
                                value="<fmt:formatDate pattern="MM/dd/yyyy" value="${sighting.displayDate}"/>"
                                />
                     </div>
@@ -106,9 +106,12 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-4 col-md-8">
-                        <input type="submit" class="btn btn-primary" value="Update Sighting"/>
+                        <input type="submit" class="btn btn-danger" 
+                               value="Update Sighting"
+                               style="background-color: maroon;"/>
                         <a href="${pageContext.request.contextPath}/displaySightingsPage"
-                           class="btn btn-default">Cancel</a>
+                           class="btn btn-default" 
+                           >Cancel</a>
                     </div>
 
                 </div>

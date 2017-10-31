@@ -5,14 +5,12 @@
  */
 package com.sg.superpeoplesightings.controller;
 
-import com.sg.superpeoplesightings.dao.AlbumDao;
 import com.sg.superpeoplesightings.dao.LocationDao;
 import com.sg.superpeoplesightings.dao.OrganizationDao;
 import com.sg.superpeoplesightings.dao.SightingDao;
 import com.sg.superpeoplesightings.dao.SuperPersonDao;
 import com.sg.superpeoplesightings.dao.SuperPowerDao;
 import com.sg.superpeoplesightings.model.Location;
-import com.sg.superpeoplesightings.model.Picture;
 import com.sg.superpeoplesightings.model.Sighting;
 import com.sg.superpeoplesightings.model.SuperPerson;
 import java.time.LocalDate;
@@ -37,35 +35,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class SightingController {
 
     public static final String pictureFolder = "images/";
-    private AlbumDao dao;
-    
+
     SuperPersonDao superPersonDao;
     SuperPowerDao superPowerDao;
     OrganizationDao orgDao;
     SightingDao sightingDao;
     LocationDao locationDao;
-    AlbumDao albumDao;
 
     @Inject
     public SightingController(SuperPersonDao superPersonDao, SuperPowerDao superPowerDao,
-            OrganizationDao orgDao, SightingDao sightingDao, LocationDao locationDao,
-            AlbumDao albumDao) {
+            OrganizationDao orgDao, SightingDao sightingDao, LocationDao locationDao) {
         this.superPersonDao = superPersonDao;
         this.superPowerDao = superPowerDao;
         this.orgDao = orgDao;
         this.sightingDao = sightingDao;
         this.locationDao = locationDao;
-        this.albumDao = albumDao;
     }
 
     @RequestMapping(value = "/displaySightingsPage", method = RequestMethod.GET)
     public String displaySightingsPage(Model model) {
         List<SuperPerson> superPersonList = superPersonDao.getAllSuperPeople();
-        List<Sighting> sightingList = sightingDao.getAllSightings();//@todo - sort by date desc
+        List<Sighting> sightingList = sightingDao.getAllSightings();
         List<Location> locationList = locationDao.getAllLocations();
-        List<Picture> pictures = albumDao.getAllPictures();
 
-        model.addAttribute("pictureList", pictures);
         model.addAttribute("superPersonList", superPersonList);
         model.addAttribute("sightingList", sightingList);
         model.addAttribute("locationList", locationList);
@@ -119,18 +111,10 @@ public class SightingController {
     public String editSighting(@Valid @ModelAttribute("sighting") Sighting sighting,
             BindingResult result, HttpServletRequest request) {
 
-        //@todo - add validations to the superPerson object.
-//        if (result.hasErrors()) {
-//            return "editSightingForm";
-//        }
         //SET THE DATE
         String parameter = request.getParameter("dateJQuery");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         sighting.setDate(LocalDate.parse(request.getParameter("dateJQuery"), formatter));
-//        LocalDate dateSelected = (LocalDate.parse(
-//                request.getParameter("date"),
-//                DateTimeFormatter.ISO_LOCAL_DATE));
-//        sighting.setDate(dateSelected);
 
         //SET THE LOCATION
         String locSelected = request.getParameter("location");
@@ -155,14 +139,13 @@ public class SightingController {
     @RequestMapping(value = "/displayEditSightingForm", method = RequestMethod.GET)
     public String displayEditSightingForm(HttpServletRequest request, Model model
     ) {
-        List<SuperPerson> superPersonList = superPersonDao.getAllSuperPeople();//@todo - high - sort the list by name
+        List<SuperPerson> superPersonList = superPersonDao.getAllSuperPeople();
         List<Location> locationList = locationDao.getAllLocations();
 
         String sightingIdParameter = request.getParameter("sightingId");
         int sightingId = Integer.parseInt(sightingIdParameter);
         Sighting sighting = sightingDao.getSightingById(sightingId);
-        //Date date = java.sql.Date.valueOf(sighting.getDate());
-        
+
         model.addAttribute("sighting", sighting);
         model.addAttribute("locationList", locationList);
         model.addAttribute("superPersonList", superPersonList);
