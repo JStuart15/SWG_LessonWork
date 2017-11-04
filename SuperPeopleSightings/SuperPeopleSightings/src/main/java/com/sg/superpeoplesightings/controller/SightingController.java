@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class SightingController {
 
-    public static final String pictureFolder = "images/";
+    //public static final String pictureFolder = "images/";
 
     SuperPersonDao superPersonDao;
     SuperPowerDao superPowerDao;
