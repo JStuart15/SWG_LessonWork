@@ -1,29 +1,14 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!-- Directive for Spring Form tag libraries -->
-<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="/WEB-INF/jspf/commonTagLibraries.jspf" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Locations</title>
-        <!-- Bootstrap core CSS -->
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">  
+        <%@include file="/WEB-INF/jspf/commonHeadLinks.jspf" %>
     </head>
     <body>
         <div class="container">
             <h1>Edit Location</h1>
             <hr>
-            <div class="navbar">
-                <ul class="nav nav-tabs">
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super People</a></li>
-                    <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
-                </ul>    
-            </div>
+            <%@include file="/WEB-INF/jspf/topNavBar.jspf" %>
             <sf:form class="form-horizontal" role="form" modelAttribute="location"
                      action="editLocation" method="POST">
                 <div class="form-group">
@@ -103,16 +88,16 @@
                     <div class="form-group">
                         <div class="col-md-offset-4 col-md-8">
                             <input type="submit" class="btn btn-danger"
-                                   style="background-color: maroon;"
                                    value="Update Location"/>
                             <a href="${pageContext.request.contextPath}/displayLocationsPage"
                            class="btn btn-default">Cancel</a>
-                        </div>
                     </div>
+                </div>
             </sf:form>
         </div>
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/setLocationNavActive.js"></script>
     </body>
 </html>

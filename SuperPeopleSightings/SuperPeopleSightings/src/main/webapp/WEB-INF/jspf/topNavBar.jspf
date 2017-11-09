@@ -1,0 +1,9 @@
+<div class="navbar">
+    <ul class="nav nav-tabs">
+        <li role="presentation" id="home"><a href="${pageContext.request.contextPath}/">Home</a></li>
+        <li role="presentation" id="superHumans"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
+        <li role="presentation" id="locations"><a href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
+        <li role="presentation" id="organizations"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
+        <li role="presentation" id="sightings"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
+    </ul>    
+</div>

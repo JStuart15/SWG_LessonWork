@@ -1,27 +1,14 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="/WEB-INF/jspf/commonTagLibraries.jspf" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Sightings</title>  
-        <!-- Bootstrap core CSS -->
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <%@include file="/WEB-INF/jspf/commonHeadLinks.jspf" %>
     </head>
     <body>
         <div class="container">
             <h1>Super Human Sightings</h1>
             <hr/>
-            <div class="navbar">
-                <ul class="nav nav-tabs">
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
-                    <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
-                </ul>    
-            </div>
+            <%@include file="/WEB-INF/jspf/topNavBar.jspf" %>
             <h2>${message}</h2>
             <div class="col-md-6">
                 <h2>Sightings</h2>
@@ -37,7 +24,7 @@
                         <c:forEach var="currentSighting" items="${sightingList}">
                             <tr>
                                 <td>
-                                    <a style="color: maroon;" href ="displaySightingDetails?sightingId=${currentSighting.sightingId}">
+                                    <a href ="displaySightingDetails?sightingId=${currentSighting.sightingId}">
                                         <fmt:formatDate pattern="MM/dd/yyyy" 
                                                         value="${currentSighting.displayDate}"
                                                         />
@@ -52,11 +39,11 @@
                                     </c:forEach>
                                 </td>
                                 <td>
-                                    <a style="color: maroon;" href="displayEditSightingForm?sightingId=${currentSighting.sightingId}">
+                                    <a href="displayEditSightingForm?sightingId=${currentSighting.sightingId}">
                                         Edit
                                     </a>
                                 </td>
-                                <td><a style="color: maroon;" href="deleteSighting?sightingId=${currentSighting.sightingId}">
+                                <td><a href="deleteSighting?sightingId=${currentSighting.sightingId}">
                                         Delete
                                     </a>
                                 </td>
@@ -120,12 +107,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-
-                    </div>
-                    <div class="form-group">
                         <div class="col-md-offset-4 col-md-8">
                             <input type="submit" class="btn btn-danger"
-                                   style="background-color: maroon;"
                                    value="Create Sighting"/>
                         </div>
                     </div>
@@ -134,6 +117,7 @@
             <!-- Placed at the end of the document so the pages load faster -->
             <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
             <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+            <script src="${pageContext.request.contextPath}/js/setSightingNavActive.js"></script>
             <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
             <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

@@ -1,27 +1,14 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="/WEB-INF/jspf/commonTagLibraries.jspf" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Super Human Sightings</title>
-        <!-- Bootstrap core CSS -->
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <%@include file="/WEB-INF/jspf/commonHeadLinks.jspf" %>
     </head>
     <body>
         <div class="container">
             <h1>Super Human Sightings</h1>
             <hr/>
-            <div class="navbar">
-                <ul class="nav nav-tabs">
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
-                </ul>    
-            </div>
+            <%@include file="/WEB-INF/jspf/topNavBar.jspf" %>
             <h2>${message}</h2>
             <div class="row">
                 <div class="col-md-6">
@@ -37,7 +24,7 @@
                         <c:forEach var="currentSuperPerson" items="${superPersonList}">
                             <tr>
                                 <td style="word-break:break-all;">
-                                    <a style="color:maroon;" href ="displaySuperPersonDetails?superPersonId=${currentSuperPerson.superPersonId}">
+                                    <a href ="displaySuperPersonDetails?superPersonId=${currentSuperPerson.superPersonId}">
                                         <c:out value="${currentSuperPerson.name}"/>
                                     </a>
                                 </td>
@@ -50,12 +37,12 @@
                                     </c:forEach>
                                 </td>
                                 <td>
-                                    <a style="color:maroon;" href="displayEditSuperPersonForm?superPersonId=${currentSuperPerson.superPersonId}">
+                                    <a href="displayEditSuperPersonForm?superPersonId=${currentSuperPerson.superPersonId}">
                                         Edit
                                     </a>
                                 </td>
                                 <td>
-                                    <a style="color:maroon;" href="deleteSuperPerson?superPersonId=${currentSuperPerson.superPersonId}">
+                                    <a href="deleteSuperPerson?superPersonId=${currentSuperPerson.superPersonId}">
                                         Delete
                                     </a>
                                 </td>
@@ -63,7 +50,6 @@
                         </c:forEach>
                     </table>
                 </div>
-
                 <div class="col-md-6">
                     <h2>Add New Super Human</h2>
                     <form class="form-horizontal"
@@ -137,7 +123,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-4 col-md-8">
-                                <input type="submit" style="background-color: maroon;" class="btn btn-danger" value="Create Super Human"/>
+                                <input type="submit" class="btn btn-danger" value="Create Super Human"/>
                             </div>
                         </div>
 
@@ -148,7 +134,7 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-
+        <script src="${pageContext.request.contextPath}/js/setSuperHumansNavActive.js"></script>
     </body>
 </html>
 

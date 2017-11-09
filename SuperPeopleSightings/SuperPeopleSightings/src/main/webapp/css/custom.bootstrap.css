@@ -1,0 +1,15 @@
+.btn-danger {
+  color: #fff;
+  background-color: maroon;
+  border-color: maroon;
+}
+
+a {
+  background-color: transparent;
+  color: maroon;
+}
+a:active,
+a:hover {
+  outline: 0;
+  color: maroon;
+}

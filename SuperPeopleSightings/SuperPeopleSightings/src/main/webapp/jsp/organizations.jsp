@@ -1,28 +1,14 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="/WEB-INF/jspf/commonTagLibraries.jspf" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Sightings</title>  
-        <!-- Bootstrap core CSS -->
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <%@include file="/WEB-INF/jspf/commonHeadLinks.jspf" %>
     </head>
     <body>
         <div class="container">
             <h1>Super Human Sightings</h1>
             <hr/>
-            <div class="navbar">
-                <ul class="nav nav-tabs">
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySuperPeoplePage">Super Humans</a></li>
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displayLocationsPage">Locations</a></li>
-                    <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/displayOrganizationsPage">Organizations</a></li>
-                    <li role="presentation"><a style="color:maroon" href="${pageContext.request.contextPath}/displaySightingsPage">Sightings</a></li>
-                </ul>    
-            </div>
+            <%@include file="/WEB-INF/jspf/topNavBar.jspf" %>
             <h2>${message}</h2>
             <div class="row">
                 <div class="col-md-6">
@@ -38,7 +24,7 @@
                         <c:forEach var="currentOrganization" items="${organizationList}">
                             <tr>
                                 <td style="word-break:break-all;">
-                                    <a style="color: maroon;" href ="displayOrganizationDetails?organizationId=${currentOrganization.organizationId}">
+                                    <a href ="displayOrganizationDetails?organizationId=${currentOrganization.organizationId}">
                                         <c:out value="${currentOrganization.name}"/>
                                     </a>
                                 </td>
@@ -49,97 +35,97 @@
                                     <c:out value="${currentOrganization.state}"/>
                                 </td>
                                 <td>
-                                    <a style="color: maroon;" href="displayEditOrganizationForm?organizationId=${currentOrganization.organizationId}">
+                                    <a href="displayEditOrganizationForm?organizationId=${currentOrganization.organizationId}">
                                         Edit
                                     </a>
                                 </td>
                                 <td>
-                                    <a style="color: maroon;" href="deleteOrganization?organizationId=${currentOrganization.organizationId}">
+                                    <a href="deleteOrganization?organizationId=${currentOrganization.organizationId}">
                                         Delete
                                     </a>
                                 </td>
                             </tr>
-                            </c:forEach>
-                        </table>
-                    </div>
-                    <div class="col-md-6">
-                        <h2>Add New Organization</h2>
-                        <form class="form-horizontal"
-                              role="form" method="POST"
-                              action="createOrganization">
-                            <div class="form-group">
-                                <label for="name" class="col-md-4 control-label">Organization Name:</label>
-                                <div class="col-md-8">
-                                    <input type="text" name="orgname" 
-                                           class="form-control" 
-                                           placeholder="Organization Name" 
-                                           required="true" maxlength="45"/>
-                                </div>
+                        </c:forEach>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h2>Add New Organization</h2>
+                    <form class="form-horizontal"
+                          role="form" method="POST"
+                          action="createOrganization">
+                        <div class="form-group">
+                            <label for="name" class="col-md-4 control-label">Organization Name:</label>
+                            <div class="col-md-8">
+                                <input type="text" name="orgname" 
+                                       class="form-control" 
+                                       placeholder="Organization Name" 
+                                       required="true" maxlength="45"/>
                             </div>
-                            <div class="form-group">
-                                <label for="description" class="col-md-4 control-label">Description:</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" 
-                                           name="description" maxlength="45"
-                                           placeholder="Description"/>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-md-4 control-label">Description:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" 
+                                       name="description" maxlength="45"
+                                       placeholder="Description"/>
                             </div>
-                            <div class="form-group">
-                                <label for="street" class="col-md-4 control-label">Street:</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" 
-                                           name="street" maxlength="45"
-                                           placeholder="Street Address"/>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="street" class="col-md-4 control-label">Street:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" 
+                                       name="street" maxlength="45"
+                                       placeholder="Street Address"/>
                             </div>
-                            <div class="form-group">
-                                <label for="city" class="col-md-4 control-label">City:</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" 
-                                           name="city" maxlength="45"
-                                           placeholder="City"/>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="city" class="col-md-4 control-label">City:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" 
+                                       name="city" maxlength="45"
+                                       placeholder="City"/>
                             </div>
-                            <div class="form-group">
-                                <label for="state" class="col-md-4 control-label">State:</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" 
-                                           name="state" placeholder="State"
-                                           maxlength="2" pattern="[A-Za-z]{2}"/>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="state" class="col-md-4 control-label">State:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" 
+                                       name="state" placeholder="State"
+                                       maxlength="2" pattern="[A-Za-z]{2}"/>
                             </div>
-                            <div class="form-group">
-                                <label for="zip" class="col-md-4 control-label">Zip:</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" 
-                                           name="zip" placeholder="Zip Code"
-                                           pattern="(\d{5}([\-]\d{4})?)"
-                                           maxlength="10"/>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="zip" class="col-md-4 control-label">Zip:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" 
+                                       name="zip" placeholder="Zip Code"
+                                       pattern="(\d{5}([\-]\d{4})?)"
+                                       maxlength="10"/>
                             </div>
-                            <div class="form-group">
-                                <label for="phone" class="col-md-4 control-label">Phone (with dashes):</label>
-                                <div class="col-md-8">
-                                    <input type="phone" class="form-control" 
-                                           name="phone" placeholder="Phone Number"
-                                           pattern="\d{3}[\-]\d{3}[\-]\d{4}"
-                                           maxlength="12"/>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="col-md-4 control-label">Phone (with dashes):</label>
+                            <div class="col-md-8">
+                                <input type="phone" class="form-control" 
+                                       name="phone" placeholder="Phone Number"
+                                       pattern="\d{3}[\-]\d{3}[\-]\d{4}"
+                                       maxlength="12"/>
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                <div class="col-md-offset-4 col-md-8">
-                                    <input type="submit" class="btn btn-primary" value="Create Organization"/>
-                                </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-8">
+                                <input type="submit" class="btn btn-danger" value="Create Organization"/>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <!-- Placed at the end of the document so the pages load faster -->
-            <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
-            <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-
-        </body>
-    </html>
+        </div>
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="${pageContext.request.contextPath}/js/jquery-3.1.1.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/setOrganizationNavActive.js"></script>
+    </body>
+</html>
 
