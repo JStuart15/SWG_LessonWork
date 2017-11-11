@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.messagetemplate.controller;
+package com.sg.messagetemplater.dao;
+
+import com.sg.messagetemplater.model.MessageTemplate;
+import java.util.List;
 
 /**
  *
  * @author jstuart15
  */
-public class RestController {
-    
+public interface MessageTemplateDao {
+
+    public List<MessageTemplate> getAllMessageTemplates();
 }

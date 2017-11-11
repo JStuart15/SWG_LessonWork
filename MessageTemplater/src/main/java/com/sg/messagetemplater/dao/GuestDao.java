@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.messagetemplate.dao;
+package com.sg.messagetemplater.dao;
 
-import com.sg.messagetemplate.model.Guest;
+import com.sg.messagetemplater.model.Guest;
 import java.util.List;
 
 /**

@@ -5,18 +5,14 @@
  */
 package com.sg.messagetemplate.dao;
 
-import com.sg.messagetemplate.model.Guest;
+import com.sg.messagetemplate.model.MessageTemplate;
 import java.util.List;
 
 /**
  *
  * @author jstuart15
  */
-public interface GuestDao {
+public interface MessageTemplateDao {
 
-    public Guest addGuest(Guest guest);
-
-    public List<Guest> getAllGuests();
-
-    public Guest getGuestById(long guestId);
+    public List<MessageTemplate> getAllMessageTemplates();
 }

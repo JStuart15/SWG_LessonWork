@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "name": "RoomReady",
+        "variables": [
+            "timeOfDayGreeting",
+            "firstName",
+            "comany",
+            "roomNumber"
+        ]
+    }
+]

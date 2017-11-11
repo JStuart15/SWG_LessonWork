@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.messagetemplate.dao;
+package com.sg.messagetemplater.dao;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sg.messagetemplate.model.Guest;
+import com.sg.messagetemplater.model.Guest;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +19,7 @@ import java.util.List;
 public class GuestDaoJsonFileImpl implements GuestDao {
 
     private List<Guest> guestList = new ArrayList<>();
-    private static final String JSON_DIRECTORY = "./jsonFiles/";
     
-    private void createDirectory(){
-        File newDir = new File("./", "jsonFiles");
-        newDir.mkdir();
-    }
     @Override
     public Guest addGuest(Guest company) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -32,8 +27,7 @@ public class GuestDaoJsonFileImpl implements GuestDao {
 
     @Override
     public List<Guest> getAllGuests() {
-        File fileName = new File(JSON_DIRECTORY + "Guests.json");
-        createDirectory();
+        File fileName = new File("Guests.json");
         try {
             ObjectMapper mapper = new ObjectMapper();
             guestList = mapper.readValue(fileName,
