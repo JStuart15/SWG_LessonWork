@@ -5,9 +5,10 @@
  */
 package com.sg.messagetemplater.controller;
 
-import com.sg.messagetemplater.dao.CompanyDao;
-import com.sg.messagetemplater.dao.CompanyDaoJsonFileImpl;
-import com.sg.messagetemplater.model.Company;
+
+import com.sg.messagetemplater.dao.GuestDao;
+import com.sg.messagetemplater.dao.GuestDaoJsonFileImpl;
+import com.sg.messagetemplater.model.Guest;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,12 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @author jstuart15
  */
 @RestController
-public class CompanyController {
+public class GuestController {
 
-    private final CompanyDao companyDao = new CompanyDaoJsonFileImpl();
+    private final GuestDao guestDao = new GuestDaoJsonFileImpl();
 
-    @RequestMapping(value = "/companies", method = RequestMethod.GET)
-    public List<Company> getAllCompanies() {
-        return companyDao.getAllCompanies();
+    @RequestMapping(value = "/guests", method = RequestMethod.GET)
+    public List<Guest> getAllGuests() {
+        return guestDao.getAllGuests();
     }
 }

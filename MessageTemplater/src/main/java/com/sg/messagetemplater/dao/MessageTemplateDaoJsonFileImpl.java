@@ -17,18 +17,24 @@ import java.util.List;
  * @author jstuart15
  */
 public class MessageTemplateDaoJsonFileImpl implements MessageTemplateDao {
+
     List<MessageTemplate> messageTemplateList = new ArrayList<>();
-    
+
     @Override
     public List<MessageTemplate> getAllMessageTemplates() {
+        loadMessageTemplates();
+        return messageTemplateList;
+    }
+
+    private void loadMessageTemplates() {
         try {
             ObjectMapper mapper = new ObjectMapper();
             File fileName = new File("MessageTemplates.json");
-            messageTemplateList = mapper.readValue(fileName, 
-                    new TypeReference<List<MessageTemplate>>(){});
+            messageTemplateList = mapper.readValue(fileName,
+                    new TypeReference<List<MessageTemplate>>() {
+            });
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return messageTemplateList;
     }
 }

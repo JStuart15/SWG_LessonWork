@@ -14,9 +14,6 @@ import java.util.List;
  */
 public interface GuestDao {
 
-    public Guest addGuest(Guest guest);
-
     public List<Guest> getAllGuests();
 
-    public Guest getGuestById(long guestId);
 }

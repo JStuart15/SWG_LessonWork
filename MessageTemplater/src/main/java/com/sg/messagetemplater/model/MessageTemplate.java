@@ -16,6 +16,7 @@ public class MessageTemplate {
 
     private long id;
     private String name;
+    private String message;
     private List<String> variables;
 
     public long getId() {
@@ -34,6 +35,14 @@ public class MessageTemplate {
         this.name = name;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public List<String> getVariables() {
         return variables;
     }
@@ -44,10 +53,11 @@ public class MessageTemplate {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + (int) (this.id ^ (this.id >>> 32));
-        hash = 47 * hash + Objects.hashCode(this.name);
-        hash = 47 * hash + Objects.hashCode(this.variables);
+        int hash = 3;
+        hash = 89 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 89 * hash + Objects.hashCode(this.name);
+        hash = 89 * hash + Objects.hashCode(this.message);
+        hash = 89 * hash + Objects.hashCode(this.variables);
         return hash;
     }
 
@@ -67,6 +77,9 @@ public class MessageTemplate {
             return false;
         }
         if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.message, other.message)) {
             return false;
         }
         if (!Objects.equals(this.variables, other.variables)) {

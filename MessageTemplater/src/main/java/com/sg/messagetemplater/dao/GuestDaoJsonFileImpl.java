@@ -19,28 +19,22 @@ import java.util.List;
 public class GuestDaoJsonFileImpl implements GuestDao {
 
     private List<Guest> guestList = new ArrayList<>();
-    
-    @Override
-    public Guest addGuest(Guest company) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public List<Guest> getAllGuests() {
+        loadGuests();
+        return guestList;
+    }
+
+    private void loadGuests() {
         File fileName = new File("Guests.json");
         try {
             ObjectMapper mapper = new ObjectMapper();
             guestList = mapper.readValue(fileName,
-                    new TypeReference<List<Guest>>() {});
+                    new TypeReference<List<Guest>>() {
+            });
         } catch (Exception e) {
-            System.out.println("Could not find json file. " + e.getMessage());
+            System.out.println(e.getMessage());
         }
-        return guestList;
     }
-
-    @Override
-    public Guest getGuestById(long companyId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

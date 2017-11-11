@@ -21,19 +21,9 @@ public class CompanyDaoJsonFileImpl implements CompanyDao {
     private List<Company> companyList = new ArrayList<>();
 
     @Override
-    public Company addCompany(Company company) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public List<Company> getAllCompanies() {
         loadCompanies();
         return companyList;
-    }
-
-    @Override
-    public Company getCompanyById(long companyId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void loadCompanies() {
