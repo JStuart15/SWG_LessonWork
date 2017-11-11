@@ -38,7 +38,6 @@ public class ContactController {
         if (result.hasErrors()){
             return "editContactForm";
         }
-        
         dao.updateContact(contact);
         return "redirect:displayContactsPage";
     }
