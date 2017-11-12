@@ -37,4 +37,18 @@ public class MessageTemplateDaoJsonFileImpl implements MessageTemplateDao {
             System.out.println(e.getMessage());
         }
     }
+
+    @Override
+    public MessageTemplate getMessageTemplateById(long id) {
+        loadMessageTemplates();
+        int index;
+        for (MessageTemplate message : messageTemplateList) {
+            if (message.getId() == id) {
+                return message;
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
 }

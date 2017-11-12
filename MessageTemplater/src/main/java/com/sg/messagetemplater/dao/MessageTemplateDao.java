@@ -15,4 +15,6 @@ import java.util.List;
 public interface MessageTemplateDao {
 
     public List<MessageTemplate> getAllMessageTemplates();
+    
+    public MessageTemplate getMessageTemplateById(long id);
 }

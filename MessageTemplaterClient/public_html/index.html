@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Message Templater</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap.css">
+
+    </head>
+    <body>
+        <div class="container">
+            <h1>Craft a Message</h1>
+            <div id="errorMessages"></div>
+            <form>
+                <div class="form-group">
+                    <label for="messageSelect">Message Template</label>
+                    <select id="messageSelect" 
+                            class="form-control"
+                            onselect="loadTemplate">
+                        <option disabled selected>select a message template</option>
+                    </select>                
+                </div>
+                <div class="form-group">
+                    <label for="companySelect">Company</label>
+                    <select id="companySelect" class="form-control">
+                        <option disabled selected>select a company</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="guestSelect">Guest</label>
+                    <select id="guestSelect" class="form-control">
+                        <option disabled selected>select a guest</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="messageCustom">Message Customization</label><br>
+                    <small>Use this area to customize the message that will be sent.</small>
+                    <textarea class="form-control" 
+                              id="messageCustom" 
+                              rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="messagePreview">Message Preview</label>
+                    <textarea disabled 
+                              class="form-control" 
+                              id="messagePreview" 
+                              rows="3">
+
+                    </textarea>
+                </div>
+            </form>
+        </div>
+        <script src="js/jquery-3.2.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" crossorigin="anonymous"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/index.js"></script>
+
+    </body>
+</html>

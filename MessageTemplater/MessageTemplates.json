@@ -2,7 +2,7 @@
     {
         "id": 1,
         "name": "RoomReady",
-        "message":"<timeOfDayGreeting> <firstName>, and welcome to <company>!  Room <roomNumber> is now ready for you.  Enjoy your stay, and let us know if you need anything.",
+        "message":"#timeOfDayGreeting #firstName, and welcome to #company!  Room #roomNumber is now ready for you.  Enjoy your stay, and let us know if you need anything.",
         "variables": [
             "timeOfDayGreeting",
             "firstName",
