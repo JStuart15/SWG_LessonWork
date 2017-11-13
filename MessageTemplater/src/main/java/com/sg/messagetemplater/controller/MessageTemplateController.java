@@ -28,7 +28,7 @@ public class MessageTemplateController {
         return messageTemplateDao.getAllMessageTemplates();
     }
     
-    @RequestMapping(value = "/messagetemplates/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/messagetemplate/{id}", method = RequestMethod.GET)
     public MessageTemplate getMessageTemplate(@PathVariable("id") long id){
         return messageTemplateDao.getMessageTemplateById(id);
     }

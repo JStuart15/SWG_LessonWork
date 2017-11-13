@@ -20,8 +20,7 @@ and open the template in the editor.
                 <div class="form-group">
                     <label for="messageSelect">Message Template</label>
                     <select id="messageSelect" 
-                            class="form-control"
-                            onselect="loadTemplate">
+                            class="form-control">
                         <option disabled selected>select a message template</option>
                     </select>                
                 </div>
@@ -39,12 +38,26 @@ and open the template in the editor.
                 </div>
                 <div class="form-group">
                     <label for="messageCustom">Message Customization</label><br>
-                    <small>Use this area to customize the message that will be sent.</small>
                     <textarea class="form-control" 
                               id="messageCustom" 
                               rows="3"></textarea>
+                    <small>Use this area to customize the message that will be sent. 
+                        The following tags are available for custom messages:
+                        &ltFirst Name&gt, 
+                        &ltLast Name&gt, 
+                        &ltRoom Number&gt,
+                        &ltBooking Start Date&gt,
+                        &ltBooking End Date&gt,
+                        &ltCompany Name&gt, and
+                        &ltCity&gt
+                    </small>
                 </div>
                 <div class="form-group">
+                    <div class="form-group">
+                        <button type="button"
+                                class="btn btn-primary" 
+                                onclick="generateMessage()">Generate Message</button>
+                    </div>
                     <label for="messagePreview">Message Preview</label>
                     <textarea disabled 
                               class="form-control" 
@@ -52,6 +65,10 @@ and open the template in the editor.
                               rows="3">
 
                     </textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" 
+                            onclick="displayMessageSent()">Send Message</button>
                 </div>
             </form>
         </div>

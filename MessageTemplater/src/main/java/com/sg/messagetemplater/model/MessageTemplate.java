@@ -5,7 +5,6 @@
  */
 package com.sg.messagetemplater.model;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,7 +16,6 @@ public class MessageTemplate {
     private long id;
     private String name;
     private String message;
-    private List<String> variables;
 
     public long getId() {
         return id;
@@ -43,21 +41,12 @@ public class MessageTemplate {
         this.message = message;
     }
 
-    public List<String> getVariables() {
-        return variables;
-    }
-
-    public void setVariables(List<String> variables) {
-        this.variables = variables;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 89 * hash + (int) (this.id ^ (this.id >>> 32));
-        hash = 89 * hash + Objects.hashCode(this.name);
-        hash = 89 * hash + Objects.hashCode(this.message);
-        hash = 89 * hash + Objects.hashCode(this.variables);
+        int hash = 7;
+        hash = 79 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 79 * hash + Objects.hashCode(this.name);
+        hash = 79 * hash + Objects.hashCode(this.message);
         return hash;
     }
 
@@ -82,9 +71,7 @@ public class MessageTemplate {
         if (!Objects.equals(this.message, other.message)) {
             return false;
         }
-        if (!Objects.equals(this.variables, other.variables)) {
-            return false;
-        }
         return true;
     }
+
 }

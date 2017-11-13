@@ -3,29 +3,80 @@ $(document).ready(function () {
     clearMessagePreview();
     loadMessageTemplates();
     loadCompanies();
-    //loadGuests();
+    loadGuests();
+
     $('#messageSelect').focusout(function () {
         loadMessageCustom();
     });
-    $('#companySelect').focusout(function () {
-        updateMessageCustomForCompany();
-    });
+    /*$('#companySelect').focusout(function () {
+     updateMessagePreviewForCompany();
+     });
+     $('#guestSelect').focusout(function () {
+     updateMessagePreviewForGuest();
+     });*/
 });
 
-function clearMessageCustom() {
-    $('#messageCustom').empty();
-}
+function generateMessage() {
+    //get the text in messageCustom
+    var text = $('#messageCustom').val();
+    var companyId = $('#companySelect').val();
+    var guestId = $('#guestSelect').val();
+    console.log("Company ID: " + companyId + "GuestId: " + guestId);
+    var firstName;
+    var lastName;
+    var roomNumber;
+    var bookStartDate;
+    var bookEndDate;
+    var companyName;
+    var city;
 
-function clearMessagePreview() {
-    $('#messagePreview').empty();
-}
+    //get company information
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/company/' + companyId,
+        dataType: 'json',
+        success: function (company) {
+            companyName = company.company;
+            city = company.city;
+        },
+        error: function () {
+            $('#errorMessages')
+                    .append($('<li>')
+                            .attr({class: 'list-group-item list-group-item-danger'})
+                            .text("Error calling web service...please ensure REST Service is running."));
+        }
+    });
 
+    //get guest information
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/guest/' + guestId,
+        dataType: 'json',
+        success: function (guest) {
+            firstName = guest.firstName;
+            lastName = guest.lastName;
+            roomNumber = guest.reservation.roomNumber;
+            bookStartDate = guest.reservation.startTimestamp;
+            bookEndDate = guest.reservation.endTimestamp;
+        },
+        error: function () {
+            $('#errorMessages')
+                    .append($('<li>')
+                            .attr({class: 'list-group-item list-group-item-danger'})
+                            .text("Error calling web service...please ensure REST Service is running."));
+        }
+    });
+
+    //replace tags in messageCustom with actual values
+
+    //populate messagePreview
+}
 function loadMessageCustom() {
     var messageId = $('#messageSelect').val();
     $('#messageCustom').append(messageId);
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/messagetemplates/' + messageId,
+        url: 'http://localhost:8080/messagetemplate/' + messageId,
         dataType: 'json',
         success: function (message) {
             var messageText = message.message;
@@ -35,11 +86,11 @@ function loadMessageCustom() {
             $('#errorMessages')
                     .append($('<li>')
                             .attr({class: 'list-group-item list-group-item-danger'})
-                            .text("Error calling web service...please ensure it is running."));
+                            .text("Error calling web service...please ensure REST Service is running."));
         }
     });
-
 }
+
 function loadMessageTemplates() {
     var messageSelect = $('#messageSelect');
 
@@ -92,6 +143,47 @@ function loadCompanies() {
     });
 }
 
-function loadTemplate() {
-    $('#companySelect').prop('disabled', 'disabled');
+function loadGuests() {
+    var guestSelect = $('#guestSelect');
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/guests',
+        dataType: 'json',
+        success: function (guestArray) {
+            $.each(guestArray, function (index, guest) {
+                var guestId = guest.id;
+                var guestFirstName = guest.firstName;
+                var guestLastName = guest.lastName;
+
+                var option = '<option value="' + guestId + '">' + guestFirstName
+                        + ' ' + guestLastName + '</option>';
+                guestSelect.append(option);
+            });
+        },
+        error: function () {
+            $('#errorMessages')
+                    .append($('<li>')
+                            .attr({class: 'list-group-item list-group-item-danger'})
+                            .text("Error calling web service...please try again later."));
+        }
+    });
+}
+
+function clearMessageCustom() {
+    $('#messageCustom').empty();
+}
+
+function clearMessagePreview() {
+    $('#messagePreview').empty();
+}
+
+/*function loadTemplate() {
+ $('#companySelect').prop('disabled', 'disabled');
+ }*/
+
+function displayMessageSent() {
+    alert("Your message was sent");
+    clearMessageCustom();
+    clearMessagePreview();
 }

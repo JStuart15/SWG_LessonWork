@@ -9,6 +9,7 @@ import com.sg.messagetemplater.dao.CompanyDao;
 import com.sg.messagetemplater.dao.CompanyDaoJsonFileImpl;
 import com.sg.messagetemplater.model.Company;
 import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +26,10 @@ public class CompanyController {
     @RequestMapping(value = "/companies", method = RequestMethod.GET)
     public List<Company> getAllCompanies() {
         return companyDao.getAllCompanies();
+    }
+    
+    @RequestMapping(value = "company/{id}", method = RequestMethod.GET)
+    public Company getCompany(@PathVariable("id") long id){
+        return companyDao.getCompanyById(id);
     }
 }

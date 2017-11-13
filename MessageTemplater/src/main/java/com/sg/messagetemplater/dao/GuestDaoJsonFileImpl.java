@@ -26,6 +26,17 @@ public class GuestDaoJsonFileImpl implements GuestDao {
         return guestList;
     }
 
+    @Override
+    public Guest getGuestById(long id) {
+        loadGuests();
+        for (Guest guest : guestList) {
+            if (guest.getId() == id) {
+                return guest;
+            }
+        }
+        return null;
+    }
+
     private void loadGuests() {
         File fileName = new File("Guests.json");
         try {
@@ -34,7 +45,7 @@ public class GuestDaoJsonFileImpl implements GuestDao {
                     new TypeReference<List<Guest>>() {
             });
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error getting guest from file: " + e.getMessage());
         }
     }
 }

@@ -4,15 +4,13 @@
  * and open the template in the editor.
  */
 
-
 import com.sg.messagetemplater.dao.CompanyDao;
 import com.sg.messagetemplater.dao.CompanyDaoJsonFileImpl;
-import com.sg.messagetemplater.model.Company;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -46,9 +44,19 @@ public class CompanyDaoTest {
 
     @Test
     public void testGetAllCompanies() {
-
-        List<Company> companyList = dao.getAllCompanies();
         assertNotNull(dao.getAllCompanies());
         assertEquals(5, dao.getAllCompanies().size());
+    }
+
+    @Test
+    public void testGetCompanyThatExists() {
+        assertEquals(2, dao.getCompanyById(2).getId());
+        assertEquals("Hotel California", dao.getCompanyById(1).getCompany());
+        assertEquals("Torquay", dao.getCompanyById(5).getCity());
+    }
+
+    @Test
+    public void testGetCompanyThatDoesntExist() {
+        assertNull(dao.getCompanyById(6));
     }
 }

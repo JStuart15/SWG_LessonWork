@@ -16,4 +16,6 @@ public interface CompanyDao {
     
     public List<Company> getAllCompanies();
     
+    public Company getCompanyById(long id);
+    
 }

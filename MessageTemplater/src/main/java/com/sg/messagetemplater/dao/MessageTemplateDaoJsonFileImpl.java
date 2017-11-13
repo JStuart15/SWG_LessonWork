@@ -26,6 +26,17 @@ public class MessageTemplateDaoJsonFileImpl implements MessageTemplateDao {
         return messageTemplateList;
     }
 
+    @Override
+    public MessageTemplate getMessageTemplateById(long id) {
+        loadMessageTemplates();
+        for (MessageTemplate message : messageTemplateList) {
+            if (message.getId() == id) {
+                return message;
+            } 
+        }
+        return null;
+    }
+
     private void loadMessageTemplates() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -34,21 +45,7 @@ public class MessageTemplateDaoJsonFileImpl implements MessageTemplateDao {
                     new TypeReference<List<MessageTemplate>>() {
             });
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error getting message template from file: " + e.getMessage());
         }
-    }
-
-    @Override
-    public MessageTemplate getMessageTemplateById(long id) {
-        loadMessageTemplates();
-        int index;
-        for (MessageTemplate message : messageTemplateList) {
-            if (message.getId() == id) {
-                return message;
-            } else {
-                return null;
-            }
-        }
-        return null;
     }
 }

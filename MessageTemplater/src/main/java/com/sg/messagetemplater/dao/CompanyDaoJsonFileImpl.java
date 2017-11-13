@@ -26,6 +26,17 @@ public class CompanyDaoJsonFileImpl implements CompanyDao {
         return companyList;
     }
 
+    @Override
+    public Company getCompanyById(long id) {
+        loadCompanies();
+        for (Company company : companyList) {
+            if (company.getId() == id) {
+                return company;
+            } 
+        }
+        return null;
+    }
+
     private void loadCompanies() {
         try {
             ObjectMapper mapper = new ObjectMapper();

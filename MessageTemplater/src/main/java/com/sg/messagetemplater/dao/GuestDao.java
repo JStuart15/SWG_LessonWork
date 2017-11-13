@@ -16,4 +16,6 @@ public interface GuestDao {
 
     public List<Guest> getAllGuests();
 
+    public Guest getGuestById(long id);
+
 }
