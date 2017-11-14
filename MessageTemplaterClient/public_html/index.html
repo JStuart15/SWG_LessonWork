@@ -16,7 +16,7 @@ and open the template in the editor.
         <div class="container">
             <h1>Craft a Message</h1>
             <div id="errorMessages"></div>
-            <form>
+            <form id="myForm">
                 <div class="form-group">
                     <label for="messageSelect">Message Template</label>
                     <select id="messageSelect" 
@@ -43,21 +43,21 @@ and open the template in the editor.
                               rows="3"></textarea>
                     <small>Use this area to customize the message that will be sent. 
                         The following tags are available for custom messages:
-                        &ltTime of Day Greeting&gt,
-                        &ltFirst Name&gt, 
-                        &ltLast Name&gt, 
-                        &ltRoom Number&gt,
-                        &ltBooking Start Date&gt,
-                        &ltBooking End Date&gt,
-                        &ltCompany Name&gt, and
-                        &ltCity&gt
+                        <a href="javascript:appendGreeting()">&lttime of day greeting&gt</a>,
+                        <a href="javascript:appendFirstName()">&ltfirst name&gt</a>,
+                        <a href="javascript:appendLastName()">&ltlast name&gt</a>,
+                        <a href="javascript:appendRoomNumber()">&ltroom number&gt</a>,
+                        <a href="javascript:appendStartDate()">&ltbooking start date&gt</a>,
+                        <a href="javascript:appendEndDate()">&ltbooking end date&gt</a>,
+                        <a href="javascript:appendCompany()">&ltcompany&gt</a>, and
+                        <a href="javascript:appendCity()">&ltcity&gt</a>.
                     </small>
                 </div>
                 <div class="form-group">
                     <div class="form-group">
                         <button type="button"
                                 class="btn btn-primary" 
-                                onclick="generateMessage()">Generate Message</button>
+                                onclick="generateMessagePreview()">Generate Message</button>
                     </div>
                     <label for="messagePreview">Message Preview</label>
                     <textarea disabled 

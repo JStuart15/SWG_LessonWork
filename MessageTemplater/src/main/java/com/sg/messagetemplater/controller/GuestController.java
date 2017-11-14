@@ -9,6 +9,7 @@ import com.sg.messagetemplater.dao.GuestDao;
 import com.sg.messagetemplater.dao.GuestDaoJsonFileImpl;
 import com.sg.messagetemplater.model.Guest;
 import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author jstuart15
  */
 @RestController
+@CrossOrigin
 public class GuestController {
 
     private final GuestDao guestDao = new GuestDaoJsonFileImpl();

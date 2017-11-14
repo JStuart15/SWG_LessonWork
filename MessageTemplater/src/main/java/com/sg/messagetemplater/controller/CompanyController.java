@@ -9,6 +9,7 @@ import com.sg.messagetemplater.dao.CompanyDao;
 import com.sg.messagetemplater.dao.CompanyDaoJsonFileImpl;
 import com.sg.messagetemplater.model.Company;
 import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author jstuart15
  */
 @RestController
+@CrossOrigin
 public class CompanyController {
 
     private final CompanyDao companyDao = new CompanyDaoJsonFileImpl();
