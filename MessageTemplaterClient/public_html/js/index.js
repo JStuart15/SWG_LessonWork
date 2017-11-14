@@ -17,60 +17,46 @@ $(document).ready(function () {
 });
 
 function generateMessage() {
-    //get the text in messageCustom
-    var text = $('#messageCustom').val();
     var companyId = $('#companySelect').val();
     var guestId = $('#guestSelect').val();
-    console.log("Company ID: " + companyId + "GuestId: " + guestId);
-    var firstName;
-    var lastName;
-    var roomNumber;
-    var bookStartDate;
-    var bookEndDate;
-    var companyName;
-    var city;
 
-    //get company information
-    $.ajax({
-        type: 'GET',
-        url: 'http://localhost:8080/company/' + companyId,
-        dataType: 'json',
-        success: function (company) {
-            companyName = company.company;
-            city = company.city;
-        },
-        error: function () {
-            $('#errorMessages')
-                    .append($('<li>')
-                            .attr({class: 'list-group-item list-group-item-danger'})
-                            .text("Error calling web service...please ensure REST Service is running."));
-        }
-    });
-
-    //get guest information
+    //put guest information in message preview
     $.ajax({
         type: 'GET',
         url: 'http://localhost:8080/guest/' + guestId,
         dataType: 'json',
-        success: function (guest) {
-            firstName = guest.firstName;
-            lastName = guest.lastName;
-            roomNumber = guest.reservation.roomNumber;
-            bookStartDate = guest.reservation.startTimestamp;
-            bookEndDate = guest.reservation.endTimestamp;
-        },
-        error: function () {
-            $('#errorMessages')
-                    .append($('<li>')
-                            .attr({class: 'list-group-item list-group-item-danger'})
-                            .text("Error calling web service...please ensure REST Service is running."));
+        success: function (data) {
+            var text = $('#messageCustom').val();
+            text = text.replace('<First Name>', data.firstName);
+            console.log(data.firstName);
+            text = text.replace('<Last Name>', data.lastName);
+            console.log(data.lastName);
+            text = text.replace('<Room Number>', data.reservation.roomNumber);
+            console.log(data.reservation.roomNumber);
+            var startDate = new Date(data.reservation.startTimestamp * 1000).toDateString();
+            console.log(startDate);
+            text = text.replace('<Booking Start Date>', startDate);
+            var endDate = new Date(data.reservation.endTimestamp * 1000).toDateString();
+            console.log(endDate);
+            text = text.replace('<Booking End Date>', endDate);
+            $('#messagePreview').html(text);
         }
     });
 
-    //replace tags in messageCustom with actual values
-
-    //populate messagePreview
+    //put Company information in message preview
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/company/' + companyId,
+        dataType: 'json',
+        success: function (data) {
+            var text = $('#messagePreview').val();
+            text = text.replace('<Company>', data.company);
+            text = text.replace('<City>', data.city);
+            $('#messagePreview').html(text);
+        }
+    });
 }
+
 function loadMessageCustom() {
     var messageId = $('#messageSelect').val();
     $('#messageCustom').append(messageId);

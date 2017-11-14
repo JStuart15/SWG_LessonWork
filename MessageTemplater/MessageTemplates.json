@@ -2,16 +2,16 @@
     {
         "id": 1,
         "name": "Your Room is Ready",
-        "message":"<TimeOfDayGreeting> <FirstName>, and welcome to <Company>!  Room <RoomNumber> is now ready for you.  Enjoy your stay, and let us know if you need anything."
+        "message":"<Time Of Day Greeting> <First Name>, and welcome to <Company>!  Room <Room Number> is now ready for you.  Enjoy your stay, and let us know if you need anything."
     },
     {
         "id": 2,
         "name": "Looking Forward to Your Visit",
-        "message": "Hello <FirstName>, we are looking forward to your visit on <BookingDateStart>.  If you have any special requests prior to your stay, please let us know."
+        "message": "Hello <First Name>, we are looking forward to your visit on <Booking Date Start>.  If you have any special requests prior to your stay, please let us know."
     },
     {
         "id": 3,
         "name": "Thank You for Visit",
-        "message": "Hello <FirstName>, we hope you enjoyed your stay at <Company>.  If you have any recommendations on how we can improve your visit next time, please let us know."
+        "message": "Hello <First Name>, we hope you enjoyed your stay at <Company>.  If you have any recommendations on how we can improve your visit next time, please let us know."
     }
 ]
