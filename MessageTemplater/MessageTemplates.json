@@ -7,7 +7,7 @@
     {
         "id": 2,
         "name": "Looking Forward to Your Visit",
-        "message": "Hello <first name>, we are looking forward to your visit on <booking date start>.  If you have any special requests prior to your stay, please let us know."
+        "message": "Hello <first name>, we are looking forward to your visit on <booking start date>.  If you have any special requests prior to your stay, please let us know."
     },
     {
         "id": 3,

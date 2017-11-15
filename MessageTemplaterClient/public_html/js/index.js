@@ -8,7 +8,6 @@ $(document).ready(function () {
     $('#messageSelect').focusout(function () {
         loadMessageCustom();
     });
-
 });
 
 function generateMessagePreview() {
