@@ -33,7 +33,7 @@ function generateMessagePreview() {
         crossDomain: 'true',
         success: function (data) {
             var text = $('#messageCustom').val();
-            text = text.replace('<time of day greeting>', greeting);
+            text = text.replace(/<time of day greeting>/g, greeting);
             console.log(greeting);
             text = text.replace('<first name>', data.firstName);
             console.log(data.firstName);

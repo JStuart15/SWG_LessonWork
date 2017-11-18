@@ -5,8 +5,7 @@
  */
 package interviewquestions;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 /**
  *
@@ -19,9 +18,10 @@ public class InterviewQuestions {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        anagram();
+        //anagram();
+        mostFrequentInArray();
         //numNotInSecondArray();
-        
+
     }
 
     private static void fizzBuzz() {
@@ -64,48 +64,88 @@ public class InterviewQuestions {
         //exactly once.For example, the word anagram can be rearranged 
         //into "nag a ram".
         String s1 = "anagram";
+        s1 = s1.toLowerCase().replace(" ", "");
+
         String s2 = "nag a ram";
-        s2 = s2.replace(" ", "");
+        s2 = s2.toLowerCase().replace(" ", "");
 
         char[] s1CharArray = s1.toCharArray();
         char[] s2CharArray = s2.toCharArray();
-        
-        Map<Character, Integer> lettersCountsArr1 = new HashMap<>();
-        for (int i = 0; i < s1CharArray.length; i++) {
-            
-            
+
+        Arrays.sort(s1CharArray);
+        System.out.print("\n after sorting s1 looks like: ");
+        for (char c : s1CharArray) {
+            System.out.print(c);
         }
-        
+        Arrays.sort(s2CharArray);
+        System.out.print("\n after sorting s2 looks like: ");
+        for (char c : s2CharArray) {
+            System.out.print(c);
+        }
+
+        if (Arrays.equals(s1CharArray, s2CharArray)) {
+            System.out.println("");
+            System.out.println(s1 + " and " + s2 + " are anagrams");
+        } else {
+            System.out.println("");
+            System.out.println(s1 + " and " + s2 + " are not anagrams");
+        }
     }
 
     private static void numNotInSecondArray() {
         //4. Given two arrays, find the number not in the second array 
         System.out.println("Two arrays, find number not in 2nd array; expect 3");
-        int[] arr1 = {1,2,3,4,5};
-        int[] arr2 = {1,2,4,5};
+        int[] arr1 = {1, 2, 3, 4, 5};
+        int[] arr2 = {1, 2, 4, 5};
         Boolean isMatch = false;
         int missingNum = -1;
-        for(int i = 0; i < arr1.length; i++){
-            for(int j = 0; j < arr2.length; j++){
+        for (int i = 0; i < arr1.length; i++) {
+            for (int j = 0; j < arr2.length; j++) {
                 isMatch = false;
-                if(arr1[i] == arr2[j]){
+                if (arr1[i] == arr2[j]) {
                     isMatch = true;
                     break;
                 }
             }
-            if (isMatch == false ){
+            if (isMatch == false) {
                 missingNum = arr1[i];
                 break;
             }
         }
         System.out.println("The missing number from array2 is " + missingNum);
     }
-    
-    
 
+    private static void mostFrequentInArray() {
+        //5. Find the most frequent number in an array 
+        int[] intArray = {1, 50, 1, 50, 51, 2, 3, 4, 5, 6, 8, 8, 8, 9, 10};
+        Arrays.stream(intArray);
+        //what if i sort it and count 
+        Arrays.sort(intArray);
+        for (int i : intArray) {
+            System.out.print(i + ",");
+        }
+        int num = 0;
+        int maxNum = 0;
+        int count = 0;
+        int maxCount = 0;
+        for (int i = 1; i < intArray.length; i++) {
+            if(intArray[i] == intArray[i-1]){
+                num = i;
+                count++;
+            } else{
+                if (count > maxCount){
+                    maxCount = count;
+                    maxNum = num;
+                }
+                count = 0;
+            }
+            
+            //this could be done with streams so how would we do that?
+        }
+        System.out.println("The most frequent number is: " + maxNum);
+    }
 }
 
-//5. Find the most frequent number in an array 
 //6. Find the first non-repeated character in a String 
 //7. Create an algorithm that will output the results of rolling a die (1-6) using a function that simulates a coin toss (1 or 2). All 6 outcomes should be equally likely. 
 //8. Find the longest word in a sentence. 
