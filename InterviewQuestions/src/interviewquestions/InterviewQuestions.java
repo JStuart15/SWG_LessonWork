@@ -18,8 +18,10 @@ public class InterviewQuestions {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        //fizzBuzz();
+        palindrome();
         //anagram();
-        mostFrequentInArray();
+        //mostFrequentInArray();
         //numNotInSecondArray();
 
     }
@@ -31,21 +33,27 @@ public class InterviewQuestions {
         //   "FizzBuzz". 
         System.out.println("Running #1 FizzBuzz");
         for (int i = 1; i <= 100; i++) {
-            System.out.print(i + "-");
+            if (i % 3 == 0 && i % 5 == 0) {
+                System.out.print("FizzBuzz\n");
+                continue;
+            }
             if (i % 3 == 0) {
-                System.out.print("Fizz");
+                System.out.print("Fizz\n");
+                continue;
             }
             if (i % 5 == 0) {
-                System.out.print("Buzz");
+                System.out.print("Buzz\n");
+                continue;
             }
-            System.out.println("");
+            System.out.print(i + "\n");
         }
     }
 
     private static void palindrome() {
         //2. Check if a string is a palindrome. 
         System.out.println("Running #2 Palindrome");
-        String text = "racecar";
+        String text = "rotor";
+        System.out.println(text.length());
         int textLength = text.length() - 1;
         Boolean isPalindrome = true;
 
@@ -115,39 +123,47 @@ public class InterviewQuestions {
         System.out.println("The missing number from array2 is " + missingNum);
     }
 
+    //5. Find the most frequent number in an array 
     private static void mostFrequentInArray() {
-        //5. Find the most frequent number in an array 
-        int[] intArray = {1, 50, 1, 50, 51, 2, 3, 4, 5, 6, 8, 8, 8, 9, 10};
+        int[] intArray = {1, 50, 1, 50, 51, 2, 3, 4, 5, 6, 8, 8, 8, 9, 10, 45, 50, 49, 50};
         Arrays.stream(intArray);
         //what if i sort it and count 
         Arrays.sort(intArray);
         for (int i : intArray) {
             System.out.print(i + ",");
         }
+        System.out.println("");
         int num = 0;
         int maxNum = 0;
         int count = 0;
         int maxCount = 0;
         for (int i = 1; i < intArray.length; i++) {
-            if(intArray[i] == intArray[i-1]){
-                num = i;
+            if (intArray[i] == intArray[i - 1]) {
+                num = intArray[i];//we have a repeat
+                System.out.println("number is: " + num);
                 count++;
-            } else{
-                if (count > maxCount){
+                System.out.println("count of " + num + " is " + count);
+            } else {
+                if (count > maxCount) {
                     maxCount = count;
                     maxNum = num;
                 }
                 count = 0;
             }
-            
-            //this could be done with streams so how would we do that?
         }
         System.out.println("The most frequent number is: " + maxNum);
     }
+
+    //6. Find the first non-repeated character in a String 
+    private static void firstNonRepeatingCharinArray() {
+        String s = "ssaafrass";
+    }
+
 }
 
-//6. Find the first non-repeated character in a String 
-//7. Create an algorithm that will output the results of rolling a die (1-6) using a function that simulates a coin toss (1 or 2). All 6 outcomes should be equally likely. 
+//7. Create an algorithm that will output the results of rolling a die (1-6) 
+//   using a function that simulates a coin toss (1 or 2). 
+//   All 6 outcomes should be equally likely. 
 //8. Find the longest word in a sentence. 
 //9. Print out all anagrams of a String
 //10. Take an array and rotate it n spots
@@ -159,4 +175,5 @@ public class InterviewQuestions {
 //15. Multiply function without using *
 //16. Divide function without using /
 //17. Given two number arrays return one array with only the unique numbers (no repeats in a single array)
+
 //18. Given two number arrays return one array with only the duplicate numbers (no repeats in a single array)
