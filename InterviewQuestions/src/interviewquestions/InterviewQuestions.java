@@ -19,7 +19,7 @@ public class InterviewQuestions {
     public static void main(String[] args) {
         // TODO code application logic here
         //fizzBuzz();
-        palindrome();
+        //palindrome();
         //anagram();
         //mostFrequentInArray();
         //numNotInSecondArray();
@@ -52,12 +52,12 @@ public class InterviewQuestions {
     private static void palindrome() {
         //2. Check if a string is a palindrome. 
         System.out.println("Running #2 Palindrome");
-        String text = "rotor";
-        System.out.println(text.length());
-        int textLength = text.length() - 1;
+        String text = "avcvA";
+        text = text.toLowerCase();
+        int textLength = text.length() - 1; //because array starts at position 0
+        int loopMax = text.length()/2;
         Boolean isPalindrome = true;
-
-        for (int i = 0; i < textLength / 2; i++) {
+        for (int i = 0; i < loopMax; i++) {
             if (text.charAt(i) != text.charAt(textLength - i)) {
                 isPalindrome = false;
             }
