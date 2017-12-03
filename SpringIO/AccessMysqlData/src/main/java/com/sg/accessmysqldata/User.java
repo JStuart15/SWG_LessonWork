@@ -11,4 +11,5 @@ package com.sg.accessmysqldata;
  */
 public class User {
     
+    
 }
