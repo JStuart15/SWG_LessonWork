@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.accessmysqldata;
+package com.sg.accessmysqldata.model;
+
+import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author jstuart15
  */
-public class User {
-    
+public interface UserRepository extends CrudRepository<User, Long> {
     
 }
